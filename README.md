@@ -1,0 +1,1 @@
+# mazdik.github.io
