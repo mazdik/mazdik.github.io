@@ -1,0 +1,44 @@
+[
+  {
+    "id": "ASMODIANS",
+    "name": "ASMODIANS",
+    "icon": "tree-icon tree-folder",
+    "children": [
+      {
+        "id": "MALE",
+        "name": "MALE",
+        "icon": "tree-icon tree-file"
+      },
+      {
+        "id": "FEMALE",
+        "name": "FEMALE",
+        "icon": "tree-icon tree-file"
+      }
+    ]
+  },
+  {
+    "id": "ELYOS",
+    "name": "ELYOS",
+    "icon": "tree-icon tree-folder",
+    "children": [
+      {
+        "id": "MALE",
+        "name": "MALE",
+        "icon": "tree-icon tree-folder",
+        "children": [
+          {
+            "id": "LAZY",
+            "name": "LAZY",
+            "icon": "tree-icon tree-folder",
+            "leaf": false
+          }
+        ]
+      },
+      {
+        "id": "FEMALE",
+        "name": "FEMALE",
+        "icon": "tree-icon tree-file"
+      }
+    ]
+  }
+]
