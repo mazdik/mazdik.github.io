@@ -34,8 +34,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97193,
@@ -72,8 +71,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97270,
@@ -110,8 +108,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97294,
@@ -148,8 +145,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97306,
@@ -186,8 +182,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97351,
@@ -224,8 +219,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97408,
@@ -262,8 +256,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97432,
@@ -300,8 +293,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97439,
@@ -338,8 +330,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97452,
@@ -376,8 +367,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97479,
@@ -414,8 +404,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97523,
@@ -452,8 +441,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97531,
@@ -490,8 +478,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97630,
@@ -528,8 +515,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97680,
@@ -566,8 +552,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97718,
@@ -604,8 +589,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97727,
@@ -642,8 +626,7 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
   },
   {
     "id": 97833,
@@ -680,7 +663,191 @@
     "marrytitle": null,
     "bg_points": 0,
     "personal_rating": 0,
-    "arena_points": 0,
-    "partner_id": null
+    "arena_points": 0
+  },
+  {
+    "id": 97834,
+    "name": "Nemesis",
+    "account_id": 18,
+    "account_name": "karta1",
+    "exp": 239,
+    "recoverexp": 1048,
+    "x": 932.239,
+    "y": 1689.09,
+    "z": 261.777,
+    "heading": 95,
+    "world_id": 220010000,
+    "gender": "MALE",
+    "race": "ASMODIANS",
+    "player_class": "GLADIATOR",
+    "creation_date": "2017-01-16T02:20:03",
+    "deletion_date": null,
+    "last_online": "2018-01-16T03:22:52",
+    "cube_size": 0,
+    "advanced_stigma_slot_size": 0,
+    "warehouse_size": 0,
+    "mailboxLetters": 0,
+    "mailboxUnReadLetters": 0,
+    "brokerKinah": 0,
+    "bind_point": 0,
+    "title_id": -1,
+    "online": 0,
+    "note": null,
+    "repletionstate": 0,
+    "rebirth_id": 0,
+    "memberpoints": 2592,
+    "marry_player_id": 0,
+    "marrytitle": null,
+    "bg_points": 0,
+    "personal_rating": 0,
+    "arena_points": 0
+  },
+  {
+    "id": 97835,
+    "name": "Rubble",
+    "account_id": 18,
+    "account_name": "karta1",
+    "exp": 23,
+    "recoverexp": 1048,
+    "x": 932.239,
+    "y": 1689.09,
+    "z": 261.777,
+    "heading": 95,
+    "world_id": 220010000,
+    "gender": "FEMALE",
+    "race": "ASMODIANS",
+    "player_class": "GLADIATOR",
+    "creation_date": "2017-01-17T02:20:03",
+    "deletion_date": null,
+    "last_online": "2018-01-17T03:22:52",
+    "cube_size": 0,
+    "advanced_stigma_slot_size": 0,
+    "warehouse_size": 0,
+    "mailboxLetters": 0,
+    "mailboxUnReadLetters": 0,
+    "brokerKinah": 0,
+    "bind_point": 0,
+    "title_id": -1,
+    "online": 0,
+    "note": null,
+    "repletionstate": 0,
+    "rebirth_id": 0,
+    "memberpoints": 2592,
+    "marry_player_id": 0,
+    "marrytitle": null,
+    "bg_points": 0,
+    "personal_rating": 0,
+    "arena_points": 0
+  },
+  {
+    "id": 97836,
+    "name": "Vicious",
+    "account_id": 18,
+    "account_name": "karta1",
+    "exp": 10023,
+    "recoverexp": 1048,
+    "x": 932.239,
+    "y": 1689.09,
+    "z": 261.777,
+    "heading": 95,
+    "world_id": 220010000,
+    "gender": "FEMALE",
+    "race": "ELYOS",
+    "player_class": "GLADIATOR",
+    "creation_date": "2017-01-18T02:20:03",
+    "deletion_date": null,
+    "last_online": "2018-01-18T03:22:52",
+    "cube_size": 0,
+    "advanced_stigma_slot_size": 0,
+    "warehouse_size": 0,
+    "mailboxLetters": 0,
+    "mailboxUnReadLetters": 0,
+    "brokerKinah": 0,
+    "bind_point": 0,
+    "title_id": -1,
+    "online": 0,
+    "note": null,
+    "repletionstate": 0,
+    "rebirth_id": 0,
+    "memberpoints": 2592,
+    "marry_player_id": 0,
+    "marrytitle": null,
+    "bg_points": 0,
+    "personal_rating": 0,
+    "arena_points": 0
+  },
+  {
+    "id": 97837,
+    "name": "Winger",
+    "account_id": 18,
+    "account_name": "karta1",
+    "exp": 1023,
+    "recoverexp": 1048,
+    "x": 932.239,
+    "y": 1689.09,
+    "z": 261.777,
+    "heading": 95,
+    "world_id": 220010000,
+    "gender": "FEMALE",
+    "race": "ELYOS",
+    "player_class": "GLADIATOR",
+    "creation_date": "2017-01-19T02:20:03",
+    "deletion_date": null,
+    "last_online": "2018-01-19T03:22:52",
+    "cube_size": 0,
+    "advanced_stigma_slot_size": 0,
+    "warehouse_size": 0,
+    "mailboxLetters": 0,
+    "mailboxUnReadLetters": 0,
+    "brokerKinah": 0,
+    "bind_point": 0,
+    "title_id": -1,
+    "online": 0,
+    "note": null,
+    "repletionstate": 0,
+    "rebirth_id": 0,
+    "memberpoints": 2592,
+    "marry_player_id": 0,
+    "marrytitle": null,
+    "bg_points": 0,
+    "personal_rating": 0,
+    "arena_points": 0
+  },
+  {
+    "id": 97838,
+    "name": "Sling",
+    "account_id": 18,
+    "account_name": "karta1",
+    "exp": 5553,
+    "recoverexp": 1048,
+    "x": 932.239,
+    "y": 1689.09,
+    "z": 261.777,
+    "heading": 95,
+    "world_id": 220010000,
+    "gender": "FEMALE",
+    "race": "ELYOS",
+    "player_class": "GLADIATOR",
+    "creation_date": "2017-01-19T02:20:03",
+    "deletion_date": null,
+    "last_online": "2018-01-19T03:22:52",
+    "cube_size": 0,
+    "advanced_stigma_slot_size": 0,
+    "warehouse_size": 0,
+    "mailboxLetters": 0,
+    "mailboxUnReadLetters": 0,
+    "brokerKinah": 0,
+    "bind_point": 0,
+    "title_id": -1,
+    "online": 0,
+    "note": null,
+    "repletionstate": 0,
+    "rebirth_id": 0,
+    "memberpoints": 2592,
+    "marry_player_id": 0,
+    "marrytitle": null,
+    "bg_points": 0,
+    "personal_rating": 0,
+    "arena_points": 0
   }
 ]
