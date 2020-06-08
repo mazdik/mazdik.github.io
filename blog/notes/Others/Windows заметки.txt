@@ -1,0 +1,65 @@
+###### убить все процессы
+taskkill /F /IM FreeFileSync.exe
+
+###### оставить последние 180 дней
+c:\windows\system32\forfiles.exe -p c:\arc_out -s -m *.* -d -180 -c "cmd /c del /q @path"
+
+###### psexec
+Она позволяет выполнять команды на удаленных компьютерах  и при этом не требует установки в систему
+Например эта команда копирует программу 7z920.exe в удаленную систему и устанавливает в фоновом режиме(/S)
+psexec /accepteula \\172.24.91.2 -u oracle -p master -c C:\7z920.exe /S
+
+###### Порт RDP
+HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TerminalServer\WinStations\RDP-Tcp\PortNumber
+
+###### UPTIME В WINDOWS
+net statistics server
+
+###### Узнать все даты перезагрузки
+В событиях фильтр по коду 6005 - говорит нам, что компьютер только включится
+
+###### RAID
+http://habrahabr.ru/sandbox/71436/
+В этот раз винты были по 3 ТБ. Система ставится. массив создается на весь объем. НО при установке НЕ ДАВАЛО создать раздел больше ~2ТБ.
+
+http://www.pokatashkin.com/it/microsoft/11884
+Итак, самое главное, если мы размечаем диск в формате MBR (Master Boot Record), то его максимальный размер будет только 2TB.
+Чтобы создавать разделы размером более 2TB, надо использовать формат GPT (GUID Partition Table).
+GPT могут загружаться на новых системах с UEFI (Unified Extensible Firmware Interface), который пришел на смену классическому BIOS (Basic Input/Output System).
+
+2 варианта решения:
+1. Внутри массива, создать 2 логических диска. Первый из которых 2 Тб или меньше, а второй с оставшимся пространством.
+2. Конвертировать в GPT
+
+###### Порт форвардинг в Windows
+netsh interface portproxy add v4tov4 listenport=8080 listenaddress=101.48.178.59 connectport=8080 connectaddress=192.168.56.101
+
+С помощью netstat проверим, что на компьютере стал прослушиваться порт 8080:
+netstat -ano | findstr :8080
+
+Определить процесс, который слушает этот порт можно с помощью его PID (в нашем примере PID – 336):
+tasklist | findstr 336
+
+Выведем на экран список всех правил перенаправления в системе:
+netsh interface portproxy show all
+
+Чтобы очистить все имеющиеся правила перенаправления:
+netsh interface portproxy reset
+
+В случае необходимости в брандмауэра  Windows можно добавить новое правило командой:
+netsh advfirewall firewall add rule name=”RDP_3340” protocol=TCP dir=in localip=10.10.1.110  localport=3340 action=allow
+
+###### Расчет адресации в протоколе IPv4
+255.255.255.255 = /32
+255.255.255.0 = /24
+255.255.0.0 = /16
+255.0.0.0 = /8
+
+###### Измерение времени выполнения
+powershell -Command "Measure-Command {python test.py}"
+
+###### winscp в консоле
+winscp.exe sftp://user:password@server.ru/
+winscp.exe ftp://user:password@server.ru/folder/
+winscp.exe ftp://user:password@server.ru/folder/ /upload f:\upload /nointeractiveinput
+winscp.exe /command "open ftp://user:password@server.ru/" "synchronize both f:\upload /folder" "exit" /log=f:\winscp.log

@@ -1,0 +1,59 @@
+В подавляющем большинстве случаев мы используем при работе с базой режим DEDICATED servers. То есть, для каждого соединения сервер запускает выделенный серверный процесс.
+
+Web-приложения, работающие с базой. mod_plsql работает как Oracle*Net клиент, и, при каждом HTTP-вызове устанавливает и разрывает соединение с базой. Это ведет к большому количеству запусков выделенных процессов, высокому переключению контекстов и, в конечном итоге, ухудшает отклик системы.
+
+Технически Оракл иногда рекомендует в подобных случаях (для Web-приложений) использовать Shared server.
+
+
+Для pfile.ora(init.ora):
+###########################################
+# DISPATCHERS
+###########################################
+dispatchers="(protocol=tcp)(dispatchers=2)(service=test)"
+
+## shared servers on startup
+shared_servers=2
+
+## maximum shared server sessions
+shared_server_sessions=1000
+
+## Maximum Shared Servers
+max_shared_servers=20
+
+## Maximum Dispatchers
+max_dispatchers=20
+
+Для spfile.ora:
+alter system set dispatchers='';
+alter system set dispatchers="(protocol=tcp)(dispatchers=2)";
+alter system set shared_servers=2 scope=both;
+alter system set shared_server_sessions=1000 scope=both;
+alter system set max_shared_servers=100 scope=both;
+alter system set max_dispatchers=100 scope=both;
+
+
+В tnsnames.ora:
+
+TEST_SHARED =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = alpha2)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVER = SHARED)
+      (SERVICE_NAME = test)
+    )
+  )
+
+TEST_DEDICATED =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = alpha2)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = test)
+    )
+  )
+  
+  

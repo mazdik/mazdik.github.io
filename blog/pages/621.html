@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">PL/SQL &#1086;&#1073;&#1098;&#1105;&#1084; &#1053;DD</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&#1069;&#1090;&#1072; &#1087;&#1088;&#1086;&#1094;&#1077;&#1076;&#1091;&#1088;&#1072; &#1074;&#1086;&#1079;&#1074;&#1088;&#1072;&#1097;&#1072;&#1077;&#1090; &#1086;&#1073;&#1098;&#1105;&#1084; &#1089;&#1074;&#1086;&#1073;&#1086;&#1076;&#1085;&#1086;&#1081; &#1087;&#1072;&#1084;&#1103;&#1090;&#1080; &#1085;&#1072; &#1076;&#1080;&#1089;&#1082;&#1077; D &#1074; &#1043;&#1073;. &#1042;&#1099;&#1087;&#1086;&#1083;&#1085;&#1103;&#1077;&#1090; &#1074;&#1085;&#1077;&#1096;&#1085;&#1102;&#1102; &#1082;&#1086;&#1084;&#1072;&#1085;&#1076;&#1091; <strong><span style="color: #008000;">fsutil volume diskfree D:</span></strong>&nbsp; &#1087;&#1086;&#1076; Windows. &#1044;&#1083;&#1103; &#1101;&#1090;&#1086;&#1075;&#1086; &#1076;&#1086;&#1083;&#1078;&#1085;&#1072; &#1073;&#1099;&#1090;&#1100; &#1079;&#1072;&#1087;&#1091;&#1097;&#1077;&#1085;&#1072;&nbsp;<strong><a title="&#1042;&#1099;&#1087;&#1086;&#1083;&#1085;&#1077;&#1085;&#1080;&#1077; &#1074;&#1085;&#1077;&#1096;&#1085;&#1080;&#1093; &#1079;&#1072;&#1076;&#1072;&#1095; &#1080;&#1079; &#1041;&#1044; Oracle 10" href="http://mazdik.ru/?p=575">OracleJobSchedulerSID</a><br></strong></p>
+<p>&#1069;&#1090;&#1072; &#1087;&#1088;&#1086;&#1094;&#1077;&#1076;&#1091;&#1088;&#1072; &#1074;&#1099;&#1087;&#1086;&#1083;&#1085;&#1103;&#1077;&#1090;&#1089;&#1103; &#1089;&#1077;&#1082;&#1091;&#1085;&#1076;&#1091;, &#1072; &#1087;&#1088;&#1080;&#1085;&#1094;&#1080;&#1087; &#1088;&#1072;&#1073;&#1086;&#1090;&#1099; &#1090;&#1072;&#1082;&#1086;&#1081;: &#1089;&#1086;&#1079;&#1076;&#1072;&#1077;&#1090;&#1089;&#1103; BAT&#1085;&#1080;&#1082;, &#1089;&#1086;&#1079;&#1076;&#1072;&#1077;&#1090;&#1089;&#1103; JOB, &#1079;&#1072;&#1076;&#1072;&#1085;&#1080;&#1077; &#1074;&#1099;&#1087;&#1086;&#1083;&#1085;&#1103;&#1077;&#1090;&#1089;&#1103;, &#1091;&#1076;&#1072;&#1083;&#1103;&#1077;&#1090;&#1089;&#1103; BAT&#1085;&#1080;&#1082;, &#1091;&#1076;&#1072;&#1083;&#1103;&#1077;&#1090;&#1089;&#1103; JOB, &#1087;&#1072;&#1088;&#1089;&#1080;&#1090;&#1089;&#1103; &#1083;&#1086;&#1075; &#1092;&#1072;&#1081;&#1083;, &#1091;&#1076;&#1072;&#1083;&#1103;&#1077;&#1090;&#1089;&#1103; &#1083;&#1086;&#1075; &#1092;&#1072;&#1081;&#1083;.</p>
+<pre class="lang:plsql">
+create or replace procedure P_R_TASK(sOUT out varchar2) as
+PRAGMA AUTONOMOUS_TRANSACTION;
+sBAT_TXT varchar2(4000);
+sBCP_DIRNAME constant varchar2(200) := 'BCP_DIR';
+sDIR_BCP varchar2(200) := 'D:\bcp';
+sBAT_NAME1 varchar(20) := 'Task.bat';
+sLOG_NAME1 varchar(20) := 'diskfree.txt';
+
+procedure CREATE_BAT(sNAME in varchar2, sTXT in varchar2) as
+F1 UTL_FILE.FILE_TYPE;
+begin
+F1 := UTL_FILE.FOPEN(sBCP_DIRNAME, sNAME, 'W', 4048);
+UTL_FILE.PUT_LINE(file =&gt; F1, buffer =&gt; sTXT);
+UTL_FILE.fclose(file =&gt; F1);
+end CREATE_BAT;
+
+procedure DELETE_FILE(sFILENAME in varchar2) as
+begin
+begin
+UTL_FILE.FREMOVE(sBCP_DIRNAME, sFILENAME);
+exception
+when others then
+null;
+end;
+end DELETE_FILE;
+
+procedure DROP_JOB as
+begin
+begin
+dbms_scheduler.drop_job('P_R_TASK_JOB', TRUE);
+exception
+when others then
+null;
+end;
+end DROP_JOB;
+
+procedure CREATE_JOB as
+begin
+DROP_JOB;
+begin
+dbms_scheduler.create_job('P_R_TASK_JOB',
+job_action =&gt; sDIR_BCP || '\' ||
+sBAT_NAME1 || ' &gt; null',
+job_type =&gt; 'executable',
+enabled =&gt; false,
+auto_drop =&gt; false);
+end;
+end CREATE_JOB;
+
+/* &#1050;&#1086;&#1085;&#1074;&#1077;&#1088;&#1090;&#1072;&#1094;&#1080;&#1103; &#1073;&#1083;&#1086;&#1073; &#1074; &#1082;&#1083;&#1086;&#1073; */
+FUNCTION blob_to_clob(plob IN BLOB) RETURN CLOB IS
+lclob_Result CLOB := 'X';
+l_dest_offsset INTEGER := 1;
+l_src_offsset INTEGER := 1;
+l_lang_context INTEGER := dbms_lob.default_lang_ctx;
+l_warning INTEGER;
+BEGIN
+IF plob IS NOT NULL AND LENGTH(plob) &gt; 0 THEN
+dbms_lob.converttoclob(dest_lob =&gt; lclob_Result,
+src_blob =&gt; plob,
+amount =&gt; dbms_lob.lobmaxsize,
+dest_offset =&gt; l_dest_offsset,
+src_offset =&gt; l_src_offsset,
+blob_csid =&gt; nls_charset_id('AL32UTF8'),
+lang_context =&gt; l_lang_context,
+warning =&gt; l_warning);
+RETURN(lclob_Result);
+ELSE
+RETURN NULL;
+END IF;
+EXCEPTION
+WHEN OTHERS THEN
+RETURN NULL;
+END blob_to_clob;
+
+procedure PARSE_LOG as
+sMESSAGE VARCHAR2(1000);
+SRC_LOC BFILE;
+cCLOB CLOB;
+bBLOB BLOB;
+begin
+src_loc := BFILENAME(sBCP_DIRNAME, sLOG_NAME1);
+
+if (DBMS_LOB.FILEEXISTS(src_loc) = 1) then
+
+DBMS_LOB.CREATETEMPORARY(bBLOB, TRUE, DBMS_LOB.SESSION);
+DBMS_LOB.OPEN(src_loc, DBMS_LOB.LOB_READONLY);
+DBMS_LOB.OPEN(bBLOB, DBMS_LOB.LOB_READWRITE);
+DBMS_LOB.LOADFROMFILE(dest_lob =&gt; bBLOB,
+src_lob =&gt; src_loc,
+amount =&gt; DBMS_LOB.getLength(src_loc));
+DBMS_LOB.CLOSE(bBLOB);
+DBMS_LOB.CLOSE(src_loc);
+cCLOB := blob_to_clob(bBLOB);
+
+if cCLOB is not null then
+--sMESSAGE := regexp_substr(cCLOB, 'Total # of avail free bytes :\s\d{5,40}');
+sMESSAGE := regexp_substr(cCLOB, '\d{5,40}');
+sMESSAGE := round(sMESSAGE/1024/1024/1024, 2);
+end if;
+else
+sMESSAGE := '&#1051;&#1086;&#1075; &#1092;&#1072;&#1081;&#1083; &#1085;&#1077; &#1085;&#1072;&#1081;&#1076;&#1077;&#1085;';
+end if;
+sOUT:=sMESSAGE;
+
+end PARSE_LOG;
+
+begin
+
+sBAT_TXT := '@echo off
+fsutil volume diskfree D: &gt; D:\bcp\'||sLOG_NAME1;
+
+CREATE_BAT(sBAT_NAME1, sBAT_TXT);
+
+CREATE_JOB;
+begin
+DBMS_SCHEDULER.RUN_JOB('P_R_TASK_JOB');
+exception
+when others then
+null;
+end;
+
+DELETE_FILE(sBAT_NAME1);
+DROP_JOB;
+COMMIT;
+PARSE_LOG;
+DELETE_FILE(sLOG_NAME1);
+
+end P_R_TASK;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

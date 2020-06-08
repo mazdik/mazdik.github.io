@@ -1,0 +1,7 @@
+Создать базу ORCL с паролем SYS (создается служба OracleServiceORCL):
+
+oradim.exe -new -sid ORCL -syspwd sys -startmode auto
+
+oradim.exe -edit -sid ORCL -startmode auto -srvcstart system
+
+oradim.exe -delete -sid MINKULT

@@ -1,0 +1,129 @@
+Еще два способа защиты от http флуда (DDOS) fail2ban
+
+Просмотрев логи своего веб сервера (xampp) /opt/lampp/logs/error_log я заметил, что кто-то брутит пытаясь найти что то. 
+[Mon Apr 04 23:05:52 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/pass.txt, referer: http://webxakep.net
+[Mon Apr 04 23:05:52 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/moderator, referer: http://webxakep.net
+[Mon Apr 04 23:05:52 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/modules, referer: http://webxakep.net
+[Mon Apr 04 23:05:52 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/newsadmin, referer: http://webxakep.net
+
+После установки fail2ban в конфиге /etc/fail2ban/jail.conf изменил эти строки:
+
+[apache-shorewall]
+
+enabled  = true
+filter   = apache-noscript
+action   = iptables[name=httpd, port=http, protocol=tcp]
+logpath  = /opt/lampp/logs/error_log
+maxretry = 3
+
+true-включить
+apache-noscript - фильтр который лежит в /etc/fail2ban/filter.d
+iptables[name=httpd, port=http, protocol=tcp] - фаервол iptables
+/opt/lampp/logs/error_log -путь к лог файлу апача
+maxretry = 3 кол-во ошибок
+При возникновение 3 ошибок доступ блокируется при помощи файервола iptables.
+
+Также изменил конфиг фильтра в /etc/fail2ban/filter.d
+failregex = [[]client <HOST>[]] (File does not exist|.* not found or unable to stat)
+
+«.*» обозначает любой текст
+Это значит что будет блокироваться вот такие строки:
+[Mon Apr 04 23:04:37 2011] [error] [client XX.104.134.251] script '/opt/lampp/htdocs/moderator.php' not found or unable to stat, referer: http://webxakep.net
+[Mon Apr 04 23:04:27 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/mssql, referer: http://webxakep.net
+
+
+Во время DDOS в логах апаче /opt/lampp/logs/access_log записывается много таких строк:
+XX.119.73.134 - - [23/Jun/2011:14:22:03 +0600] "GET /index.php HTTP/1.1" 200 -
+XX.119.73.134 - - [23/Jun/2011:14:22:03 +0600] "GET /index.php HTTP/1.1" 200 -
+XX.119.73.134 - - [23/Jun/2011:14:22:03 +0600] "GET /index.php HTTP/1.1" 200 -
+
+В /etc/fail2ban/jail.conf изменил вот так:
+
+[apache-badbots]
+
+enabled  = true
+filter   = apache-badbots
+action   = iptables[name=Bad, port=http, protocol=tcp]
+logpath  = /opt/lampp/logs/access_log
+bantime  = 1800
+maxretry = 250
+
+bantime  = 1800 - блокировать на 30 мин
+maxretry = 250 - количество строк в логах с одним и тем же IP (меньше ставить не советую)
+
+Конфиг фильтра в /etc/fail2ban/filter.d
+failregex = ^<HOST> -.*"(GET|POST).*
+
+Узнаем кого заблокировали /var/log/fail2ban.log
+2011-06-29 04:16:49,743 fail2ban.actions: WARNING [apache-shorewall] Ban XX.24.139.11
+2011-06-29 04:16:50,757 fail2ban.actions: WARNING [apache-shorewall] XX.24.139.11 already banned
+2011-06-29 04:26:50,211 fail2ban.actions: WARNING [apache-shorewall] Unban XX.24.139.11
+2011-06-29 16:55:38,908 fail2ban.actions: WARNING [apache-badbots] Ban XX.119.73.134
+
+PS: я сам не догоняю выражение "already banned"
+
+
+
+
+
+Просмотрев логи своего веб сервера (xampp) [B]/opt/lampp/logs/error_log[/B] я заметил, что кто-то брутит пытаясь найти что то. 
+[CODE][Mon Apr 04 23:05:52 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/pass.txt, referer: http://webxakep.net
+[Mon Apr 04 23:05:52 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/moderator, referer: http://webxakep.net
+[Mon Apr 04 23:05:52 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/modules, referer: http://webxakep.net
+[Mon Apr 04 23:05:52 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/newsadmin, referer: http://webxakep.net[/CODE]
+
+После установки fail2ban в конфиге [B]/etc/fail2ban/jail.conf[/B] изменил эти строки:
+
+[CODE][apache-shorewall]
+
+enabled  = true
+filter   = apache-noscript
+action   = iptables[name=httpd, port=http, protocol=tcp]
+logpath  = /opt/lampp/logs/error_log
+maxretry = 3[/CODE]
+
+[B]true [/B]- включить
+[B]apache-noscript[/B] - фильтр который лежит в /etc/fail2ban/filter.d
+[B]iptables[name=httpd, port=http, protocol=tcp][/B] - фаервол iptables
+[B]/opt/lampp/logs/error_log[/B] - путь к лог файлу апача
+[B]maxretry = 3[/B] - кол-во ошибок
+При возникновение 3 ошибок доступ блокируется при помощи файервола iptables.
+
+Также изменил конфиг фильтра в [B]/etc/fail2ban/filter.d[/B]
+[CODE]failregex = [[]client <HOST>[]] (File does not exist|.* not found or unable to stat)[/CODE]
+
+[B]«.*»[/B] - обозначает любой текст
+Это значит что будет блокироваться вот такие строки:
+[CODE][Mon Apr 04 23:04:37 2011] [error] [client XX.104.134.251] script '/opt/lampp/htdocs/moderator.php' not found or unable to stat, referer: http://webxakep.net
+[Mon Apr 04 23:04:27 2011] [error] [client XX.104.134.251] File does not exist: /opt/lampp/htdocs/mssql, referer: http://webxakep.net[/CODE]
+
+
+Во время DDOS в логах апаче [B]/opt/lampp/logs/access_log[/B] записывается много таких строк:
+[CODE]XX.119.73.134 - - [23/Jun/2011:14:22:03 +0600] "GET /index.php HTTP/1.1" 200 -
+XX.119.73.134 - - [23/Jun/2011:14:22:03 +0600] "GET /index.php HTTP/1.1" 200 -
+XX.119.73.134 - - [23/Jun/2011:14:22:03 +0600] "GET /index.php HTTP/1.1" 200 -[/CODE]
+
+В [B]/etc/fail2ban/jail.conf[/B] изменил вот так:
+[CODE]
+[apache-badbots]
+
+enabled  = true
+filter   = apache-badbots
+action   = iptables[name=Bad, port=http, protocol=tcp]
+logpath  = /opt/lampp/logs/access_log
+bantime  = 1800
+maxretry = 250[/CODE]
+
+[B]bantime  = 1800[/B] - блокировать на 30 мин
+[B]maxretry = 250[/B] - количество строк в логах с одним и тем же IP (меньше ставить не советую)
+
+Конфиг фильтра в [B]/etc/fail2ban/filter.d[/B]
+[CODE]failregex = ^<HOST> -.*"(GET|POST).*[/CODE]
+
+Узнаем кого заблокировали [B]/var/log/fail2ban.log[/B]
+[CODE]2011-06-29 04:16:49,743 fail2ban.actions: WARNING [apache-shorewall] Ban XX.24.139.11
+2011-06-29 04:16:50,757 fail2ban.actions: WARNING [apache-shorewall] XX.24.139.11 already banned
+2011-06-29 04:26:50,211 fail2ban.actions: WARNING [apache-shorewall] Unban XX.24.139.11
+2011-06-29 16:55:38,908 fail2ban.actions: WARNING [apache-badbots] Ban XX.119.73.134[/CODE]
+
+PS: я сам не догоняю выражение "already banned"

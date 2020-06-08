@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">shell &#1089;&#1082;&#1088;&#1080;&#1087;&#1090; &#1076;&#1083;&#1103; &#1084;&#1072;&#1089;&#1089;&#1086;&#1074;&#1086;&#1081; &#1080;&#1085;&#1089;&#1090;&#1072;&#1083;&#1083;&#1103;&#1094;&#1080;&#1080; &#1073;&#1072;&#1079;</h1>
+
+
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><a href="/uploads/2012/06/linux-logo.png"><img class="alignnone size-full wp-image-41" title="linux-logo" src="/uploads/2012/06/linux-logo.png" alt="" width="128" height="128"></a><a href="/uploads/2012/06/logo-mysql-110x57.png"><img class="alignnone size-full wp-image-23" title="logo-mysql-110x57" src="/uploads/2012/06/logo-mysql-110x57.png" alt="" width="110" height="57"></a></p>
+<pre class="lang:bash">
+
+#!/bin/sh
+
+USER=user
+PASS=password
+DBHOST=localhost
+path="/wwwbackup/wppack_sql/"
+
+for sqlfile in `ls $path`
+do
+
+echo Loading ${sqlfile%.*} ...
+/opt/lampp/bin/mysql -h $DBHOST -u $USER --password=$PASS -D ${sqlfile%.*}
+					</pre>
+</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

@@ -1,0 +1,13 @@
+Файл настроек DNS серверов /etc/resolv.conf
+
+nameserver 127.0.1.1
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+nameserver 4.2.2.2
+
+nameserver 127.0.1.1
+nameserver 77.88.8.7
+nameserver 77.88.8.3
+
+cat /etc/resolv.conf
+

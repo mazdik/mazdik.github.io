@@ -1,0 +1,27 @@
+
+BACKUP VALIDATE DATABASE;
+VALIDATE DATAFILE 47;
+По этой команде RMAN не делает бекап базы данных, но читает все блоки и проверяет их на поврежденность. 
+Если находятся поврежденные блоки, то информация о них попадает в V$DATABASE_BLOCK_CORRUPTION
+
+select * from V$DATABASE_BLOCK_CORRUPTION;
+
+Если информация о блоке находится в этом представлении, то командой BLOCKRECOVER его можно восстановить.
+BLOCKRECOVER DATAFILE хх BLOCK yy;  
+
+Восстановить все блоки
+BLOCKRECOVER CORRUPTION LIST;
+ 
+ 
+rman target sys/parusina@FRS
+BACKUP VALIDATE DATABASE;
+BLOCKRECOVER CORRUPTION LIST;
+
+
+Ошибка ORA-01578: ORACLE data block corrupted (file # 4, block # 108514)
+BLOCKRECOVER DATAFILE 4 BLOCK 108514;  
+RECOVER DATAFILE 4 BLOCK 108514;
+
+
+select * from V$BACKUP_CORRUPTION;
+select * from V$COPY_CORRUPTION;

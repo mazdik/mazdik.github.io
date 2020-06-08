@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1055;&#1077;&#1088;&#1077;&#1089;&#1086;&#1079;&#1076;&#1072;&#1090;&#1100; Enterprise Manager</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><strong><span style="color: #339966;">alter user SYS identified by syssys;</span></strong><br><strong><span style="color: #339966;"> alter user DBSNMP identified by syssys;</span></strong><br><strong><span style="color: #339966;"> alter user SYSMAN identified by syssys;</span></strong></p>
+<p><strong><span style="color: #0000ff;">emca -config dbcontrol db -repos recreate</span></strong></p>
+<p>STARTED EMCA at 13.08.2013 15:30:59<br>
+EM Configuration Assistant, Version 11.2.0.3.0 Production<br>
+Copyright (c) 2003, 2011, Oracle.&nbsp; All rights reserved.</p>
+<p>Enter the following information:<br>
+Database<strong> SID</strong>: TESTDB<br>
+Database Control is already configured for the database TESTDB<br>
+You have chosen to configure Database Control for managing the database TESTDB<br>
+This will remove the existing configuration and the default settings and perform<br>
+a fresh configuration<br>
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-<br>
+WARNING : While repository is dropped the database will be put in quiesce mode.<br>
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-<br>
+Do you wish to continue? [yes(Y)/no(N)]: y<br>
+Listener <strong>ORACLE_HOME</strong> [ c:\app\oracle\product\11.2.0\dbhome_1 ]:<br>
+Password for <strong>SYS</strong> user:<br>
+Password for <strong>DBSNMP</strong> user:<br>
+Password for <strong>SYSMAN</strong> user:<br>
+Password for SYSMAN user: Email address for notifications (optional):<br>
+Outgoing Mail (SMTP) server for notifications (optional):</p>
+<p><span id="more-381"></span></p>
+<p>You have specified the following settings</p>
+<p>Database ORACLE_HOME &hellip;&hellip;&hellip;&hellip;&hellip;. c:\app\oracle\product\11.2.0\dbhome_1</p>
+<p>Local hostname &hellip;&hellip;&hellip;&hellip;&hellip;. WIN-OE6TDQPLRNT<br>
+Listener ORACLE_HOME &hellip;&hellip;&hellip;&hellip;&hellip;. c:\app\oracle\product\11.2.0\dbhome_1<br>
+Listener port number &hellip;&hellip;&hellip;&hellip;&hellip;. 1521<br>
+Database SID &hellip;&hellip;&hellip;&hellip;&hellip;. TESTDB<br>
+Email address for notifications &hellip;&hellip;&hellip;&hellip;&hellip;<br>
+Outgoing Mail (SMTP) server for notifications &hellip;&hellip;&hellip;&hellip;&hellip;<br>
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-<br>
+WARNING : While repository is dropped the database will be put in quiesce mode.<br>
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-<br>
+Do you wish to continue? [yes(Y)/no(N)]: y<br>
+13.08.2013 15:31:27 oracle.sysman.emcp.EMConfig perform<br>
+INFO: This operation is being logged at c:\app\oracle\cfgtoollogs\emca\testdb\em<br>
+ca_2013_08_13_15_30_59.log.<br>
+13.08.2013 15:31:28 oracle.sysman.emcp.util.PortManager isPortInUse<br>
+WARNING: Specified port 3938 is already in use.<br>
+13.08.2013 15:31:28 oracle.sysman.emcp.util.DBControlUtil stopOMS<br>
+INFO: Stopping Database Control (this may take a while) &hellip;<br>
+13.08.2013 15:31:29 oracle.sysman.emcp.EMReposConfig invoke<br>
+INFO: Dropping the EM repository (this may take a while) &hellip;<br>
+13.08.2013 15:33:14 oracle.sysman.emcp.EMReposConfig invoke<br>
+INFO: Repository successfully dropped<br>
+13.08.2013 15:33:15 oracle.sysman.emcp.EMReposConfig createRepository<br>
+INFO: Creating the EM repository (this may take a while) &hellip;<br>
+13.08.2013 15:38:49 oracle.sysman.emcp.EMReposConfig invoke<br>
+INFO: Repository successfully created<br>
+13.08.2013 15:38:53 oracle.sysman.emcp.EMReposConfig uploadConfigDataToRepositor<br>
+y<br>
+INFO: Uploading configuration data to EM repository (this may take a while) &hellip;<br>
+13.08.2013 15:40:40 oracle.sysman.emcp.EMReposConfig invoke<br>
+INFO: Uploaded configuration data successfully<br>
+13.08.2013 15:40:49 oracle.sysman.emcp.util.DBControlUtil secureDBConsole<br>
+INFO: Securing Database Control (this may take a while) &hellip;<br>
+13.08.2013 15:41:03 oracle.sysman.emcp.util.DBControlUtil secureDBConsole<br>
+INFO: Database Control secured successfully.<br>
+13.08.2013 15:41:03 oracle.sysman.emcp.util.DBControlUtil startOMS<br>
+INFO: Starting Database Control (this may take a while) &hellip;<br>
+13.08.2013 15:41:59 oracle.sysman.emcp.EMDBPostConfig performConfiguration<br>
+INFO: Database Control started successfully<br>
+13.08.2013 15:42:00 oracle.sysman.emcp.EMDBPostConfig performConfiguration<br>
+INFO: &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; The Database Control URL is https://WIN-OE6TDQPLRNT:1158/em &lt;&lt;<br>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>
+13.08.2013 15:42:02 oracle.sysman.emcp.EMDBPostConfig invoke<br>
+WARNING:<br>
+************************&nbsp; WARNING&nbsp; ************************</p>
+<p>Management Repository has been placed in secure mode wherein Enterprise Manager<br>
+data will be encrypted.&nbsp; The encryption key has been placed in the file: c:/app/<br>
+oracle/product/11.2.0/dbhome_1/WIN-OE6TDQPLRNT_testdb/sysman/config/emkey.ora. E<br>
+nsure this file is backed up as the encrypted data will become unusable if this<br>
+file is lost.</p>
+<p>***********************************************************<br>
+Enterprise Manager configuration completed successfully<br>
+FINISHED EMCA at 13.08.2013 15:42:02</p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

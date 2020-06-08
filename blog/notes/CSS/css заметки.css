@@ -1,0 +1,87 @@
+/* Background color in print preview */
+body{
+	-webkit-print-color-adjust:exact;
+}
+
+/* How to put scrollbar only for modal-body in bootstrap modal dialog */
+.modal-body{
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+#scroll-wrap {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+/* Таблица скроломами X/Y */
+.table-container {
+    width: 500px;
+    height: 500px;
+    overflow: auto;
+}
+tbody td, thead th {
+    min-width: 100px;
+    max-width: 300px;
+    width: auto;
+}
+
+/* Псевдораспорка */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Блок в центре */
+.center {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+}
+
+/* Трёхэлементный селектор */
+li + li {
+ margin-top: 1rem;
+}
+/* вместо */
+li {
+ margin-bottom: 1rem;
+}
+li:last-of-type {
+  margin-bottom: 0;
+}
+/* или */
+li:first-child ~ li
+li:not(:first-child)
+
+/* Обрезка текста с добавлением многоточия, "…" */
+p {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* douchebag vertical align */
+.element {
+ position: relative;
+ top: 50%;
+ transform: translateY(-50%);
+}
+
+/* Пустые состояния */
+div:empty:after {
+  content: 'Ой, ничего';
+}
+
+/*
+title attribute as tooltip
+&#013; for CR, &#010; for LF, and &#009; for TAB
+*/
+<div title="1)&#009;A&#013;&#010;2)&#009;B">Hover Me</div>
+
+/* clamp */
+.element {
+  width: clamp(200px, 50%, 1000px);
+  /* Это - эквивалент следующего выражения */
+  width: max(200px, min(50%, 1000px));
+}

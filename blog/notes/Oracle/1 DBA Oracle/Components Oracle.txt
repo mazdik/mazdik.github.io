@@ -1,0 +1,34 @@
+
+--Статусы компонентов Oracle:
+select comp_id, comp_name, version, status, schema
+from dba_registry;
+
+shutdown immediate;
+startup migrate;
+
+spool D:\upgrade_db.log
+@D:\oracle\product\10.2.0\db_1\RDBMS\ADMIN\catproc.sql
+@D:\oracle\product\10.2.0\db_1\RDBMS\ADMIN\catexf.sql
+spool off
+
+shutdown immediate
+startup
+
+
+
+Удалить Expression Filter (доступен в Enterprise Edition)
+@D:\oracle\product\10.2.0\db_1\RDBMS\ADMIN\catnoexf.sql
+
+Удалить Oracle Rules Manager this way:
+@D:\oracle\product\10.2.0\db_1\RDBMS\ADMIN\catnorul.sql
+
+Удалить OLAP Catalog
+@D:\oracle\product\10.2.0\db_1\olap\ADMIN\catnoamd.sql
+
+Удалить Oracle OLAP API
+@D:\oracle\product\10.2.0\db_1\olap\ADMIN\olapidrp.plb
+@D:\oracle\product\10.2.0\db_1\olap\ADMIN\catnoxoq.sql
+
+Удалить OLAP Analytic Workspace
+@D:\oracle\product\10.2.0\db_1\olap\ADMIN\catnoaps.sql
+@D:\oracle\product\10.2.0\db_1\olap\ADMIN\cwm2drop.sql

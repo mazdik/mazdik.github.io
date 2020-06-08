@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1042;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1077; &#1041;&#1044; Oracle &#1085;&#1072; &#1085;&#1086;&#1074;&#1086;&#1084; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1077; &#1087;&#1086;&#1084;&#1086;&#1097;&#1100;&#1102; RMAN</h1>
+
+
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><img class="aligncenter wp-image-1077 size-full" src="/uploads/2013/04/backup.jpg" alt="backup" width="596" height="325" srcset="/uploads/2013/04/backup.jpg 596w, /uploads/2013/04/backup-300x163.jpg 300w" sizes="(max-width: 596px) 100vw, 596px"><br>
+1. &#1057;&#1086;&#1079;&#1076;&#1072;&#1090;&#1100; &#1089;&#1090;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1091; &#1082;&#1072;&#1090;&#1072;&#1083;&#1086;&#1075;&#1086;&#1074;. &#1053;&#1072;&#1087;&#1088;&#1080;&#1084;&#1077;&#1088;:<br>
+mkdir D:\oracle\product\10.2.0\admin\ORCL\adump<br>
+mkdir D:\oracle\product\10.2.0\admin\ORCL\bdump<br>
+mkdir D:\oracle\product\10.2.0\admin\ORCL\cdump<br>
+mkdir D:\oracle\product\10.2.0\admin\ORCL\dpdump<br>
+mkdir D:\oracle\product\10.2.0\admin\ORCL\udump<br>
+mkdir D:\oracle\product\10.2.0\oradata\ORCL<br>
+2. &#1053;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1072; Oracle Net<br>
+&#1072;). &#1053;&#1072;&#1089;&#1090;&#1088;&#1072;&#1080;&#1074;&#1072;&#1077;&#1084; listener.ora<br>
+&#1073;). &#1053;&#1072;&#1089;&#1090;&#1088;&#1072;&#1080;&#1074;&#1072;&#1077;&#1084; tnsnames.ora<br>
+&#1074;). sqlnet.ora &#1089;&#1086;&#1079;&#1076;&#1072;&#1090;&#1100; &#1080; &#1076;&#1086;&#1073;&#1072;&#1074;&#1080;&#1090;&#1100; &#1074; &#1085;&#1077;&#1075;&#1086; &#1089;&#1090;&#1088;&#1086;&#1082;&#1091;:<br>
+SQLNET.AUTHENTICATION_SERVICES = (NTS)<br>
+3. &#1057;&#1086;&#1079;&#1076;&#1072;&#1077;&#1084; &#1073;&#1072;&#1079;&#1091; ORCL &#1089; &#1087;&#1072;&#1088;&#1086;&#1083;&#1077;&#1084; SYS (&#1089;&#1086;&#1079;&#1076;&#1072;&#1077;&#1090;&#1089;&#1103; &#1089;&#1083;&#1091;&#1078;&#1073;&#1072; OracleServiceORCL):<br>
+oradim.exe -new -sid ORCL -syspwd sys -startmode auto<br>
+oradim.exe -edit -sid ORCL -startmode auto -srvcstart system<br>
+4. &#1042; regedit (&#1085;&#1072;&#1087;&#1088;&#1080;&#1084;&#1077;&#1088; &#1074; KEY_OraDb10g_home1) &#1089;&#1086;&#1079;&#1076;&#1072;&#1077;&#1084; &#1089;&#1090;&#1088;&#1086;&#1082;&#1086;&#1074;&#1086;&#1077; &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1077; ORACLE_SID<br>
+5. &#1057;&#1082;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; RMAN-&#1073;&#1101;&#1082;&#1072;&#1087;&#1099; &#1089; FRA. &#1053;&#1072;&#1087;&#1088;&#1080;&#1084;&#1077;&#1088;: &#1074; &#1082;&#1072;&#1090;&#1072;&#1083;&#1086;&#1075; C:\FRA.<br>
+&#1046;&#1077;&#1083;&#1072;&#1090;&#1077;&#1083;&#1100;&#1085;&#1086; &#1091;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100; &#1087;&#1091;&#1090;&#1100; &#1082;&#1072;&#1082; &#1073;&#1099;&#1083;&#1086; &#1074; spfile, &#1095;&#1090;&#1086;&#1073;&#1099; &#1085;&#1077; &#1091;&#1082;&#1072;&#1079;&#1099;&#1074;&#1072;&#1090;&#1100; &#1087;&#1091;&#1090;&#1080; &#1087;&#1088;&#1080; &#1074;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1080;.<br>
+6. &#1044;&#1072;&#1083;&#1077;&#1077; &#1087;&#1086;&#1076;&#1082;&#1083;&#1102;&#1095;&#1072;&#1077;&#1084;&#1089;&#1103; &#1082; RMAN &#1080; &#1074;&#1099;&#1087;&#1086;&#1083;&#1085;&#1103;&#1077;&#1084; &#1089;&#1083;&#1077;&#1076;&#1091;&#1102;&#1097;&#1080;&#1077; &#1082;&#1086;&#1084;&#1072;&#1085;&#1076;&#1099;:</p>
+<p><strong><span style="color: #3366ff;">RMAN TARGET /</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">SET DBID</span> <span style="color: #339966;">2272089540</span></strong><br><strong>RMAN&gt; <span style="color: #3366ff;">STARTUP FORCE NOMOUNT</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">RESTORE SPFILE FROM</span> <span style="color: #339966;">&lsquo;C:\FRA\ORCL\AUTOBACKUP\2013_04_01\O1_MF_S_811592437_8OL9SQ0H_.BKP&rsquo;;</span></strong><br><strong>RMAN&gt; <span style="color: #3366ff;">SHUTDOWN IMMEDIATE;</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">STARTUP NOMOUNT;</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">RESTORE CONTROLFILE FROM AUTOBACKUP;</span></strong><br>
+&#1080;&#1083;&#1080; &#1077;&#1089;&#1083;&#1080; &#1087;&#1091;&#1090;&#1100; &#1082; &#1072;&#1074;&#1090;&#1086;&#1073;&#1101;&#1082;&#1072;&#1087;&#1091; &#1076;&#1088;&#1091;&#1075;&#1086;&#1081; &#1090;&#1086;:<br><strong>RMAN&gt; <span style="color: #3366ff;">RESTORE CONTROLFILE FROM</span> <span style="color: #339966;">&lsquo;C:\FRA\ORCL\AUTOBACKUP\2013_04_01\O1_MF_S_811592437_8OL9SQ0H_.BKP&rsquo;;</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">ALTER DATABASE MOUNT;</span></strong><br>
+&#1077;&#1089;&#1083;&#1080; &#1087;&#1091;&#1090;&#1100; &#1082; &#1073;&#1101;&#1082;&#1072;&#1087;&#1089;&#1077;&#1090;&#1091; &#1076;&#1088;&#1091;&#1075;&#1086;&#1081; &#1090;&#1086; &#1091;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100; (&#1077;&#1089;&#1083;&#1080; &#1085;&#1077;&#1089;&#1082;&#1086;&#1083;&#1100;&#1082;&#1086;, &#1090;&#1086; &#1076;&#1083;&#1103; &#1082;&#1072;&#1078;&#1076;&#1086;&#1081; &#1087;&#1086; &#1082;&#1086;&#1084;&#1072;&#1085;&#1076;&#1077;):<br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">CATALOG BACKUPPIECE</span> <span style="color: #339966;">&lsquo;C:\FRA\ORCL\BACKUPSET\2013_04_01\O1_MF_NNNDF_TAG20130401T101609_8OL9KB8S_.BKP&rsquo;;</span></strong></p>
+<p>&#1080;&#1083;&#1080; <strong><span style="color: #3366ff;">CATALOG START WITH</span><span style="color: #339966;"> &lsquo;C:\FRA\ORCL\BACKUPSET\2013_04_01&rsquo;;</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">LIST BACKUP;</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">RESTORE DATABASE;</span></strong><br><strong>RMAN&gt; <span style="color: #3366ff;">RECOVER DATABASE;</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">ALTER DATABASE OPEN RESETLOGS;</span></strong></p>
+<p>&nbsp;</p>
+<h3>&#1042;&#1086;&#1079;&#1084;&#1086;&#1078;&#1085;&#1099;&#1077; &#1087;&#1088;&#1086;&#1073;&#1083;&#1077;&#1084;&#1099;:</h3>
+<p>&#1053;&#1077; &#1089;&#1086;&#1074;&#1087;&#1072;&#1076;&#1077;&#1085;&#1080;&#1077; DBID:<br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">LIST BACKUP;</span></strong></p>
+<p>RMAN-00571: ===========================================================<br>
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============<br>
+RMAN-00571: ===========================================================<br>
+RMAN-03002: failure of list command at 04/05/2013 16:05:13<br>
+RMAN-06189: current DBID 2272089542 does not match target mounted database (2272<br>
+089540)</p>
+<p><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">SHUTDOWN IMMEDIATE</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">STARTUP NOMOUNT</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">SET DBID</span> <span style="color: #339966;">2272089540</span></strong><br><strong>RMAN&gt; <span style="color: #3366ff;">ALTER DATABASE MOUNT;</span></strong><br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">LIST BACKUP;</span></strong></p>
+<p>&#1053;&#1077; &#1089;&#1086;&#1074;&#1087;&#1072;&#1076;&#1077;&#1085;&#1080;&#1077; &#1085;&#1091;&#1084;&#1077;&#1088;&#1072;&#1094;&#1080;&#1080; &#1072;&#1088;&#1093;&#1080;&#1074;&#1085;&#1099;&#1093; &#1078;&#1091;&#1088;&#1085;&#1072;&#1083;&#1086;&#1074; &#1080; &#1082;&#1086;&#1085;&#1090;&#1088;&#1086;&#1083;&#1100;&#1085;&#1099;&#1093; &#1090;&#1086;&#1095;&#1077;&#1082;:<br><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">RECOVER DATABASE;</span></strong></p>
+<p>RMAN-00571: ===========================================================<br>
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============<br>
+RMAN-00571: ===========================================================<br>
+RMAN-03002: failure of recover command at 04/05/2013 15:51:34<br>
+RMAN-06054: media recovery requesting unknown archived log for thread 1 with <strong>seq</strong><br><strong> uenc</strong>e <strong><span style="color: #ff6600;">1</span></strong> and starting SCN of 2208740</p>
+<p><strong>RMAN&gt;</strong> <strong><span style="color: #3366ff;">RECOVER DATABASE UNTIL SEQUENCE 1;</span></strong></p>
+<p>&#1044;&#1086;&#1087;&#1086;&#1083;&#1085;&#1080;&#1090;&#1077;&#1083;&#1100;&#1085;&#1086;:<br>
+&#1057;&#1082;&#1088;&#1080;&#1087;&#1090; &#1087;&#1088;&#1086;&#1089;&#1084;&#1086;&#1090;&#1088;&#1072; &#1076;&#1072;&#1090;&#1072; &#1080; &#1088;&#1077;&#1076;&#1086; &#1083;&#1086;&#1075; &#1092;&#1072;&#1081;&#1083;&#1086;&#1074; &#1074; sqlplus:<br>
+SELECT FILE# AS &laquo;File/Grp#&raquo;, NAME FROM V$DATAFILE UNION<br>
+SELECT GROUP#,MEMBER FROM V$LOGFILE;</p>
+<p>&#1055;&#1088;&#1080;&#1084;&#1077;&#1088; &#1089;&#1082;&#1088;&#1080;&#1087;&#1090;&#1072; &#1074;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103; &#1089; &#1085;&#1086;&#1074;&#1099;&#1084; SID &#1080; &#1087;&#1091;&#1090;&#1103;&#1084;&#1080; &#1082; &#1076;&#1072;&#1090;&#1072;&#1092;&#1072;&#1081;&#1083;&#1072;&#1084;. &#1053;&#1086;&#1084;&#1077;&#1088;&#1072; datafile &#1091; &#1074;&#1089;&#1077;&#1093; &#1088;&#1072;&#1079;&#1085;&#1099;&#1077;.<br>
+RMAN&gt; @C:\rman.txt</p>
+<p>RMAN&gt; run{<br>
+set newname for datafile 1 to &lsquo;C:\ORADATA\ORCL\SYSTEM01.DBF&rsquo;;<br>
+set newname for datafile 2 to &lsquo;C:\ORADATA\ORCL\SYSAUX01.DBF&rsquo;;<br>
+set newname for datafile 3 to &lsquo;C:\ORADATA\ORCL\UNDOTBS01.DBF&rsquo;;<br>
+set newname for datafile 4 to &lsquo;C:\ORADATA\ORCL\SPR01.DBF&rsquo;;<br>
+set newname for datafile 5 to &lsquo;C:\ORADATA\ORCL\SPR_IND01.DBF&rsquo;;<br>
+set newname for datafile 6 to &lsquo;C:\ORADATA\ORCL\USERS01.DBF&rsquo;;<br>
+set newname for datafile 7 to &lsquo;C:\ORADATA\ORCL\USERS02.DBF&rsquo;;<br>
+set newname for datafile 8 to &lsquo;C:\ORADATA\ORCL\USERS03.DBF&rsquo;;<br>
+set newname for datafile 9 to &lsquo;C:\ORADATA\ORCL\USR_IND01.DBF&rsquo;;<br>
+set newname for datafile 10 to &lsquo;C:\ORADATA\ORCL\USR_IND02.DBF&rsquo;;<br>
+set newname for datafile 11 to &lsquo;C:\ORADATA\ORCL\USR_IND03.DBF&rsquo;;<br>
+SQL &laquo;ALTER DATABASE RENAME FILE &raquo;D:\ORADATA\ORCL\REDO01.LOG&raquo; TO &raquo;C:\ORADATA\ORCL\REDO01.LOG&raquo; &laquo;;<br>
+SQL &laquo;ALTER DATABASE RENAME FILE &raquo;D:\ORADATA\ORCL\REDO02.LOG&raquo; TO &raquo;C:\ORADATA\ORCL\REDO02.LOG&raquo; &laquo;;<br>
+SQL &laquo;ALTER DATABASE RENAME FILE &raquo;D:\ORADATA\ORCL\REDO03.LOG&raquo; TO &raquo;C:\ORADATA\ORCL\REDO03.LOG&raquo; &laquo;;<br>
+SET NEWNAME FOR TEMPFILE 1 TO &lsquo;C:\ORADATA\ORCL\TEMP01.DBF&rsquo;;<br>
+SET NEWNAME FOR TEMPFILE 2 TO &lsquo;C:\ORADATA\ORCL\TEMP02.DBF&rsquo;;</p>
+<p>SET UNTIL SCN 745212;<br>
+RESTORE DATABASE;<br>
+SWITCH DATAFILE ALL;<br>
+SWITCH TEMPFILE ALL;<br>
+RECOVER DATABASE;<br>
+}</p>
+<p>&#1042;&#1084;&#1077;&#1089;&#1090;&#1086; SET UNTIL SCN &#1084;&#1086;&#1078;&#1085;&#1086; SET UNTIL SEQUENCE;</p>
+<p>&#1055;&#1086;&#1089;&#1083;&#1077;&#1076;&#1085;&#1080;&#1081; SEQUENCE &#1074; &#1073;&#1101;&#1082;&#1072;&#1087;&#1077; 103505 + 20 (FRA\ARCHIVELOG &mdash; 20&#1096;&#1090;) + 1 = 103526;<br>
+RECOVER DATABASE UNTIL SEQUENCE 103526;</p>
+<p>&#1055;&#1077;&#1088;&#1077;&#1089;&#1086;&#1079;&#1076;&#1072;&#1085;&#1080;&#1077; spfile &#1095;&#1077;&#1088;&#1077;&#1079; sqlplus<br>
+CREATE PFILE FROM SPFILE;<br>
+CREATE SPFILE FROM PFILE;</p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

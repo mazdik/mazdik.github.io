@@ -1,0 +1,21 @@
+        var form = $("#animals-form");
+        var settings = form.data('settings');
+        settings.submitting = true;
+        $.fn.yiiactiveform.validate(form, function(messages) {
+            if ($.isEmptyObject(messages)) { 
+                // If there are no error messages all data are valid
+                $.each(settings.attributes, function() {
+                    $.fn.yiiactiveform.updateInput(this, messages, form);
+                });
+                successFunction();
+            } else {
+                // Fields acquiring invalid data classes and messages show up. Update the inputs.
+                settings = form.data('settings'),
+                        $.each(settings.attributes, function() {
+                            $.fn.yiiactiveform.updateInput(this, messages, form);
+                        });
+                settings.submitting = false;
+            }
+        });
+		
+successFunction(); Это своя функция

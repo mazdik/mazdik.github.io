@@ -1,0 +1,209 @@
+html, body {
+  height: 100%;
+}
+
+.wrap {
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -60px;
+  padding: 0 0 60px;
+}
+
+.wrap>.container {
+  padding: 70px 15px 20px;
+}
+
+.footer {
+  height: 60px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+/* Bootstrap custom */
+.navbar-custom {
+  background-color: rgba(25, 29, 48, 0.7);
+  border-color: #222222;
+  background-repeat: repeat-x;
+}
+
+.navbar-custom .navbar-brand {
+  color: #ffffff;
+}
+
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus {
+  color: #e6e6e6;
+  background-color: transparent;
+}
+
+.navbar-custom .navbar-text {
+  color: #ffffff;
+}
+
+.navbar-custom .navbar-nav>li:last-child>a {
+  border-right: 1px solid #222222;
+}
+
+.navbar-custom .navbar-nav>li>a {
+  color: #ffffff;
+  border-left: 1px solid #222222;
+}
+
+.navbar-custom .navbar-nav>li>a:hover,
+.navbar-custom .navbar-nav>li>a:focus {
+  color: #c0c0c0;
+  background-color: transparent;
+}
+
+.navbar-custom .navbar-nav>.active>a,
+.navbar-custom .navbar-nav>.active>a:hover,
+.navbar-custom .navbar-nav>.active>a:focus {
+  color: #c0c0c0;
+  background-color: #222222;
+  background-image: linear-gradient(to bottom, #222222 0%, #3c3c3c 100%);
+  background-repeat: repeat-x;
+}
+
+.navbar-custom .navbar-nav>.disabled>a,
+.navbar-custom .navbar-nav>.disabled>a:hover,
+.navbar-custom .navbar-nav>.disabled>a:focus {
+  color: #cccccc;
+  background-color: transparent;
+}
+
+.navbar-custom .navbar-toggle {
+  border-color: #dddddd;
+}
+
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+  background-color: #dddddd;
+}
+
+.navbar-custom .navbar-toggle .icon-bar {
+  background-color: #cccccc;
+}
+
+.navbar-custom .navbar-collapse,
+.navbar-custom .navbar-form {
+  border-color: #212121;
+}
+
+.navbar-custom .navbar-nav>.dropdown>a:hover .caret,
+.navbar-custom .navbar-nav>.dropdown>a:focus .caret {
+  border-top-color: #c0c0c0;
+  border-bottom-color: #c0c0c0;
+}
+
+.navbar-custom .navbar-nav>.open>a,
+.navbar-custom .navbar-nav>.open>a:hover,
+.navbar-custom .navbar-nav>.open>a:focus {
+  background-color: #222222;
+  color: #c0c0c0;
+}
+
+.navbar-custom .navbar-nav>.open>a .caret,
+.navbar-custom .navbar-nav>.open>a:hover .caret,
+.navbar-custom .navbar-nav>.open>a:focus .caret {
+  border-top-color: #c0c0c0;
+  border-bottom-color: #c0c0c0;
+}
+
+.navbar-custom .navbar-nav>.dropdown>a .caret {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+.navbar-custom .navbar-link {
+  color: #ffffff;
+}
+
+.navbar-custom .navbar-link:hover {
+  color: #c0c0c0;
+}
+
+.btn-custom {
+  color: #fff;
+  background-color: #088393;
+  border-color: #088393;
+}
+
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active,
+.btn-custom.active {
+  color: #fff;
+  background-color: #076d7b;
+  border-color: #055863;
+}
+
+.btn-custom.disabled:hover,
+.btn-custom.disabled:focus,
+.btn-custom.disabled:active,
+.btn-custom.disabled.active,
+.btn-custom[disabled]:hover,
+.btn-custom[disabled]:focus,
+.btn-custom[disabled]:active,
+.btn-custom[disabled].active,
+fieldset[disabled] .btn-custom:hover,
+fieldset[disabled] .btn-custom:focus,
+fieldset[disabled] .btn-custom:active,
+fieldset[disabled] .btn-custom.active {
+  color: #fff;
+  background-color: #088393;
+  border-color: #088393;
+}
+
+.footer {
+  background: rgba(25, 29, 48, 0.7);
+  font-weight: bold;
+  color: #fff;
+}
+
+.footer a {
+  color: #fff;
+}
+
+.container h1, h2, h3 {
+  color: #5bb1be;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+  color: #fff;
+  background-color: #088393;
+}
+
+/* menu list */
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.flex-container li {
+  background: #5bb1be;
+  margin: 5px;
+  color: white;
+  text-align: center;
+}
+.flex-container li a {
+    padding: 5px;
+    font-weight: bold;
+    font-size: 1.25em;
+    color: #ffffff;
+    text-decoration: none;
+}
+.flex-container li a:hover {
+  background-color: #088393;
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  cursor: pointer;
+}

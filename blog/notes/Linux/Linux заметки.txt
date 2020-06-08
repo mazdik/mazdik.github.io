@@ -1,0 +1,95 @@
+## Версия линукс
+cat /etc/*-release
+
+## dconf-editor
+Кодировка для XED - org.x.editor
+
+## Кодировка в Gedit для Ubuntu
+gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']"
+
+## Кодировка в Pluma для Linux Mint (форк редактора Gedit)
+gsettings set org.mate.pluma auto-detected-encodings "['UTF-8', 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']"
+
+## cd /opt/lampp
+sudo ./manager-linux.run (or manager-linux-x64.run)
+
+## Не удалось выполнить процесс-потомок «xterm»
+# sudo ln -s /usr/bin/mate-terminal /usr/bin/xterm
+
+## Очистка кэша в Linux
+echo 3 > /proc/sys/vm/drop_caches
+
+## Монтировать hdd
+gksu gedit /etc/fstab
+UUID=12102C02102CEB83 /media/Store ntfs-3g auto,users,permissions,exec 0 0
+sudo mkdir /media/Store
+sudo mount /media/Store
+chmod 755 -R /media/Store
+chown <username> -R /media/Store
+Описание:
+auto: Will be mounted at boot and from mount -a
+users: Allow every user to mount and unmount the filesystem
+permissions: (NTFS-3G option) Set standard permissions on created files and use standard access control.
+By default, ntfs-3g mounts the partition noexec, nosuid, and nodev.
+noexec: Do not allow direct execution of any binaries on the mounted filesystem.
+nosuid: Do not allow set-user-identifier or set-group-identifier bits to take effect.
+nodev: Do not interpret character or block special devices on the file system.
+
+##Сделать файл исполняемым
+chmod +x *.sh
+
+## Сделать файлы не исполняемыми
+cd /home/user/domains/domain.com/public_html
+find . -type d -exec chmod 0755 {} \;
+find . -type f -exec chmod 0644 {} \;
+
+## Список исполняемых файлов
+find . -type f -perm /a+x
+
+## Количесво файлов в текущей директории
+ls -1 | wc -l
+
+## Размер папки
+du -h --max-dep=1
+
+## Удалить процессы по имени
+ps aux | grep my_pattern
+pkill -f my_pattern
+
+## Создать символическую ссылку
+ln -s ~/Dropbox <dir-that-you-want-to-sync>
+
+## Поиск расположения файла
+whereis perl
+which node
+
+## Обновить меню загрузчика 
+sudo update-grub
+Список меню загрузчика
+awk -F\' '/menuentry / {print $2}' /boot/grub/grub.cfg 
+
+## Отключение ненужных служб Linux Mint
+sudo apt-get install sysv-rc-conf
+sudo sysv-rc-conf
+
+## Клиент оракла
+sudo sh -c "echo /opt/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+sudo ldconfig
+
+## Переход директории скрипта
+#!/bin/bash
+cd "$(dirname "$0")"
+
+## Список вкл. служб
+systemctl list-unit-files | grep enabled
+
+## watch for file changes для VS Code и ng serve
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+## Открыть редактор с правами админа в linux mint
+xed admin:///etc/sysctl.conf
+
+## Cleanup trace files more than 3 days old
+find trace/*.trc -mtime +3 -exec rm {} \;
+# Удалять вместе с каталогами
+find /uploads -mtime +31 -exec rm -r {} \;

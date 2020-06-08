@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1040;&#1089;&#1089;&#1086;&#1094;&#1080;&#1072;&#1090;&#1080;&#1074;&#1085;&#1099;&#1081; &#1084;&#1072;&#1089;&#1089;&#1080;&#1074; Oracle</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><strong><span style="color: #339966;">TYPE RESULT_SUM IS TABLE OF NUMBER INDEX BY VARCHAR2(100);</span></strong><br><strong><span style="color: #339966;">nRESULT_SUM RESULT_SUM;</span></strong></p>
+<p>&#1069;&#1090;&#1086;&#1090; &#1072;&#1089;&#1089;&#1086;&#1094;&#1080;&#1072;&#1090;&#1080;&#1074;&#1099;&#1081; &#1084;&#1072;&#1089;&#1089;&#1080;&#1074; &#1089; &#1087;&#1086;&#1084;&#1086;&#1097;&#1100;&#1102; &#1086;&#1073;&#1099;&#1095;&#1085;&#1086;&#1075;&#1086; &#1084;&#1072;&#1089;&#1089;&#1080;&#1074;&#1072; &#1074; &#1094;&#1080;&#1082;&#1083;&#1077; &#1080;&#1085;&#1076;&#1077;&#1082;&#1089;&#1080;&#1088;&#1091;&#1102; &#1087;&#1086; &#1089;&#1090;&#1088;&#1086;&#1082;&#1072;&#1084;.</p>
+<pre class="lang:plsql">
+type STRCODES is varray(100) of varchar2(40);
+arrSTRCODES STRCODES;
+TYPE RESULT_SUM IS TABLE OF NUMBER INDEX BY VARCHAR2(100);
+nRESULT_SUM RESULT_SUM;
+</pre>
+<pre class="lang:plsql">
+arrSTRCODES := STRCODES(
+'&#1060;1/1110/&#1044;1', '&#1060;1/1110/&#1044;2', '&#1060;1/1110/&#1044;3',
+'&#1060;1/1550/&#1044;1', '&#1060;1/1550/&#1044;2', '&#1060;1/1550/&#1044;3'
+);
+
+for i in 1..arrSTRCODES.COUNT loop
+nRESULT_SUM(arrSTRCODES(i)):=0;
+end loop;
+
+for i in 1..arrSTRCODES.COUNT loop
+P_SET_NUMBER_VALUE(nCOMPANY, nSUBREPORT, arrSTRCODES(i), nRESULT_SUM(arrSTRCODES(i)));
+end loop;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

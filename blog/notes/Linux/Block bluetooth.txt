@@ -1,0 +1,11 @@
+sudo touch /etc/rc.local
+sudo pico /etc/rc.local
+
+Добавьте в конец файла, перед строкой «exit 0», следующую строку:
+
+rfkill block bluetooth
+
+список и состояние беспроводных устройств:
+
+sudo rfkill list all
+

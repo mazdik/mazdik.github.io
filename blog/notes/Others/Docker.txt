@@ -1,0 +1,29 @@
+-- добавить своего пользователя в группу docker и перелогиниться
+sudo usermod -aG docker $(whoami)
+
+-- существующие на нашем хосте образы 
+docker images
+-- существующие на нашем хосте контейнеры
+docker ps -a
+-- Удалить контейнер
+docker rm
+-- Удалить все контейнеры 
+docker rm -f $(docker ps -aq)
+-- Удалить все образы
+docker rmi -f $(docker images -a -q)
+--  Удалить образ, с ключом —force удалит контейнер и образ
+docker rmi
+-- Запустить контейнер и открыть в нём bash
+docker run -it -d --name my_container ubuntu /bin/bash
+-- логи
+docker logs -f my_container
+-- Запуск и остановка контейнера
+docker start my_container
+docker stop my_container
+-- Зайти в уже запущенный контейнер (точнее выполнить команду внутри контейнера)
+docker exec -it my_container /bin/bash
+
+-- Запустить/остановить/перезапустить все контейнеры
+docker restart $(docker ps -a -q)
+docker start $(docker ps -a -q -f status=exited)
+docker stop $(docker ps -a -q)

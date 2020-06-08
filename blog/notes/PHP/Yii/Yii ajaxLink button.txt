@@ -1,0 +1,44 @@
+/**************** Способ 1 ******************/
+     <?php
+        $this->widget('bootstrap.widgets.TbButton', array(
+            'buttonType' => 'ajaxLink',
+            'label' => 'Добавить в корзину',
+            'icon' => 'icon-shopping-cart',
+            'url' => array('/products/put', 'id' => $model->id),
+            'type' => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+            'size' => 'large', // null, 'large', 'small' or 'mini'
+            'htmlOptions'=>array('class'=>'pull-right'),
+            'ajaxOptions'=>array(
+                'type'=>'POST',
+                'url'=>array('/products/put', 'id' => $model->id),
+                'success' => "function() {
+                 $.jGrowl('Товар успешно добавлен в корзину. <a href=".$this->createUrl('/products/ShoppingCart').">Перейти к оформлению</a>.',
+                        {life:'6000', position:'bottom-right'}
+                        );
+                }",
+            ),
+        ));
+        ?>
+		
+/**************** Способ 2 ******************/
+echo CHtml::ajaxLink('Уже отдали', array('/animals/status', 'id' => $model->id),
+        array(
+            'type' =>'POST',
+            'url'=>array('/animals/status', 'id' => $model->id),
+            'success' => 'function(data) { window.location.reload(); }',
+            ), 
+        array('class'=>'btn btn-success',)
+        );
+		
+Контроллер
+	public function actionStatus($id)
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			$model = $this->loadModel($id);
+			if($model) {
+			$model->status = ($model->gender == 1 || $model->gender == 3) ? 3 : 2;
+			$model->save();
+			}
+		}
+	}

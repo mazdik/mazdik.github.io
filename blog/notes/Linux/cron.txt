@@ -1,0 +1,35 @@
+crond: (*system*) BAD FILE MODE
+ls -l /etc/crontab
+chmod 0644 /etc/crontab
+chown root /etc/crontab
+ls -l /etc/crontab
+
+Лог
+cat /var/log/cron
+
+vim /etc/crontab
+i - Insert-вставка
+Esc - чтобы попасть в режим чтени¤ наберем :
+:wq - сохранить и выйти (write и quit)
+:q! - выйти без сохранени
+
+cat /etc/crontab
+
+Как в CentOS перезагрузить cron (crontab)
+service crond restart
+systemctl restart crond
+systemctl reload crond
+
+service crond status
+
+vim - поиск
+/слово поиска Enter
+n  Повторить поиск
+
+Примеры:
+0 */4 * * * root lynx -source http://127.0.0.1/aionl2top/bonus.php
+0 */5 * * * root lynx -source http://127.0.0.1/aionmmotop.php
+0 */5 * * * root lynx -source http://127.0.0.1/aiontop.php
+0 */8 * * * root lynx -source http://127.0.0.1/time_aion.php
+0 5 * * * aion /home/aion/backup/dump.sh
+

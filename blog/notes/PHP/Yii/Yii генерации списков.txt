@@ -1,0 +1,7 @@
+	public static function getAssocList()
+	{
+		$models = self::model()->findAll(array('order'=>'title ASC'));
+		return CHtml::listData($models, 'category_id', 'title');
+	}
+	
+	<?php echo $form->dropDownList($model,'category_id', Category::getAssocList()); ?>

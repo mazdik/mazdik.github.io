@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">APEX computation: blob to clob</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; &#1092;&#1072;&#1081;&#1083;&#1072; BLOB &#1089; &#1082;&#1086;&#1085;&#1074;&#1077;&#1088;&#1090;&#1072;&#1094;&#1080;&#1077;&#1081; &#1074; &#1087;&#1086;&#1083;&#1077; CLOB.</p>
+<p>P3_IMPORT_FILE &mdash; File Browse<br>
+Storage Type: Table WWV_FLOW_FILES</p>
+<p>P3_CLOB_TXT &mdash;&nbsp;&nbsp;Hidden<br>
+Source Type: Database Column</p>
+<p>Computations -&gt;<br>
+Item Name: P3_CLOB_TXT<br>
+Type PL/SQL Function Body<br>
+Computation Point: After Submit<br>
+Computation:</p>
+<pre class="lang:plsql">
+
+declare
+l_data blob;
+l_xml_data clob;
+l_clob clob;
+l_src_offset integer := 1;
+l_dst_offset integer := 1;
+l_warn integer;
+l_lang_ctx integer := dbms_lob.default_lang_ctx;
+
+begin
+if (:P3_IMPORT_FILE is null) then
+return l_clob;
+end if;
+begin
+select f.blob_content
+into l_data
+from wwv_flow_files f
+where f.name = P3_IMPORT_FILE;
+exception
+when no_data_found then
+raise_application_error(-20001, apex_lang.message('UPLOAD_FAILED'));
+end;
+delete from wwv_flow_files where name = P3_IMPORT_FILE;
+
+sys.dbms_lob.createtemporary(l_xml_data, false, sys.dbms_lob.session);
+dbms_lob.converttoclob(
+l_xml_data,
+l_data,
+dbms_lob.lobmaxsize,
+l_dst_offset,
+l_src_offset,
+NLS_CHARSET_ID('UTF8'),
+l_lang_ctx,
+l_warn);
+
+l_clob:= l_xml_data;
+sys.dbms_lob.freetemporary(l_xml_data);
+P3_IMPORT_FILE := null;
+return l_clob;
+
+end;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

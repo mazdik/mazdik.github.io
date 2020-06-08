@@ -1,0 +1,3 @@
+locale -a | grep ru_RU
+
+localedef -c -i ru_RU -f CP1251 ru_RU.CP1251

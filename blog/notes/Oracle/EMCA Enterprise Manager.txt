@@ -1,0 +1,85 @@
+Пересоздать Oracle Enterprise Manager
+
+emca -deconfig dbcontrol db -repos drop
+emca -config dbcontrol db -repos create
+или
+emca -config dbcontrol db -repos recreate
+
+пароли если не известно:
+alter user SYS identified by master;
+alter user DBSNMP identified by master;
+alter user SYSMAN identified by master;
+
+alter user DBSNMP account unlock;
+
+Если ошибка
+CONFIG: ORA-00955: name is already used by an existing object
+
+drop user sysman cascade;
+drop user MGMT_VIEW cascade;
+drop public synonym SETEMVIEWUSERCONTEXT;
+drop role MGMT_USER;
+drop PUBLIC SYNONYM MGMT_TARGET_BLACKOUTS;
+
+begin
+  for cur in (select synonym_name
+    from dba_synonyms
+    where table_owner = 'SYSMAN'
+    and owner = 'PUBLIC'
+    ) loop
+    --dbms_output.put_line('drop public synonym '||cur.synonym_name);
+    execute immediate ('drop public synonym '||cur.synonym_name);
+    end loop;
+end;
+
+sc delete OracleDBConsolekazs
+
+
+Запуск
+SET ORACLE_SID=ORCL
+emctl stop dbconsole
+emctl start dbconsole
+
+Ошибка: Error starting Database Control
+Оказывается просрочен корневой сертификат на SSL (истек 31.12.2010) в дистрибутивах 10.2.0.4 и 10.2.0.5, т.е. эта ошибка будет у всех кто после нового года (01.01.2011) пытался создать EM.
+Patch 8350262: CREATE DBCONSOLE CERT WITH 10YEAR VALIDITY
+
+Как установить патч 8350262
+emctl stop dbconsole
+set PATH=%PATH%;D:\oracle\product\10.2.0\db_1\OPatch
+set ORACLE_HOME=D:\oracle\product\10.2.0\db_1
+opatch -help
+cd D:\8350262_10204_Generic\8350262
+opatch apply
+
+Opatch lsinventory detail | find "8350262"
+
+Если ошибка
+Patch 8350262: Required component(s) missing : [ oracle.sysman.agent.core, 10.2.0.4.0a ]
+OPatch failed with error code = 74
+Установить патч p6810189_10204. Если даже установлен, то установить еще раз выбрав все компоненты.
+
+
+Где лежат файлы Enterprise Manager
+D:\oracle\product\10.2.0\db_1\srv_kazs
+D:\oracle\product\10.2.0\db_1\srv_kazs\sysman\config - конфиги Enterprise Manager
+D:\oracle\product\10.2.0\db_1\oc4j\j2ee\OC4J_DBConsole_srv_kazs
+srv - имя сервера, kazs - SID
+
+Логи установки
+D:\oracle\product\10.2.0\db_1\cfgtoollogs\emca
+
+
+Ошибка про job_queue_processes (если значение 0)
+alter system set job_queue_processes=10 scope=both;
+
+/* EM */
+Errors in $ORACLE_HOME/host/sysman/log/emagent_perl.trc:
+ERROR: Max Count Value not set properly in file
+--Удалить пустые строки в файлах:
+/u01/app/oracle/product/11.2.0/dbhome_1/sysman/config/esa
+database.properties  
+host.properties  
+instance.properties  
+oracle_listener.properties
+

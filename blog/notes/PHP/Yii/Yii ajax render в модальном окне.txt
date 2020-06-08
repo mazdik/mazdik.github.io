@@ -1,0 +1,54 @@
+Контроллер
+        public function actionRead() {
+            $this->renderPartial('pages/read');
+        }
+Весь код виджета
+    class ReadModalWidget extends CWidget {
+        
+        public function init()
+	{
+	}
+        
+        public function run(){
+            
+            $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'readModal'));
+     
+            echo '<div class="modal-header">';
+            echo '<a class="close" data-dismiss="modal">?</a>';
+            echo '<h4>Заголовок</h4>';
+            echo '</div>';
+
+            echo '<div class="modal-body" id="modal_body_read">';
+            echo '</div>';
+
+            echo '<div class="modal-footer">';
+            $this->widget('bootstrap.widgets.TbButton', array(
+            'label'=>'Закрыть',
+            'url'=>'#',
+            'htmlOptions'=>array('data-dismiss'=>'modal'),
+            ));
+            
+            echo '</div>';
+            $this->endWidget();
+            
+            $this->widget('bootstrap.widgets.TbButton', array(
+            'label'=>'Открыть',
+            'htmlOptions'=>array(
+            'id' => 'buttonread',
+            'data-toggle'=>'modal',
+            'data-target'=>'#readModal',
+            ),
+            ));
+            
+            echo '<script>
+                $("#buttonread").click(function(){
+                    var w = $("#modal_body_read");
+                    w.load("'.Yii::app()->createUrl('site/read').'")
+                });
+                </script>';
+            
+        }
+
+    }
+Вызов виджета во вьюше
+<?php $this->widget('application.widgets.ReadModalWidget'); ?>

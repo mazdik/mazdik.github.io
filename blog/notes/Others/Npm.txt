@@ -1,0 +1,32 @@
+﻿npm install
+npm install -g @angular/cli@8.0.0-rc.0
+
+npm uninstall angular2-localstorage --save
+npm uninstall -g
+
+/* Список установленных глобальных модулей */
+npm list -g --depth=0
+
+/* Обновить глобальные пакеты */
+npm update -g
+/* Обновить пакеты в package.json */
+npm update --save-dev
+
+/* Настройка NPM в файле %userprofile%\.npmrc */
+https-proxy=http://user:pass@proxy.local:8080/
+strict-ssl=false
+
+/* Установка прокси */
+npm config set proxy http://172.23.1.241:3128
+npm config set https-proxy http://172.23.1.241:3128
+/* Проверка прокси */
+npm config get proxy
+npm config get http-proxy
+
+/* Несколько репозиториев */
+@it:registry=http://server.local
+registry=https://registry.npmjs.org/
+strict-ssl=false
+ca=
+https-proxy=http://user:pass@proxy.local:8080/
+no-proxy=server.local

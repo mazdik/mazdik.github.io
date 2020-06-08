@@ -1,0 +1,36 @@
+<div class="m q l"></div>
+<div class="m q r"></div>
+<div class="m v"></div>
+<div class="m a"></div>
+<style>
+  * {background:#0B2429;}
+  .m {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .a {
+    width: 50px;
+    height: 50px;
+    border-radius:50%;
+    background: #0B2429;
+    box-shadow: 0 0 0 45px #F3AC3C, 0 0 0 65px #0B2429, 0 0 0 75px #998235;
+  }
+  .q {
+    border: 90px solid transparent;
+  }
+  .r {
+    border-left-color: #998235;
+    transform: translate(calc(-50% + 141px), -50%);
+  }
+  .l {
+    border-right-color: #998235;
+    transform: translate(calc(-50% - 141px), -50%);
+  }
+  .v {
+    width: 130px;
+    height: 200px;
+    background: #0B2429; 
+  }
+</style>

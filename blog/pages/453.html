@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1055;&#1077;&#1088;&#1077;&#1093;&#1086;&#1076; &#1089; APEX Embedded PL/SQL Gateway &#1074; APEX Listener</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><a title="&#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1072; APEX oracle 11g (Embedded PL/SQL Gateway)" href="http://mazdik.ru/?p=433" target="_blank">&#1055;&#1086;&#1089;&#1083;&#1077; &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1080;&nbsp;APEX</a></p>
+<p><strong>&#1054;&#1090;&#1082;&#1083;&#1102;&#1095;&#1080;&#1090;&#1100; Oracle XML DB Protocol Server</strong><br><strong><span style="color: #0000ff;">EXEC DBMS_XDB.SETHTTPPORT(0);</span></strong></p>
+<p><strong><span style="color: #0000ff;">ALTER USER APEX_PUBLIC_USER ACCOUNT UNLOCK;</span></strong><br><strong><span style="color: #0000ff;">ALTER USER APEX_PUBLIC_USER IDENTIFIED BY new_password;</span></strong></p>
+<p><strong>&#1053;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1072; RESTful Services</strong></p>
+<p><strong><span style="color: #0000ff;">@apex_rest_config.sql</span></strong><br>
+&#1041;&#1091;&#1076;&#1091;&#1090; &#1089;&#1086;&#1079;&#1076;&#1072;&#1085;&#1099; &#1076;&#1074;&#1072; &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1103;: APEX_LISTENER &#1080; APEX_REST_PUBLIC_USER<br>
+&#1057;&#1082;&#1072;&#1095;&#1072;&#1090;&#1100;&nbsp;http://www.oracle.com/technetwork/developer-tools/apex-listener/downloads/index.html</p>
+<p><strong>&#1047;&#1072;&#1087;&#1091;&#1089;&#1082; APEX Listener &#1074; Standalone Mode</strong><br><strong><span style="color: #0000ff;">java -jar apex.war</span></strong></p>
+<p>Standalone Mode &#1087;&#1086;&#1076;&#1093;&#1086;&#1076;&#1080;&#1090; &#1090;&#1086;&#1083;&#1100;&#1082;&#1086; &#1076;&#1083;&#1103; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103; &#1074; &#1094;&#1077;&#1083;&#1103;&#1093; &#1088;&#1072;&#1079;&#1074;&#1080;&#1090;&#1080;&#1103;, &#1080; &#1085;&#1077; &#1087;&#1086;&#1076;&#1076;&#1077;&#1088;&#1078;&#1080;&#1074;&#1072;&#1077;&#1090;&#1089;&#1103; &#1076;&#1083;&#1103; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103; &#1074; &#1088;&#1072;&#1079;&#1074;&#1077;&#1088;&#1090;&#1099;&#1074;&#1072;&#1085;&#1080;&#1080; &#1087;&#1088;&#1086;&#1080;&#1079;&#1074;&#1086;&#1076;&#1089;&#1090;&#1074;&#1072;.<br>
+&#1048;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1091;&#1081;&#1090;&#1077; &#1087;&#1086;&#1076;&#1076;&#1077;&#1088;&#1078;&#1080;&#1074;&#1072;&#1077;&#1084;&#1099;&#1081; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088; &#1087;&#1088;&#1080;&#1083;&#1086;&#1078;&#1077;&#1085;&#1080;&#1081; Java EE &#1076;&#1083;&#1103; &#1088;&#1072;&#1079;&#1074;&#1077;&#1088;&#1090;&#1099;&#1074;&#1072;&#1085;&#1080;&#1103; &#1087;&#1088;&#1086;&#1080;&#1079;&#1074;&#1086;&#1076;&#1089;&#1090;&#1074;&#1072;.</p>
+<p>&#1055;&#1086;&#1089;&#1083;&#1077; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080; &#1073;&#1091;&#1076;&#1077;&#1090; &#1090;&#1072;&#1082;&#1086;&#1077;:</p>
+<p>D:\apex_listener&gt;<strong>java -jar apex.war</strong><br>
+INFO: Using configuration folder: D:\apex_listener\listener.conf\apex<br>
+Enter the name of the database server <strong>[localhost]:</strong><br>
+Enter the database listen port <strong>[1521]:</strong><br>
+Enter 1 to specify the database <strong>service name</strong>, or 2 to specify the database <strong>SID</strong> [1]:1<br>
+Enter the database service name:<strong>APEX</strong><br>
+Enter the database user name<strong> [APEX_PUBLIC_USER]:</strong><br>
+Enter the database password for <strong>APEX_PUBLIC_USER:</strong><br>
+Confirm password:<br>
+Enter <strong>1</strong> to enter passwords for the <strong>RESTful Services</strong> database users (APEX_LISTENER,APEX_REST_PUBLIC_USER), 2 to use the same password as used for APEX_PUBLIC_USER or, 3 to skip this step [1]:<br>
+Enter the database password for <strong>APEX_LISTENER:</strong><br>
+Confirm password:<br>
+Enter the database password for <strong>APEX_REST_PUBLIC_USER:</strong><br>
+Confirm password:<br>
+INFO: Updated configurations: defaults, apex, apex_al, apex_rt<br>
+Enter 1 if you wish to start in <strong>standalone mode</strong> or 2 to exit [1]:<strong>1</strong><br>
+Enter the APEX static resources location or Enter to skip:<strong>D:\apex\images</strong><br>
+Enter the HTTP <strong>port [8080]:</strong><br>
+&#1101;&#1090; 17, 2014 3:53:00 PM oracle.dbtools.standalone.Standalone execute<br>
+INFO: NOTE:<br>
+Standalone mode is designed for use in development and test environments. It is not supported for use in production environments.<br>
+&#1101;&#1090; 17, 2014 3:53:00 PM oracle.dbtools.standalone.Standalone execute<br>
+INFO: Starting standalone Web Container in: D:\apex_listener\listener.conf\apex<br>
+&#1101;&#1090; 17, 2014 3:53:00 PM oracle.dbtools.standalone.Deployer deploy<br>
+INFO: Will deploy application path = D:\apex_listener\listener.conf\apex\apex\WEB-INF\web.xml<br>
+&#1101;&#1090; 17, 2014 3:53:00 PM oracle.dbtools.standalone.Deployer deploy<br>
+INFO: Deployed application path = D:\apex_listener\listener.conf\apex\apex\WEB-INF\web.xml<br>
+&#1101;&#1090; 17, 2014 3:53:00 PM oracle.dbtools.common.config.file.ConfigurationFolder logConfigFolder<br>
+INFO: Using configuration folder: D:\apex_listener\listener.conf\apex</p>
+<p>Configuration properties for: apex<br>
+cache.caching=false<br>
+cache.directory=/tmp/apex/cache<br>
+cache.duration=days<br>
+cache.expiration=7<br>
+cache.maxEntries=500<br>
+cache.monitorInterval=60<br>
+cache.procedureNameList=<br>
+cache.type=lru<br>
+db.hostname=localhost<br>
+db.password=******<br>
+db.port=1521<br>
+db.servicename=APEX<br>
+debug.debugger=false<br>
+debug.printDebugToScreen=false<br>
+error.keepErrorMessages=true<br>
+error.maxEntries=50<br>
+jdbc.DriverType=thin<br>
+jdbc.InactivityTimeout=1800<br>
+jdbc.InitialLimit=3<br>
+jdbc.MaxConnectionReuseCount=1000<br>
+jdbc.MaxLimit=10<br>
+jdbc.MaxStatementsLimit=10<br>
+jdbc.MinLimit=1<br>
+jdbc.statementTimeout=900<br>
+log.logging=false<br>
+log.maxEntries=50<br>
+misc.compress=<br>
+misc.defaultPage=apex<br>
+security.disableDefaultExclusionList=false<br>
+security.maxEntries=2000<br>
+db.username=APEX_PUBLIC_USER</p>
+<p>Using JDBC driver: Oracle JDBC driver version: 11.2.0.3.0<br>
+INFO: Oracle Application Express Listener initialized<br>
+Application Express Listener version : 2.0.5.287.04.27<br>
+Application Express Listener server info: Grizzly/1.9.49<br>
+INFO: GRIZZLY0001: Starting Grizzly Framework 1.9.49 &mdash; 17.01.14 15:53<br><strong>INFO: http://localhost:8080/apex started.</strong></p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

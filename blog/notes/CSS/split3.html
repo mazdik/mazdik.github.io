@@ -1,0 +1,42 @@
+<style type="text/css">
+/* Panels: */
+.panel{ 
+  padding: 1em; 
+  border-width: 6px; 
+  border-style: solid; 
+  height: 4em; 
+}
+
+/* Resizing */
+.resize-x { 
+  resize: horizontal;
+  overflow: auto;
+}
+
+/* Panel Colors */
+.box-a{ border-color: #F6F2A4; background: #FFFEDB;}
+.box-b{ border-color: #F2B98D; background: #FEE5D0;}
+.box-c{ border-color: #F18FB3; background: #FDD1E2;}
+
+/* Initial Dimensions */
+.p-25{ width: 25%; }
+.p-50{ width: 50%; }
+.p-75{ width: 75%; }
+
+/* Split View */
+.split-view {
+  margin: 1em 0; 
+  width: 100%;
+  clear: both;
+  display: table;
+}
+
+.split-view .panel {
+  display: table-cell;
+}
+</style>
+
+<div class="split-view">
+  <div class="resize-x p-25 box-a panel">Panel A</div>
+  <div class="box-b panel">Panel B</div>
+</div>

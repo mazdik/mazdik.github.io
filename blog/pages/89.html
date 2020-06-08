@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1044;&#1072;&#1084;&#1087; &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1077;&#1081; oracle</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&nbsp;</p>
+<pre class="lang:plsql">
+drop table temp_users;
+/
+create table temp_users as
+select t.username user_name, 'create user '||username||' identified by values '''''||password||''''''||chr(13)||
+' default tablespace '||default_tablespace||chr(13)||
+' temporary tablespace '||temporary_tablespace||chr(13)||
+decode(ACCOUNT_STATUS,'LOCKED',' account LOCK','') str
+from dba_users t
+where username not in ('SYS','SYSTEM','OUTLN','DBSNMP') and default_tablespace = 'PARUS_MAIN'
+order by username;
+
+begin
+for q in ( select str from temp_users ) loop
+dbms_output.put_line(' begin '||chr(13)||' execute immediate('''||q.str||''');'||chr(13)||' exception when others then null; '||chr(13)||' end; '||chr(13)||'/'||chr(13));
+end loop;
+
+for i in (select grantee, upper(privilege) right
+from dba_sys_privs a, temp_users b
+where b.user_name = a.grantee
+order by grantee) loop
+dbms_output.put_line(' GRANT '||i.right||' TO '||i.grantee||';');
+end loop;
+
+for i in (select grantee, upper(granted_role) right
+from dba_role_privs a, temp_users b
+where b.user_name = a.grantee
+order by grantee) loop
+dbms_output.put_line('GRANT '||i.right||' TO '||i.grantee||';');
+end loop;
+end;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

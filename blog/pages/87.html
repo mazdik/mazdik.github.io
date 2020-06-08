@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1062;&#1080;&#1082;&#1083; &#1087;&#1086; &#1076;&#1080;&#1088;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;&#1103;&#1084; &#1076;&#1083;&#1103; &#1073;&#1101;&#1082;&#1072;&#1087;&#1072; [linux]</h1>
+
+
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><a href="/uploads/2012/06/linux-logo.png"><img class="size-full wp-image-41 alignnone" title="linux-logo" src="/uploads/2012/06/linux-logo.png" alt="" width="128" height="128"></a></p>
+<p>&#1057;&#1082;&#1088;&#1080;&#1087;&#1090; sh &#1074; &#1094;&#1080;&#1082;&#1083;&#1077; &#1087;&#1077;&#1088;&#1077;&#1073;&#1080;&#1088;&#1072;&#1077;&#1090; &#1074;&#1089;&#1077; &#1076;&#1080;&#1088;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;&#1080; &#1080; &#1074;&#1099;&#1087;&#1086;&#1083;&#1085;&#1103;&#1077;&#1090; &#1072;&#1088;&#1093;&#1080;&#1074;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1077; &#1076;&#1083;&#1103; &#1082;&#1072;&#1078;&#1076;&#1086;&#1081;.</p>
+<pre class="lang:bash">
+
+#!/bin/sh
+
+path="/home/user/public_html/"
+for site in `ls $path`
+do
+
+zip -r -9 /home/user/1backup/$site.zip $path/$site
+
+done
+
+</pre>
+<p>&#1044;&#1083;&#1103; sql &#1076;&#1072;&#1084;&#1087;&#1086;&#1074;:</p>
+<pre class="lang:bash">
+
+#!/bin/sh
+
+for sqlfile in /home/user/1backup/*.sql
+do
+
+zip -r -9 $sqlfile.zip $sqlfile
+rm -rf $sqlfile
+
+done
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

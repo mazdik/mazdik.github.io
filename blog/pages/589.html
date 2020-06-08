@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1042;&#1099;&#1087;&#1086;&#1083;&#1085;&#1077;&#1085;&#1080;&#1077; &#1082;&#1086;&#1084;&#1072;&#1085;&#1076; &#1054;&#1057; &#1074; Oracle</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&#1054;&#1087;&#1088;&#1077;&#1076;&#1077;&#1083;&#1103;&#1077;&#1090;&#1089;&#1103; IP &#1072;&#1076;&#1088;&#1077;&#1089; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1072;. &#1042;&#1099;&#1095;&#1080;&#1089;&#1083;&#1103;&#1102;&#1090;&#1089;&#1103; IP &#1072;&#1076;&#1088;&#1077;&#1089;&#1072; &#1076;&#1083;&#1103; &#1082;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103; &#1087;&#1086; &#1089;&#1077;&#1090;&#1080;. &#1043;&#1077;&#1085;&#1077;&#1088;&#1080;&#1088;&#1091;&#1102;&#1090;&#1089;&#1103; BAT&#1085;&#1080;&#1082;&#1080; &#1074; &#1076;&#1080;&#1088;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;&#1080; Oracla (BCP_DIR). &#1057;&#1086;&#1079;&#1076;&#1072;&#1077;&#1090;&#1089;&#1103; &#1080; &#1079;&#1072;&#1087;&#1091;&#1089;&#1082;&#1072;&#1077;&#1090;&#1089;&#1103; JOB, &#1082;&#1086;&#1090;&#1086;&#1088;&#1099;&#1081; &#1079;&#1072;&#1087;&#1091;&#1089;&#1082;&#1072;&#1077;&#1090; BAT&#1085;&#1080;&#1082;&#1080;. &#1055;&#1086;&#1089;&#1083;&#1077; &#1079;&#1072;&#1074;&#1077;&#1088;&#1096;&#1077;&#1085;&#1080;&#1103; &#1079;&#1072;&#1076;&#1072;&#1085;&#1080;&#1103; &#1091;&#1076;&#1072;&#1083;&#1103;&#1102;&#1090;&#1089;&#1103; BAT&#1085;&#1080;&#1082;&#1080; &#1080; JOB. &#1055;&#1088;&#1080;&#1084;&#1077;&#1088; &#1089;&#1086;&#1079;&#1076;&#1072;&#1085;&#1080;&#1103; &#1076;&#1080;&#1088;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;&#1080;:&nbsp;CREATE OR REPLACE DIRECTORY BCP_DIR AS &lsquo;D:\bcp&rsquo;;</p>
+<pre class="lang:plsql">
+create or replace procedure P_R_SEND_TASK as
+
+sHOST_ADDRESS varchar(15);
+sBAT_TXT varchar2(1000);
+sBCP_DIRNAME constant varchar2(200) := 'BCP_DIR';
+sDIR_BCP varchar2(200) := 'D:\bcp';
+sBAT_NAME1 varchar(20) := 'SendTask.bat';
+sBAT_NAME2 varchar(20) := 'test1.bat';
+
+function IP_PLUS(ip_string in varchar2, iNUM in integer) return varchar2 is
+d1 integer;
+d2 integer;
+d3 integer;
+q1 varchar2(3);
+q2 varchar2(3);
+q3 varchar2(3);
+q4 varchar2(3);
+v8 varchar2(15);
+begin
+-- 1. parse the input, e.g. '203.30.237.2'
+d1 := INSTR(ip_string, '.'); -- first dot
+d2 := INSTR(ip_string, '.', 1, 2); -- second dot
+d3 := INSTR(ip_string, '.', 1, 3); -- third dot
+q1 := SUBSTR(ip_string, 1, d1 - 1); -- e.g. '203'
+q2 := SUBSTR(ip_string, d1 + 1, d2 - d1 - 1); -- e.g. '30'
+q3 := SUBSTR(ip_string, d2 + 1, d3 - d2 - 1); -- e.g. '237'
+q4 := SUBSTR(ip_string, d3 + 1); -- e.g. '2'
+q4 := q4 + iNUM;
+v8 := q1 || '.' || q2 || '.' || q3 || '.' || q4;
+return v8;
+end IP_PLUS;
+
+procedure CREATE_BAT(sNAME in varchar2, sTXT in varchar2) as
+F1 UTL_FILE.FILE_TYPE;
+begin
+F1 := UTL_FILE.FOPEN(sBCP_DIRNAME, sNAME, 'W', 4048);
+UTL_FILE.PUT_LINE(file =&gt; F1, buffer =&gt; sTXT);
+UTL_FILE.fclose(file =&gt; F1);
+end CREATE_BAT;
+
+procedure DELETE_FILE(sFILENAME in varchar2) as
+begin
+begin
+UTL_FILE.FREMOVE(sBCP_DIRNAME, sFILENAME);
+exception
+when others then
+null;
+end;
+end DELETE_FILE;
+
+procedure DROP_JOB as
+begin
+begin
+dbms_scheduler.drop_job('SEND_TASK_JOB', TRUE);
+exception
+when others then
+null;
+end;
+end DROP_JOB;
+
+procedure CREATE_JOB as
+begin
+DROP_JOB;
+begin
+dbms_scheduler.create_job('SEND_TASK_JOB',
+job_action =&gt; sDIR_BCP || '\' ||
+sBAT_NAME1 || ' &gt; null',
+job_type =&gt; 'executable',
+enabled =&gt; false,
+auto_drop =&gt; false);
+end;
+end CREATE_JOB;
+
+begin
+
+sHOST_ADDRESS := utl_inaddr.get_host_address;
+
+sBAT_TXT := '@echo off
+SetLocal EnableExtensions enabledelayedexpansion
+chcp 866 &gt;nul
+SET LOGFILE=SendTask.log
+cd /d ' || sDIR_BCP || '
+echo %date% %time% &#1050;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1077; &#1079;&#1072;&#1076;&#1072;&#1095;&#1080; &gt;&gt; %LOGFILE%
+copy ' || sBAT_NAME2 || ' \\' || IP_PLUS(sHOST_ADDRESS, 1) ||
+'\Tasks\run\ /y 1&gt;&gt;%LOGFILE% 2&gt;&gt;&amp;amp;1';
+
+CREATE_BAT(sBAT_NAME1, sBAT_TXT);
+
+sBAT_TXT := '@echo off
+echo test1 &gt; test1.log';
+
+CREATE_BAT(sBAT_NAME2, sBAT_TXT);
+
+CREATE_JOB;
+begin
+DBMS_SCHEDULER.RUN_JOB('SEND_TASK_JOB');
+exception
+when others then
+null;
+end;
+
+DELETE_FILE(sBAT_NAME1);
+DELETE_FILE(sBAT_NAME2);
+DROP_JOB;
+
+end P_R_SEND_TASK;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

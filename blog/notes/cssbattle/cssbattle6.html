@@ -1,0 +1,53 @@
+<div class="q">
+  <div class="r f">
+    <div class="t a"></div>
+    <div class="t b"></div>
+  </div>
+  <div class="r f">
+    <div class="t c"></div>
+    <div class="t d"></div>
+  </div>
+<div>
+<style>
+  * {
+    background: #E3516E;
+  }
+  .f::after {
+	content: "";
+    display: table;
+    clear: both;
+  }
+  .q {
+    width: 200px;
+    height: 200px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .r {
+    position: relative;
+  }
+  .t {
+    width: 100px;
+    height: 100px;
+    float: left;;
+  }
+  .a {
+    background: #51B5A9;
+    border-radius: 100% 0 0 0;
+  }
+  .b {
+    background: #FADE8B;
+    border-radius: 0 100% 0 0;
+  }
+  .c {
+    background: #F7F3D7;
+    border-radius: 0 0 0 100%;
+  }
+  .d {
+    background: #E3516E;
+    border-radius: 0 0 100% 0;
+  }
+</style>

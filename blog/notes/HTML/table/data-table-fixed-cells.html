@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style type="text/css">
+    .datatable {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .datatable *,
+    .datatable *::before,
+    .datatable *::after {
+        box-sizing: border-box;
+    }
+
+    .datatable.scroll-vertical .datatable-body {
+        overflow-y: auto;
+    }
+
+    .datatable.scroll-vertical .datatable-body .datatable-body-row {
+        position: absolute;
+    }
+
+    .datatable-scroll {
+        display: inline-block;
+    }
+
+    .datatable-body {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .datatable-header-cell,
+    .datatable-body-cell,
+    .datatable-body-group-cell {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+    }
+
+    .datatable-body-row,
+    .datatable-body-row>div {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .datatable-body-cell:focus,
+    .datatable-header-cell:focus {
+        outline: none;
+    }
+
+    .datatable-body-cell.left,
+    .datatable-header-cell.left {
+        z-index: 1;
+    }
+
+    .datatable-header {
+        display: block;
+        overflow: hidden;
+    }
+
+    .datatable-header-cell {
+        position: relative;
+    }
+
+    .datatable-header-cell .resize-handle {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        padding: 0 4px;
+        visibility: hidden;
+        cursor: ew-resize;
+    }
+
+    .datatable-header-cell.resizeable:hover .resize-handle {
+        visibility: visible;
+    }
+
+    .datatable-body {
+        position: relative;
+        display: block;
+    }
+
+    .datatable-body-row {
+        white-space: nowrap;
+        outline: none;
+    }
+
+    .datatable-footer {
+        display: block;
+        width: 100%;
+    }
+
+    .datatable-footer .datatable-footer-inner {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .datatable-footer .page-count {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 30%;
+        flex: 1 1 30%;
+    }
+
+    .datatable-footer .datatable-pager {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 70%;
+        flex: 1 1 70%;
+        text-align: right;
+    }
+    /******/
+
+    .datatable-header-cell {
+        background-color: #5b9bd5;
+        color: white;
+        user-select: none;
+        height: 40px;
+        padding: 0 3px;
+    }
+
+    .datatable-header-cell:hover {
+        background-color: #337ab7;
+    }
+
+    .datatable-header-cell:hover .column-menu {
+        visibility: visible;
+    }
+
+    .datatable-body-cell.left {
+        background-color: white;
+    }
+
+    .datatable-body-cell {
+        height: 30px;
+        padding: 0 3px;
+    }
+
+    .datatable-body-cell,
+    .datatable-header-cell {
+        border-right: 1px solid #c6c6c6;
+        border-bottom: 1px solid #c6c6c6;
+    }
+
+    .datatable-body-cell.left:first-child,
+    .datatable-header-cell.left:first-child {
+        border-left: 1px solid #c6c6c6;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="datatable">
+        <div class="datatable-header">
+            <div class="datatable-body-row">
+                <div class="datatable-header-cell left" style="width: 150px;">1</div>
+                <div class="datatable-header-cell left" style="width: 150px;">2</div>
+                <div class="datatable-header-cell left" style="width: 150px;">3</div>
+                <div class="datatable-header-cell" style="width: 150px;">4</div>
+                <div class="datatable-header-cell" style="width: 150px;">5</div>
+                <div class="datatable-header-cell" style="width: 150px;">6</div>
+                <div class="datatable-header-cell" style="width: 150px;">7</div>
+                <div class="datatable-header-cell" style="width: 150px;">8</div>
+                <div class="datatable-header-cell" style="width: 150px;">9</div>
+                <div class="datatable-header-cell" style="width: 150px;">10</div>
+                <div class="datatable-header-cell" style="width: 150px;">11</div>
+                <div class="datatable-header-cell" style="width: 150px;">12</div>
+                <div class="datatable-header-cell" style="width: 150px;">13</div>
+                <div class="datatable-header-cell" style="width: 150px;">14</div>
+                <div class="datatable-header-cell" style="width: 150px;">15</div>
+                <div class="datatable-header-cell" style="width: 150px;">16</div>
+                <div class="datatable-header-cell" style="width: 150px;">17</div>
+                <div class="datatable-header-cell" style="width: 150px;">18</div>
+                <div class="datatable-header-cell" style="width: 150px;">19</div>
+                <div class="datatable-header-cell" style="width: 150px;">20</div>
+                <div class="datatable-header-cell" style="width: 150px;">21</div>
+                <div class="datatable-header-cell" style="width: 150px;">22</div>
+                <div class="datatable-header-cell" style="width: 150px;">23</div>
+                <div class="datatable-header-cell" style="width: 150px;">24</div>
+                <div class="datatable-header-cell" style="width: 150px;">25</div>
+                <div class="datatable-header-cell" style="width: 150px;">26</div>
+                <div class="datatable-header-cell" style="width: 150px;">27</div>
+                <div class="datatable-header-cell" style="width: 150px;">28</div>
+                <div class="datatable-header-cell" style="width: 150px;">29</div>
+                <div class="datatable-header-cell" style="width: 150px;">30</div>
+                <div class="datatable-header-cell" style="width: 150px;">31</div>
+                <div class="datatable-header-cell" style="width: 150px;">32</div>
+                <div class="datatable-header-cell" style="width: 150px;">33</div>
+                <div class="datatable-header-cell" style="width: 150px;">34</div>
+                <div class="datatable-header-cell" style="width: 150px;">35</div>
+                <div class="datatable-header-cell" style="width: 150px;">36</div>
+                <div class="datatable-header-cell" style="width: 150px;">37</div>
+                <div class="datatable-header-cell" style="width: 150px;">38</div>
+                <div class="datatable-header-cell" style="width: 150px;">39</div>
+                <div class="datatable-header-cell" style="width: 150px;">40</div>
+            </div>
+        </div>
+        <div class="datatable-body">
+            <div class="datatable-scroll">
+                <div class="datatable-body-row">
+                    <div class="datatable-body-cell left" style="width: 150px;" tabindex="-1">1</div>
+                    <div class="datatable-body-cell left" style="width: 150px;" tabindex="-1">2</div>
+                    <div class="datatable-body-cell left" style="width: 150px;" tabindex="-1">3</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">4</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">5</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">6</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">7</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">8</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">9</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">10</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">11</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">12</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">13</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">14</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">15</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">16</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">17</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">18</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">19</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">20</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">21</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">22</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">23</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">24</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">25</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">26</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">27</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">28</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">29</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">30</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">31</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">32</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">33</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">34</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">35</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">36</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">37</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">38</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">39</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">40</div>
+                </div>
+                <div class="datatable-body-row">
+                    <div class="datatable-body-cell left" style="width: 150px;" tabindex="-1">1</div>
+                    <div class="datatable-body-cell left" style="width: 150px;" tabindex="-1">2</div>
+                    <div class="datatable-body-cell left" style="width: 150px;" tabindex="-1">3</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">4</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">5</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">6</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">7</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">8</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">9</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">10</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">11</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">12</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">13</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">14</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">15</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">16</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">17</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">18</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">19</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">20</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">21</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">22</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">23</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">24</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">25</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">26</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">27</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">28</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">29</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">30</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">31</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">32</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">33</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">34</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">35</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">36</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">37</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">38</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">39</div>
+                    <div class="datatable-body-cell" style="width: 150px;" tabindex="-1">40</div>
+                </div>
+            </div>
+        </div>
+        <div class="datatable-footer">
+            <div class="datatable-footer-inner">
+                <div class="page-count">
+                    <span class="page-range">1 - 20 of 23</span>
+                </div>
+                <div class="datatable-pager">
+                    pagination
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    let scrollYPos = 0;
+    let scrollXPos = 0;
+    let prevScrollYPos = 0;
+    let prevScrollXPos = 0;
+
+    const header = document.querySelector('.datatable-header .datatable-body-row');
+    const headerLeft = document.querySelectorAll('.datatable-header-cell.left');
+    const bodyLeft = document.querySelectorAll('.datatable-body-cell.left');
+    const body = document.getElementsByClassName('datatable-body')[0];
+    body.addEventListener('scroll', onScrolled);
+
+
+    function onScrolled(event) {
+        const dom = event.currentTarget;
+        scrollYPos = dom.scrollTop;
+        scrollXPos = dom.scrollLeft;
+
+        if (prevScrollYPos !== scrollYPos || prevScrollXPos !== scrollXPos) {
+
+            header.style.transform = "translate3d(" + -scrollXPos + "px, " + scrollYPos + "px, 0)";
+            //header.style.backfaceVisibility = 'hidden';
+            for (var i = 0; i < headerLeft.length; i++) {
+                headerLeft[i].style.transform = "translate3d(" + scrollXPos + "px, " + scrollYPos + "px, 0)";
+                //headerLeft[i].style.backfaceVisibility = 'hidden';
+            }
+            for (var i = 0; i < bodyLeft.length; i++) {
+                bodyLeft[i].style.transform = "translate3d(" + scrollXPos + "px, " + scrollYPos + "px, 0)";
+                //bodyLeft[i].style.backfaceVisibility = 'hidden';
+            }
+
+            prevScrollYPos = scrollYPos;
+            prevScrollXPos = scrollXPos;
+        }
+
+    }
+    </script>
+</body>
+
+</html>

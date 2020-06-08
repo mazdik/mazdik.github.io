@@ -1,0 +1,28 @@
+﻿Для Windows Ruby и DevKit
+http://rubyinstaller.org/downloads/
+
+ruby -v
+gem install rails
+rails --version
+
+cd C:\Ruby22\DevKit
+ruby dk.rb init
+ruby dk.rb install
+
+gem install mysql2
+
+D:
+cd D:\ruby
+
+rails new aion
+
+Веб сервер для разработки
+ruby D:\ruby\aion\bin\rails server
+
+Генератор моделей из базы
+gem install rmre
+rmre -a mysql2 -d animals -u root -p vertrigo -o D:\created
+
+Управление версиями в Gemfile
+gem 'mysql2', '~> 0.3.20'
+bundle install

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.box {
+    border: 3px solid green;
+    margin-bottom: 10px;
+    height: 200px;
+}
+
+.center1 {
+    height: auto;
+    padding: 70px 0;
+    text-align: center;
+}
+
+.center2 {
+    line-height: 200px;
+    text-align: center;
+}
+
+.center2 p {
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.center3 { 
+    position: relative;
+}
+
+.center3 p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center5 { 
+    width: 100%;
+    display: table;
+}
+
+.center5 div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align:center;
+}
+
+.center6 { 
+    position: relative;
+}
+
+.center6 div {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -50px 0px 0px -50px;
+    background: teal;
+}
+
+.center7 {
+  display: flex;
+}
+
+.center7 div {
+  margin: auto;
+}
+
+</style>
+</head>
+<body>
+
+<div class="box center1">
+  <p>Center vertically - using padding</p>
+</div>
+
+<div class="box center2">
+  <p>Center vertically - using line-height</p>
+</div>
+
+<div class="box center3">
+  <p>Center vertically - using position & transform</p>
+</div>
+
+<div class="box center4">
+  <p>Center vertically - using flex</p>
+</div>
+
+<div class="box center5">
+  <div>Center vertically - using table-cell</div>
+</div>
+
+<div class="box center6">
+  <div>Center vertically - using position & margin</div>
+</div>
+
+<div class="box center7">
+  <div>Center vertically - using flex & margin</div>
+</div>
+
+</body>
+</html>

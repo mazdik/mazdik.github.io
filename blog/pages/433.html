@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1072; APEX 5.0 (Embedded PL/SQL Gateway)</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>1. &#1057;&#1082;&#1072;&#1095;&#1072;&#1090;&#1100; apex_5.0.zip. &#1056;&#1072;&#1089;&#1087;&#1086;&#1082;&#1086;&#1074;&#1072;&#1090;&#1100; &#1074; D:\apex<br>
+2. &#1057;&#1086;&#1079;&#1076;&#1072;&#1090;&#1100; &#1085;&#1086;&#1074;&#1099;&#1081; tablespace<br>
+CREATE TABLESPACE APEX DATAFILE &lsquo;D:\app\oradata\apex\apex01.dbf&rsquo; SIZE 64M AUTOEXTEND ON NEXT 10M;<br>
+3. @apexins APEX APEX TEMP /i/<br>
+4. @apxchpwd<br>
+5. @apex_epg_config D:\app<br>
+6. &#1055;&#1088;&#1080; &#1086;&#1073;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1077; &#1089;&#1091;&#1097;&#1077;&#1089;&#1091;&#1090;&#1074;&#1091;&#1102;&#1097;&#1077;&#1075;&#1086; apex: @apxldimg D:\app<br>
+7. &#1056;&#1072;&#1079;&#1073;&#1083;&#1086;&#1082;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1077;&#1081;<br>
+ALTER USER anonymous ACCOUNT UNLOCK;<br>
+ALTER USER apex_public_user ACCOUNT UNLOCK;<br>
+8. EXEC dbms_xdb.sethttpport(8080);<br>
+9. EXEC dbms_xdb.setListenerLocalAccess(l_access =&gt; FALSE);<br>
+&mdash; &#1077;&#1089;&#1083;&#1080; TRUE &mdash; &#1090;&#1086;&#1083;&#1100;&#1082;&#1086; localhost, &#1077;&#1089;&#1083;&#1080; FALSE &mdash; &#1074;&#1089;&#1077; &#1072;&#1076;&#1088;&#1077;&#1089;&#1072;<br>
+10. &#1044;&#1083;&#1103; Oracle 11g &#1074;&#1099;&#1087;&#1086;&#1083;&#1085;&#1080;&#1090;&#1100;<br>
+DECLARE<br>
+ACL_PATH VARCHAR2(4000);<br>
+BEGIN<br>
+&mdash; Look for the ACL currently assigned to &lsquo;*&rsquo; and give APEX_050000<br>
+&mdash; the &laquo;connect&raquo; privilege if APEX_050000 does not have the privilege yet.</p>
+<p>SELECT ACL INTO ACL_PATH FROM DBA_NETWORK_ACLS<br>
+WHERE HOST = &lsquo;*&rsquo; AND LOWER_PORT IS NULL AND UPPER_PORT IS NULL;</p>
+<p>IF DBMS_NETWORK_ACL_ADMIN.CHECK_PRIVILEGE(ACL_PATH, &lsquo;APEX_050000&prime;,&rsquo;connect&rsquo;) IS NULL THEN<br>
+DBMS_NETWORK_ACL_ADMIN.ADD_PRIVILEGE(ACL_PATH,&rsquo;APEX_050000&prime;, TRUE, &lsquo;connect&rsquo;);<br>
+END IF;</p>
+<p>EXCEPTION<br>
+&mdash; When no ACL has been assigned to &lsquo;*&rsquo;.<br>
+WHEN NO_DATA_FOUND THEN<br>
+DBMS_NETWORK_ACL_ADMIN.CREATE_ACL(&lsquo;power_users.xml&rsquo;,<br>
+&lsquo;ACL that lets power users to connect to everywhere&rsquo;,<br>
+&lsquo;APEX_050000&rsquo;, TRUE, &lsquo;connect&rsquo;);<br>
+DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL(&lsquo;power_users.xml&rsquo;,&rsquo;*&rsquo;);<br>
+END;<br>
+/<br>
+COMMIT;</p>
+<p>http://hostname:port/apex<br>
+Workspace: INTERNAL<br>
+Username: ADMIN<br>
+Password: *****</p>
+<p>&mdash; APEX &#1074;&#1077;&#1088;&#1080;&#1080; 3.2 &#1084;&#1086;&#1078;&#1085;&#1086; &#1091;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100;<br>
+DROP USER APEX_030200 CASCADE;</p>
+<p>&mdash; &#1042;&#1099;&#1082;&#1083;&#1102;&#1095;&#1080;&#1090;&#1100; XMLDB HTTP &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;<br>
+EXEC DBMS_XDB.SETHTTPPORT(0);<br>
+SELECT DBMS_XDB.GETHTTPPORT FROM DUAL;</p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

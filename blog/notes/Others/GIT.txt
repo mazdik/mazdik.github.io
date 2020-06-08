@@ -1,0 +1,109 @@
+# Клонировать репозиторий с удаленной машины:
+git clone git@bitbucket.org:afiskon/hs-textgen.git
+
+# Добавить все новые файлы:
+git add --all
+
+# Сделать коммит (все файлы: modified, deleted, and new):
+git add --all && git commit -a -m "update"
+
+# Замерджить все ветки локального репозитория на удаленный репозиторий
+git push origin master
+
+# Текущее состояние репозитория (изменения, неразрешенные конфликты и тп):
+git status
+
+# Установить удаленный репозиторий
+git remote set-url origin https://name:password@bitbucket.org/name/repo.git
+git remote set-url origin https://name:password@github.com/repo.git
+git remote add origin https://name@bitbucket.org/name/repo.git
+
+# Показать удаленный репозитарий:
+git remote -v
+
+# Замерджить все ветки с удаленного репозитория:
+git pull origin
+
+# Отмена локальных изменений (до индексации)
+git checkout filename
+
+# Отмена проиндексированных изменений (перед коммитом)
+git reset HEAD filename
+git checkout filename
+
+# Отбросит все сделанные изменения (незакоммиченных)
+git reset --hard HEAD
+# Сбросить последнюю фиксацию, не трогая рабочую директрию и индекс
+git reset --soft @~
+
+# Удалить новые локальные файлы (незакоммиченные)
+git clean -fxd
+
+# Показать изменения файла
+git diff filename
+
+# Создание ветки
+git checkout -b style
+git status
+# является шорткатом для git branch <имяветки> за которым идет  git checkout <имяветки>
+
+# Переключение на ветку Master
+git checkout master
+# Переключение на ветку style
+git checkout style
+
+# Слияние style в master
+git checkout master
+git merge style
+
+# История
+git log
+git log --pretty=oneline
+git log --pretty=oneline --max-count=2
+git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+
+# Отмена коммита
+git revert HEAD --no-edit
+
+# Удалить опубликованный коммит
+git push origin +7f6d03:master
+
+# Удалить опубликованный коммит (2й способ)
+git reset --hard cd62cd3367808bfd905b11e60b526453492e592b
+git push origin -f
+
+# Список удаленных веток
+git branch -a
+# Ветки, которые начинаются с remotes/origin являются ветками оригинального репозитория.
+
+# Извлечение изменений из удаленного репозитория (не сливает)
+git fetch
+# Слияние извлеченных изменений
+git merge origin/master
+# команда git pull эквивалентна комбинации git fetch и git merge.
+
+# .gitconfig
+[user]
+  email = remappp@gmail.com
+  name = mazdik
+[alias]
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[core]
+  autocrlf = input
+  safecrlf = true
+  fileMode = false
+
+# Сокращения
+@~	- 1 коммит назад
+@~2 - 2 коммита назад
+
+# Сохранить имя и пароль
+git config credential.helper store
+git config --global credential.helper store
+
+# Настройка Git в файле %userprofile%\.gitconfig
+[url "https://"]
+  insteadOf = git://
+[http]
+  proxy = http://user:pass@proxy.local:8080/
+  sslVerify = false

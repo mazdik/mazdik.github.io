@@ -1,0 +1,415 @@
+<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+<style type="text/css">
+.k-grid {
+    position: relative;
+    zoom: 1;
+}
+.k-widget *, .k-widget:before {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.k-grid-header, .k-grid-body {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.k-grid-content-locked, .k-grid-header-locked {
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden;
+    position: relative;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    border-color: #c6c6c6;
+}
+.k-grid-content-locked+.k-grid-content, .k-grid-header-locked+.k-grid-header-wrap {
+    display: inline-block;
+    vertical-align: top;
+}
+.k-grid-header-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    border-color: #c6c6c6;
+    zoom: 1;
+}
+.k-grid-content {
+    position: relative;
+    width: 100%;
+    overflow: auto;
+    overflow-x: auto;
+    overflow-y: scroll;
+    zoom: 1;
+    min-height: 0;
+}
+.k-grid table {
+	table-layout:fixed;
+	width: 100%;
+    border-spacing: 0;
+ 	border-collapse: collapse;
+}
+.k-grid tbody>tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+.k-grid tbody>tr:hover {
+    background-color: #f5f5f5;
+}
+.k-grid th, td {
+	border: 1px solid #c6c6c6;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 3px;
+    line-height: 1.42857143;
+    vertical-align: top;
+}
+.k-grid th {
+	font-weight: bold;
+	text-align: left;
+}
+</style>
+
+<script type="text/javascript">
+onload = function() {
+  var rcBody = document.querySelector(".k-grid-content"),
+  	  fcBody = document.querySelector(".k-grid-content-locked"),
+      rcHead = document.querySelector(".k-grid-header-wrap");
+  rcBody.addEventListener("scroll", function() {
+      fcBody.scrollTop = this.scrollTop;
+      rcHead.scrollLeft = this.scrollLeft;
+  });
+};
+</script>
+
+<div class="k-grid">
+    <div class="k-grid-header">
+        <div class="k-grid-header-locked" style="width: 450px;">
+            <table>
+                <colgroup>
+                    <col style="width:150px">
+                    <col style="width:300px">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Ship Name</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="k-grid-header-wrap" style="width: 402px;">
+            <table>
+                <colgroup>
+                    <col style="width:300px">
+                    <col style="width:300px">
+                    <col style="width:400px">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Ship Country</th>
+                        <th>Ship City</th>
+                        <th>ShipAddress</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div style="display: inline-block; vertical-align: top; overflow-y: scroll; visibility: hidden;"></div>
+    </div>
+    <div class="k-grid-body">
+    <div class="k-grid-content-locked" style="width: 450px; height: 387px;">
+        <table>
+            <colgroup>
+                <col style="width:150px">
+                <col style="width:300px">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td>10248</td>
+                    <td>Vins et alcools Chevalier</td>
+                </tr>
+                <tr>
+                    <td>10249</td>
+                    <td>Toms Spezialitäten</td>
+                </tr>
+                <tr>
+                    <td>10250</td>
+                    <td>Hanari Carnes</td>
+                </tr>
+                <tr>
+                    <td>10251</td>
+                    <td>Victuailles en stock</td>
+                </tr>
+                <tr>
+                    <td>10252</td>
+                    <td>Suprêmes délices</td>
+                </tr>
+                <tr>
+                    <td>10253</td>
+                    <td>Hanari Carnes</td>
+                </tr>
+                <tr>
+                    <td>10254</td>
+                    <td>Chop-suey Chinese</td>
+                </tr>
+                <tr>
+                    <td>10255</td>
+                    <td>Richter Supermarkt</td>
+                </tr>
+                <tr>
+                    <td>10256</td>
+                    <td>Wellington Importadora</td>
+                </tr>
+                <tr>
+                    <td>10257</td>
+                    <td>HILARION-Abastos</td>
+                </tr>
+                <tr>
+                    <td>10258</td>
+                    <td>Ernst Handel</td>
+                </tr>
+                <tr>
+                    <td>10259</td>
+                    <td>Centro comercial Moctezuma</td>
+                </tr>
+                <tr>
+                    <td>10260</td>
+                    <td>Ottilies Käseladen</td>
+                </tr>
+                <tr>
+                    <td>10261</td>
+                    <td>Que Delícia</td>
+                </tr>
+                <tr>
+                    <td>10262</td>
+                    <td>Rattlesnake Canyon Grocery</td>
+                </tr>
+                <tr>
+                    <td>10263</td>
+                    <td>Ernst Handel</td>
+                </tr>
+                <tr>
+                    <td>10264</td>
+                    <td>Folk och fä HB</td>
+                </tr>
+                <tr>
+                    <td>10265</td>
+                    <td>Blondel père et fils</td>
+                </tr>
+                <tr>
+                    <td>10266</td>
+                    <td>Wartian Herkku</td>
+                </tr>
+                <tr>
+                    <td>10267</td>
+                    <td>Frankenversand</td>
+                </tr>
+                <tr>
+                    <td>10268</td>
+                    <td>GROSELLA-Restaurante</td>
+                </tr>
+                <tr>
+                    <td>10269</td>
+                    <td>White Clover Markets</td>
+                </tr>
+                <tr>
+                    <td>10270</td>
+                    <td>Wartian Herkku</td>
+                </tr>
+                <tr>
+                    <td>10271</td>
+                    <td>Split Rail Beer &amp; Ale</td>
+                </tr>
+                <tr>
+                    <td>10272</td>
+                    <td>Rattlesnake Canyon Grocery</td>
+                </tr>
+                <tr>
+                    <td>10273</td>
+                    <td>QUICK-Stop</td>
+                </tr>
+                <tr>
+                    <td>10274</td>
+                    <td>Vins et alcools Chevalier</td>
+                </tr>
+                <tr>
+                    <td>10275</td>
+                    <td>Magazzini Alimentari Riuniti</td>
+                </tr>
+                <tr>
+                    <td>10276</td>
+                    <td>Tortuga Restaurante</td>
+                </tr>
+                <tr>
+                    <td>10277</td>
+                    <td>Morgenstern Gesundkost</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="k-grid-content" style="width: 417px; height: 402px;">
+        <table>
+            <colgroup>
+                <col style="width:300px">
+                <col style="width:300px">
+                <col style="width:400px">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td>France dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</td>
+                    <td>Reims</td>
+                    <td>59 rue de l'Abbaye</td>
+                </tr>
+                <tr>
+                    <td>Germany</td>
+                    <td>Münster</td>
+                    <td>Luisenstr. 48</td>
+                </tr>
+                <tr>
+                    <td>Brazil</td>
+                    <td>Rio de Janeiro</td>
+                    <td>Rua do Paço, 67</td>
+                </tr>
+                <tr>
+                    <td>France</td>
+                    <td>Lyon</td>
+                    <td>2, rue du Commerce</td>
+                </tr>
+                <tr>
+                    <td>Belgium</td>
+                    <td>Charleroi</td>
+                    <td>Boulevard Tirou, 255</td>
+                </tr>
+                <tr>
+                    <td>Brazil</td>
+                    <td>Rio de Janeiro</td>
+                    <td>Rua do Paço, 67</td>
+                </tr>
+                <tr>
+                    <td>Switzerland</td>
+                    <td>Bern</td>
+                    <td>Hauptstr. 31</td>
+                </tr>
+                <tr>
+                    <td>Switzerland</td>
+                    <td>Genève</td>
+                    <td>Starenweg 5</td>
+                </tr>
+                <tr>
+                    <td>Brazil</td>
+                    <td>Resende</td>
+                    <td>Rua do Mercado, 12</td>
+                </tr>
+                <tr>
+                    <td>Venezuela</td>
+                    <td>San Cristóbal</td>
+                    <td>Carrera 22 con Ave. Carlos Soublette #8-35</td>
+                </tr>
+                <tr>
+                    <td>Austria</td>
+                    <td>Graz</td>
+                    <td>Kirchgasse 6</td>
+                </tr>
+                <tr>
+                    <td>Mexico</td>
+                    <td>México D.F.</td>
+                    <td>Sierras de Granada 9993</td>
+                </tr>
+                <tr>
+                    <td>Germany</td>
+                    <td>Köln</td>
+                    <td>Mehrheimerstr. 369</td>
+                </tr>
+                <tr>
+                    <td>Brazil</td>
+                    <td>Rio de Janeiro</td>
+                    <td>Rua da Panificadora, 12</td>
+                </tr>
+                <tr>
+                    <td>USA</td>
+                    <td>Albuquerque</td>
+                    <td>2817 Milton Dr.</td>
+                </tr>
+                <tr>
+                    <td>Austria</td>
+                    <td>Graz</td>
+                    <td>Kirchgasse 6</td>
+                </tr>
+                <tr>
+                    <td>Sweden</td>
+                    <td>Bräcke</td>
+                    <td>Åkergatan 24</td>
+                </tr>
+                <tr>
+                    <td>France</td>
+                    <td>Strasbourg</td>
+                    <td>24, place Kléber</td>
+                </tr>
+                <tr>
+                    <td>Finland</td>
+                    <td>Oulu</td>
+                    <td>Torikatu 38</td>
+                </tr>
+                <tr>
+                    <td>Germany</td>
+                    <td>München</td>
+                    <td>Berliner Platz 43</td>
+                </tr>
+                <tr>
+                    <td>Venezuela</td>
+                    <td>Caracas</td>
+                    <td>5ª Ave. Los Palos Grandes</td>
+                </tr>
+                <tr>
+                    <td>USA</td>
+                    <td>Seattle</td>
+                    <td>1029 - 12th Ave. S.</td>
+                </tr>
+                <tr>
+                    <td>Finland</td>
+                    <td>Oulu</td>
+                    <td>Torikatu 38</td>
+                </tr>
+                <tr>
+                    <td>USA</td>
+                    <td>Lander</td>
+                    <td>P.O. Box 555</td>
+                </tr>
+                <tr>
+                    <td>USA</td>
+                    <td>Albuquerque</td>
+                    <td>2817 Milton Dr.</td>
+                </tr>
+                <tr>
+                    <td>Germany</td>
+                    <td>Cunewalde</td>
+                    <td>Taucherstraße 10</td>
+                </tr>
+                <tr>
+                    <td>France</td>
+                    <td>Reims</td>
+                    <td>59 rue de l'Abbaye</td>
+                </tr>
+                <tr>
+                    <td>Italy</td>
+                    <td>Bergamo</td>
+                    <td>Via Ludovico il Moro 22</td>
+                </tr>
+                <tr>
+                    <td>Mexico</td>
+                    <td>México D.F.</td>
+                    <td>Avda. Azteca 123</td>
+                </tr>
+                <tr>
+                    <td>Germany</td>
+                    <td>Leipzig</td>
+                    <td>Heerstr. 22</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>

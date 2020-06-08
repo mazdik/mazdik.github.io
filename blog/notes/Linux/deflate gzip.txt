@@ -1,0 +1,32 @@
+vim /etc/httpd/conf.modules.d/00-base.conf
+
+LoadModule deflate_module modules/mod_deflate.so
+
+Esc
+:wq - сохранить и выйти (write и quit)
+
+touch /etc/httpd/conf.d/mod_deflate.conf
+vim /etc/httpd/conf.d/mod_deflate.conf
+
+#Set to gzip all output
+SetOutputFilter DEFLATE
+
+#exclude the following file types
+SetEnvIfNoCase Request_URI \.(?:exe|t?gz|zip|iso|tar|bz2|sit|rar|png|jpg|gif|jpeg|flv|swf|mp3)$ no-gzip dont-vary
+
+#set compression level
+DeflateCompressionLevel 9
+
+#Handle browser specific compression requirements
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4.0[678] no-gzip
+BrowserMatch bMSIE !no-gzip !gzip-only-text/html
+SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+
+
+Esc
+:wq
+
+systemctl restart httpd.service
+
+Проверка http://checkgzipcompression.com/

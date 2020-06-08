@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1042;&#1099;&#1087;&#1086;&#1083;&#1085;&#1077;&#1085;&#1080;&#1077; &#1074;&#1085;&#1077;&#1096;&#1085;&#1080;&#1093; &#1079;&#1072;&#1076;&#1072;&#1095; &#1080;&#1079; &#1041;&#1044; Oracle 10</h1>
+
+
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&#1044;&#1083;&#1103; <strong><span style="color: #800000;">Windows</span></strong>:<br>
+1. &#1057;&#1083;&#1091;&#1078;&#1073;&#1072; <strong><span style="color: #008000;">OracleJobScheduler</span><span style="color: #0000ff;">%ORACLE_SID%</span></strong> &#1076;&#1086;&#1083;&#1078;&#1085;&#1072; &#1073;&#1099;&#1090;&#1100; &#1079;&#1072;&#1087;&#1091;&#1097;&#1077;&#1085;&#1072;.<br>
+2. &#1057;&#1083;&#1091;&#1078;&#1073;&#1072; &#1076;&#1086;&#1083;&#1078;&#1085;&#1072; &#1073;&#1099;&#1090;&#1100; &#1079;&#1072;&#1087;&#1091;&#1097;&#1077;&#1085;&#1072; &#1089; &#1091;&#1095;&#1077;&#1090;&#1085;&#1086;&#1081; &#1079;&#1072;&#1087;&#1080;&#1089;&#1100;&#1102; (&#1042; &#1089;&#1074;&#1086;&#1081;&#1089;&#1090;&#1074;&#1072;&#1093; &#1089;&#1083;&#1091;&#1078;&#1073;&#1099; -&gt; &#1074;&#1093;&#1086;&#1076; &#1074; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1091; -&gt; &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1100;-&#1087;&#1072;&#1088;&#1086;&#1083;&#1100;)</p>
+<p><img class="alignnone  wp-image-594" alt="OracleJobScheduler" src="/uploads/2014/02/OracleJobScheduler.jpg" width="426" height="369"></p>
+<p>&#1055;&#1088;&#1072;&#1074;&#1072;:<br><strong><span style="color: #008000;">GRANT CREATE JOB TO</span> <span style="color: #0000ff;">USER</span><span style="color: #008000;">;</span></strong><br><strong><span style="color: #008000;">GRANT CREATE EXTERNAL JOB TO</span> <span style="color: #0000ff;">USER</span><span style="color: #008000;">;</span></strong></p>
+<pre class="lang:plsql">
+
+-- cmd &#1089; &#1087;&#1072;&#1088;&#1072;&#1084;&#1077;&#1090;&#1088;&#1072;&#1084;&#1080;
+begin
+dbms_scheduler.create_job('myjob',
+job_action=&gt;'C:\WINDOWS\SYSTEM32\CMD.EXE',
+number_of_arguments=&gt;3,
+job_type=&gt;'executable',
+enabled=&gt;false,
+auto_drop =&gt; false
+);
+dbms_scheduler.set_job_argument_value('myjob',1,'/q');
+dbms_scheduler.set_job_argument_value('myjob',2,'/c');
+dbms_scheduler.set_job_argument_value('myjob',3,'D:\TEST.BAT');
+dbms_scheduler.enable('myjob');
+end;
+
+--&#1080;&#1083;&#1080; &#1073;&#1077;&#1079; &#1087;&#1072;&#1088;&#1072;&#1084;&#1077;&#1090;&#1088;&#1086;&#1074;
+begin
+dbms_scheduler.create_job('myjob',
+job_action=&gt;'D:\test.bat &gt; null',
+job_type=&gt;'executable',
+enabled=&gt;false,
+auto_drop =&gt; false
+);
+end;
+
+</pre>
+<pre class="lang:plsql">
+
+--&#1079;&#1072;&#1087;&#1091;&#1089;&#1090;&#1080;&#1090;&#1100; &#1079;&#1072;&#1076;&#1072;&#1095;&#1091;
+begin
+DBMS_SCHEDULER.RUN_JOB('myjob');
+end;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

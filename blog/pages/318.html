@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">bash_profile &#1076;&#1083;&#1103; Oracle</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<pre class="lang:bash">
+
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/bin
+
+export PATH
+
+ORACLE_HOME=/u01/app/oracle/product/11.2.0/db_1
+NLS_LANG=RUSSIAN_CIS.CL8MSWIN1251
+PATH=$ORACLE_HOME/bin:$PATH
+ORACLE_SID=testdb
+export ORACLE_SID
+export ORACLE_HOME
+export NLS_LANG
+export PATH
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

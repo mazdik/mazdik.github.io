@@ -1,0 +1,31 @@
+//Download
+cd ~/Downloads
+wget https://nodejs.org/dist/v7.7.3/node-v7.7.3-linux-x64.tar.xz
+
+//Install
+cd /usr/local
+tar --strip-components 1 -xJf /home/user/Загрузки/node-v7.7.3-linux-x64.tar.xz
+
+//Verify
+node -v
+npm version
+
+## Пример установки на CentOS 7
+yum install fontconfig freetype freetype-devel fontconfig-devel libstdc++
+yum install gcc-c++ make
+yum -y install bzip2
+curl --silent --location https://rpm.nodesource.com/setup_7.x | bash -
+yum -y install nodejs
+
+## Пример установки на Linux Mint
+curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+## Installing Node.js via package manager
+https://nodejs.org/en/download/package-manager/
+
+## Completly uninstall nodejs
+npm uninstall npm -g
+rm -rf /usr/bin/node
+rm -rf /usr/local/bin/node
+

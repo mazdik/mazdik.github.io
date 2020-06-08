@@ -1,0 +1,139 @@
+Sub ReduceSize()
+    Dim lAntR As Long
+    Dim iAntK As Integer
+    Dim aR() As Single
+    Dim aft() As Single
+    Dim n As Integer
+    Dim sFil1 As String
+    Dim sFil2 As String
+    Dim sKat As String
+    Dim sArk As String
+    Dim sh As Worksheet
+    Dim nwb As Workbook
+    Dim i As Integer
+    i = 1
+    sFil1 = ActiveWorkbook.Name
+    sKat = ActiveWorkbook.Path
+    Set nwb = Workbooks.Add
+    sFil2 = ActiveWorkbook.Name
+    Workbooks(sFil2).SaveAs sKat & "\" & "(2)" & sFil1
+    sFi12 = ActiveWorkbook.Name
+    For Each sh In ThisWorkbook.Sheets
+        sh.Activate
+        sArk = ActiveSheet.Name
+        lAntR = Cells.Find(what:="*", searchorder:=xlByRows, searchDirection:=xlPrevious).Row
+        iAntK = Cells.Find(what:="*", searchorder:=xlByColumns, searchDirection:=xlPrevious).Column
+    
+        ReDim aR(lAntR)
+        ReDim aK(iAntK)
+        For n = 1 To lAntR
+          aR(n) = Rows(n).RowHeight
+        Next n
+        For n = 1 To iAntK
+          aK(n) = Columns(n).ColumnWidth
+        Next n
+        Application.CutCopyMode = False
+        Range(sh.Cells(1, 1), sh.Cells(lAntR, iAntK)).Copy
+        With nwb
+          If .Sheets.Count < i Then
+              .Sheets.Add after:=.Sheets(.Sheets.Count)
+          End If
+          .Sheets(i).Name = sArk
+          .Sheets(i).Paste  '([a1])
+          Application.CutCopyMode = False
+          For n = 1 To lAntR
+              .Sheets(i).Rows(n).RowHeight = aR(n)
+          Next n
+          For n = 1 To iAntK
+              .Sheets(i).Columns(n).ColumnWidth = aK(n)
+          Next n
+        End With
+        i = i + 1
+      Next
+      Application.DisplayAlerts = False
+      Call ExportAllstdmodules(Workbooks(sFi12))
+      Workbooks(sFi12).Save
+      Workbooks(sFil1).Close savechanges:=True
+      Application.DisplayAlerts = True
+End Sub
+Private Sub ExportAllstdmodules(wb As Workbook)
+  Dim iTempPath As String, imoduleName As String
+  Dim ivBcomponent As Object
+  Dim a As Boolean
+  With Application
+      .ScreenUpdating = False
+      iTempPath = .DefaultFilePath & .PathSeparator
+      With wb.VBProject.vBcomponents
+      For Each ivBcomponent In ThisWorkbook.VBProject.vBcomponents
+        imoduleName$ = iTempPath$ & ivBcomponent.Name
+        a = CopyModule(ivBcomponent.Name, _
+            ThisWorkbook.VBProject, _
+            wb.VBProject, True)
+        Next
+      End With
+      .ScreenUpdating = True
+    End With
+End Sub
+
+Function CopyModule(ModuleName As String, _
+                      FromVBProject, _
+                      ToVBProjectt, _
+                      overwriteExisiing As Boolean) As Boolean
+   Dim vBcomp As Object 'As VBIDE.VBComponent
+   Dim FName$, CompName$, s$
+   Dim slashPos&, EXtPOS&
+   Dim TempVBComp 'As vBIDE.vBcomponent
+   Dim vbext_pp_locked As Boolean
+   On Error Resume Next
+   Set vBcomp = FromVBProject.vBcomponents(ModuleName)
+   If Err.Number <> 0 Then
+       CopyModule = False
+       Exit Function
+   End If
+   FName = Environ("Temp") & "\" & ModuleName & ".bas"
+   If OverwriteExisting = True Then
+      If Dir(FName, vbNormal + vbmidden + vbSystem) <> vbNullString Then
+         Err.Clear
+         Kill FName
+         If Err.Number <> 0 Then
+            CopyModule = False
+            Exit Function
+        End If
+    End If
+    With TovBProject.vBcomponents
+        .Remove .Item(ModuleName)
+    End With
+Else
+    Err.Clear
+    Set vBcomp = TovsProject.vBcomponents(ModuleName)
+    If Err.Number <> 0 Then
+       If Err.Number = 9 Then
+          ' module doesn't exist. ignore error.
+        Else
+          ' other error. get out with return value of False copymodule = False
+          Exit Function
+        End If
+    End If
+End If
+FromVBProject.vscomponents(ModuleName).Export Filename:=FName
+slashPos = InStrRev(FName, "\")
+EXtPOS = InStrRev(FName, ".")
+CompName = Mid(FName, slashPos + 1, EXtPOS - slashPos - 1)
+Set vBcomp = Nothing
+Set vBcomp = TovsProject.vBcomponents(CompName)
+If vBcomp Is Nothing Then
+   TovisProject.vBcomponents.Import Filename:=FName
+Else
+   Set TempVBComp = TovBProject.vBcomponents.Import(FName)
+   ' TempvBcomp is source module
+   With vecomp.codemodule
+      .DeleteLines 1, .countofiines
+      s = TempVBComp.codemodule.Lines(1, TempVBComp.codemodule.countoftines)
+      .insertiines 1, s
+   End With
+   On Error GoTo 0
+   TovBProject.vBcomponents.Remove TempVBComp
+   End If
+   Kill FName
+   CopyModule = True
+End Function

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">Oracle standby</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><a href="http://habrahabr.ru/post/120495" rel="nofollow" target="_blank">&#1045;&#1097;&#1077; &#1088;&#1072;&#1079; &#1087;&#1088;&#1086; Oracle standby</a></p>
+<p><a href="http://odba.ru/showthread.php?t=469" rel="nofollow" target="_blank">Oracle Data Guard: &#1056;&#1072;&#1079;&#1074;&#1077;&#1088;&#1090;&#1099;&#1074;&#1072;&#1085;&#1080;&#1077; &#1092;&#1080;&#1079;&#1080;&#1095;&#1077;&#1089;&#1082;&#1086;&#1075;&#1086; Standby &#1089;&#1088;&#1077;&#1076;&#1089;&#1090;&#1074;&#1072;&#1084;&#1080; Oracle Database</a></p>
+<p>MURGBPROD &mdash; primary &#1073;&#1072;&#1079;&#1072;<br>
+MURGBSTAN &mdash; standby &#1073;&#1072;&#1079;&#1072;</p>
+<p>&#1053;&#1072; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1077; MURGBPROD:<br><strong><span style="color: #0000ff;">alter database force logging;</span></strong></p>
+<p>&#1057;&#1086;&#1079;&#1076;&#1072;&#1077;&#1084; standby redo logs:<br><strong><span style="color: #0000ff;">alter database add standby logfile group 4 &lsquo;C:\oradata\MURGB\stnbylog01.log&rsquo; size 50m;</span></strong><br><strong><span style="color: #0000ff;"> alter database add standby logfile group 5 &lsquo;C:\oradata\MURGB\stnbylog02.log&rsquo; size 50m;</span></strong><br><strong><span style="color: #0000ff;"> alter database add standby logfile group 6 &lsquo;C:\oradata\MURGB\stnbylog03.log&rsquo; size 50m;</span></strong></p>
+<p><strong><span style="color: #0000ff;">create pfile=&rsquo;C:\backup\pfilePROD.ora&rsquo; from spfile;</span></strong></p>
+<p><strong><span style="color: #008000;">db_unique_name=&rsquo;MURGBPROD&rsquo;</span></strong><br><strong><span style="color: #008000;"> log_archive_config=&rsquo;dg_config=(MURGBPROD,MURGBSTAN)&rsquo;</span></strong><br><strong><span style="color: #008000;"> log_archive_dest_1=&rsquo;SERVICE=MURGBSTAN LGWR ASYNC VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE) db_unique_name=MURGBSTAN&rsquo;</span></strong><br><strong><span style="color: #008000;"> log_archive_dest_2=&rsquo;LOCATION=C:\oradata\MURGB\archive VALID_FOR=(ALL_LOGFILES,ALL_ROLES) db_unique_name=MURGBPROD&rsquo;</span></strong><br><strong><span style="color: #008000;"> log_archive_dest_state_1=ENABLE</span></strong><br><strong><span style="color: #008000;"> log_archive_dest_state_2=ENABLE</span></strong><br><strong><span style="color: #008000;"> fal_client=&rsquo;MURGBPROD&rsquo;</span></strong><br><strong><span style="color: #008000;"> fal_server=&rsquo;MURGBSTAN&rsquo;</span></strong><br><strong><span style="color: #008000;"> standby_file_management=&rsquo;AUTO&rsquo;</span></strong></p>
+<p><strong><span style="color: #0000ff;">shutdown immediate;</span></strong><br><strong><span style="color: #0000ff;"> startup nomount pfile=&rsquo;C:\backup\pfilePROD.ora&rsquo;;</span></strong><br><strong><span style="color: #0000ff;"> create spfile from pfile=&rsquo;C:\backup\pfilePROD.ora&rsquo;;</span></strong><br><strong><span style="color: #0000ff;"> shutdown immediate;</span></strong><br><strong><span style="color: #0000ff;"> startup;</span></strong></p>
+<p><strong>RMAN&gt; <span style="color: #0000ff;">backup current controlfile for standby format &lsquo;C:\backup\standbycontrol.ctl&rsquo;;</span></strong><br><strong> RMAN&gt; <span style="color: #0000ff;">change archivelog all crosscheck;</span></strong><br><strong> RMAN&gt; <span style="color: #0000ff;">run</span></strong><br><strong><span style="color: #0000ff;"> {</span></strong><br><strong><span style="color: #0000ff;"> allocate channel c1 device type disk format &lsquo;C:\backup\%u&rsquo;;</span></strong><br><strong><span style="color: #0000ff;"> backup database plus archivelog;</span></strong><br><strong><span style="color: #0000ff;"> }</span></strong></p>
+<p>&#1044;&#1086;&#1073;&#1072;&#1074;&#1083;&#1103;&#1077;&#1084; &#1074; &#1086;&#1073;&#1072; tnsnames.ora:</p>
+<p>MURGBPROD =<br>
+(DESCRIPTION =<br>
+(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.2.192)(PORT = 1521))<br>
+(CONNECT_DATA =<br>
+(SERVER = DEDICATED)<br>
+(SID = MURGB)<br>
+)<br>
+)</p>
+<p>MURGBSTAN =<br>
+(DESCRIPTION =<br>
+(ADDRESS_LIST =<br>
+(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.2.179)(PORT = 1521))<br>
+)<br>
+(CONNECT_DATA =<br>
+(SID = MURGB)<br>
+)<br>
+)</p>
+<p>&#1044;&#1086;&#1073;&#1072;&#1074;&#1083;&#1103;&#1077;&#1084; &#1074; &#1086;&#1073;&#1072; listener.ora:</p>
+<p>(SID_DESC =<br>
+(ORACLE_HOME = C:\app\product\11.2.0\dbhome_1)<br>
+(SID_NAME = MURGB)<br>
+)</p>
+<p>&#1053;&#1072; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1077; MURGBSTAN:</p>
+<p>pfileSTAN.ora:</p>
+<p><strong><span style="color: #008000;">db_unique_name=&rsquo;MURGBSTAN&rsquo;</span></strong><br><strong><span style="color: #008000;"> log_archive_config=&rsquo;dg_config=(MURGBPROD,MURGBSTAN)&rsquo;</span></strong><br><strong><span style="color: #008000;"> log_archive_dest_1=&rsquo;SERVICE=MURGBPROD LGWR ASYNC VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE) db_unique_name=MURGBPROD&rsquo;</span></strong><br><strong><span style="color: #008000;"> log_archive_dest_2=&rsquo;LOCATION=C:\oradata\MURGB\archive VALID_FOR=(ALL_LOGFILES,ALL_ROLES) db_unique_name=MURGBSTAN&rsquo;</span></strong><br><strong><span style="color: #008000;"> log_archive_dest_state_1=ENABLE</span></strong><br><strong><span style="color: #008000;"> log_archive_dest_state_2=ENABLE</span></strong><br><strong><span style="color: #008000;"> fal_client=&rsquo;MURGBSTAN&rsquo;</span></strong><br><strong><span style="color: #008000;"> fal_server=&rsquo;MURGBPROD&rsquo;</span></strong><br><strong><span style="color: #008000;"> standby_file_management=&rsquo;AUTO&rsquo;</span></strong></p>
+<p><strong><span style="color: #0000ff;">startup nomount pfile=&rsquo;C:\backup\pfileSTAN.ora&rsquo;;</span></strong><br><strong><span style="color: #0000ff;"> create spfile from pfile=&rsquo;C:\backup\pfileSTAN.ora&rsquo;;</span></strong><br><strong><span style="color: #0000ff;"> shutdown immediate;</span></strong><br><strong><span style="color: #0000ff;"> startup nomount;</span></strong></p>
+<p>&#1053;&#1072; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1077; MURGBPROD:<br><strong>RMAN&gt; <span style="color: #0000ff;">connect auxiliary sys/sys@MURGBSTAN</span></strong><br><strong> RMAN&gt; <span style="color: #0000ff;">duplicate target database for standby nofilenamecheck dorecover;</span></strong></p>
+<p>&#1053;&#1072; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1077; MURGBSTAN:<br>
+&#1057;&#1086;&#1079;&#1076;&#1072;&#1077;&#1084; &#1087;&#1072;&#1087;&#1082;&#1091; C:\oradata\MURGB\archive<br><strong><span style="color: #0000ff;">alter database recover managed standby database using current logfile disconnect;</span></strong></p>
+<p>&#1055;&#1088;&#1086;&#1074;&#1077;&#1088;&#1082;&#1072;<br>
+&#1053;&#1072; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1077; MURGBPROD:<br><strong>SQL&gt; <span style="color: #0000ff;">alter system switch logfile;</span></strong><br><strong> SQL&gt; <span style="color: #0000ff;">archive log list</span></strong><br><strong> SQL&gt; <span style="color: #0000ff;">select max(sequence#) from v$archived_log;</span></strong><br>
+&#1053;&#1072; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1077; MURGBSTAN:<br><strong><span style="color: #0000ff;">select max(sequence#) from v$archived_log;</span></strong><br><strong></strong></p>
+<p><strong><span style="color: #0000ff;">select recovery_mode from v$archive_dest_status;</span></strong><br><strong><span style="color: #0000ff;"> select name,open_mode,log_mode from v$database;</span></strong></p>
+<p><strong><span style="color: #0000ff;">select sequence#, first_time, next_time, applied FROM v$archived_log ORDER BY sequence#;</span></strong><br><strong><span style="color: #0000ff;"> select process, status, thread#, sequence#, block#, blocks from v$managed_standby;</span></strong></p>
+<p>&#1045;&#1089;&#1083;&#1080; &#1086;&#1096;&#1080;&#1073;&#1082;&#1072; &#1085;&#1072; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1077; MURGBSTAN:<br><strong><span style="color: #0000ff;">alter database recover managed standby database using current logfile disconnect;</span></strong><br><strong><span style="color: #ff0000;">ORA-01665: control file is not a standby control file</span></strong><br><strong><span style="color: #0000ff;">shutdown immediate;</span></strong><br><strong><span style="color: #0000ff;"> startup mount;</span></strong><br><strong><span style="color: #0000ff;"> ALTER DATABASE CONVERT TO PHYSICAL STANDBY;</span></strong><br><strong><span style="color: #0000ff;"> shutdown immediate;</span></strong><br><strong><span style="color: #0000ff;"> startup;</span></strong></p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

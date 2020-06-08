@@ -1,0 +1,37 @@
+/* Opacity */
+.hide {
+  opacity: 0;
+}
+/* Visibility */
+.hide {
+  visibility: hidden;
+}
+/* Display */
+.hide {
+  display: none;
+}
+/* Position */
+.hide {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+/* Clip-path */
+.hide {
+  clip-path: polygon(0px 0px,0px 0px,0px 0px,0px 0px);
+}
+/* Масштабирование элемента в 0 (к блочным) */
+{
+  transform: scale(0);
+}
+/* Нулевой height и overflow:hidden (к блочным) */
+{
+  height: 0;
+  overflow: hidden;
+}
+/* Фильтр размытия */
+{
+  filter: blur(100px);
+}
+/* HTML5-атрибут hidden */
+<div hidden><div>

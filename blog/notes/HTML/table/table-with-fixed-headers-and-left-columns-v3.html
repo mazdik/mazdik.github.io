@@ -1,0 +1,211 @@
+<style type="text/css">
+.container {
+  height:300px; 
+  width:480px;
+  overflow: hidden;
+}
+
+table {
+  position: relative;
+  background-color: #aaa;
+  border-collapse: collapse;
+table-layout: fixed;
+display: flex;
+flex-direction: column;
+height: 100%;
+width: 100%;
+}
+
+
+/*thead*/
+thead {
+  position: relative;
+  display: block; /*seperates the header from the body allowing it to be positioned*/
+}
+
+thead th {
+  background-color: #99a;
+  min-width: 120px;
+  border: 1px solid #222;
+}
+
+thead th:nth-child(1) {/*first cell in the header*/
+  position: relative;
+  background-color: #88b;
+  box-shadow: inset -1px 0 0 black;
+}
+
+
+/*tbody*/
+tbody {
+  flex: 1;
+  position: relative;
+  display: block; /*seperates the tbody from the header*/
+  overflow: auto;
+}
+
+tbody td {
+  background-color: #bbc;
+  min-width: 120px;
+  border: 1px solid #222;
+}
+
+tbody tr td:nth-child(1) {  /*the first cell in each tr*/
+  position: relative;
+  background-color: #99a;
+  box-shadow: inset -1px 0 0 black;
+}
+</style>
+
+<script type="text/javascript">
+onload = function() {
+  var tbody = document.querySelector("tbody"),
+      thead = document.querySelector("thead"),
+      theads = document.querySelectorAll("thead th:nth-child(1)"),
+      tbodys = document.querySelectorAll("tbody td:nth-child(1)");
+  tbody.addEventListener("scroll", function() {
+      thead.style.left = -this.scrollLeft;
+      for (var i = 0; i < theads.length; i++) {
+        theads[i].style.left = this.scrollLeft;
+      }
+      for (var i = 0; i < tbodys.length; i++) {
+        tbodys[i].style.left = this.scrollLeft;
+      }
+  });
+};
+</script>
+
+<body>
+<div class="container">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name<br/>123</th>
+        <th>Town</th>
+        <th>County</th>
+        <th>Age</th>
+        <th>Profession</th>
+        <th>Anual Income</th>
+        <th>Matital Status</th>
+        <th>Children</th>
+      </tr>
+       <tr>
+        <th>Name</th>
+        <th>Town</th>
+        <th>County</th>
+        <th>Age<br/>123<br/>321</th>
+        <th>Profession</th>
+        <th>Anual Income</th>
+        <th>Matital Status</th>
+        <th>Children</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John Smith</td>
+        <td>Macelsfield</td>
+        <td>Cheshire<br/>123</td>
+        <td>52</td>
+        <td>Brewer</td>
+        <td>£47,000</td>
+        <td>Married</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Jenny Jones<br/>123<br/>312</td>
+        <td>Threlkeld</td>
+        <td>Cumbria</td>
+        <td>34</td>
+        <td>Shepherdess</td>
+        <td>£28,000</td>
+        <td>Single</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>Peter Frampton</td>
+        <td>Avebury</td>
+        <td>Wiltshire</td>
+        <td>57</td>
+        <td>Musician</td>
+        <td>£124,000</td>
+        <td>Married</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>Simon King</td>
+        <td>Malvern</td>
+        <td>Worchestershire</td>
+        <td>48</td>
+        <td>Naturalist</td>
+        <td>£65,000</td>
+        <td>Married</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Lucy Diamond</td>
+        <td>St Albans</td>
+        <td>Hertfordshire</td>
+        <td>67</td>
+        <td>Pharmasist</td>
+        <td>Retired</td>
+        <td>Married</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>Austin Stevenson</td>
+        <td>Edinburgh</td>
+        <td>Lothian </td>
+        <td>36</td>
+        <td>Vigilante</td>
+        <td>£86,000</td>
+        <td>Single</td>
+        <td>Unknown</td>
+      </tr>
+      <tr>
+        <td>Wilma Rubble</td>
+        <td>Bedford</td>
+        <td>Bedfordshire</td>
+        <td>43</td>
+        <td>Housewife</td>
+        <td>N/A</td>
+        <td>Married</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Kat Dibble</td>
+        <td>Manhattan</td>
+        <td>New York</td>
+        <td>55</td>
+        <td>Policewoman</td>
+        <td>$36,000</td>
+        <td>Single</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Henry Bolingbroke</td>
+        <td>Bolingbroke</td>
+        <td>Lincolnshire</td>
+        <td>45</td>
+        <td>Landowner</td>
+        <td>Lots</td>
+        <td>Married</td>
+        <td>6</td>
+      </tr>
+      <tr>
+        <td>Alan Brisingamen</td>
+        <td>Alderley</td>
+        <td>Cheshire</td>
+        <td>352</td>
+        <td>Arcanist</td>
+        <td>A pile of gems</td>
+        <td>Single</td>
+        <td>0</td>
+      </tr>
+    </tbody>
+  </table>
+  
+</div>
+
+</body>
+

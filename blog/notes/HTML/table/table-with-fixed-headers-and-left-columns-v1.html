@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<style type="text/css">
+.fixedTable .table {
+  background-color: white;
+  width: auto;
+}
+.fixedTable .table tr td,
+.fixedTable .table tr th {
+  min-width: 100px;
+  width: 100px;
+  min-height: 20px;
+  height: 20px;
+  padding: 5px;
+}
+.fixedTable-header {
+  width: 510px;
+  height: 30px;
+  margin-left: 100px;
+  overflow: hidden;
+  border-bottom: 1px solid #CCC;
+}
+.fixedTable-sidebar {
+  width: 100px;
+  height: 310px;
+  float: left;
+  overflow: hidden;
+  border-right: 1px solid #CCC;
+}
+.fixedTable-body {
+  overflow: auto;
+  width: 510px;
+  height: 310px;
+  float: left;
+}
+</style>
+<script type="text/javascript">
+/*(function() {
+  var demo, fixedTable;
+
+  fixedTable = function(el) {
+    var $body, $header, $sidebar;
+    $body = $(el).find('.fixedTable-body');
+    $sidebar = $(el).find('.fixedTable-sidebar table');
+    $header = $(el).find('.fixedTable-header table');
+    return $($body).scroll(function() {
+      $($sidebar).css('margin-top', -$($body).scrollTop());
+      return $($header).css('margin-left', -$($body).scrollLeft());
+    });
+  };
+
+  demo = new fixedTable($('#demo'));
+
+}).call(this);*/
+
+$(document).ready(function() {
+  $('.fixedTable-body').scroll(function(e) {
+    $('.fixedTable-sidebar table').css("margin-top", -$(".fixedTable-body").scrollTop()); 
+    $('.fixedTable-header table').css("margin-left", -$(".fixedTable-body").scrollLeft());
+  });
+});
+</script>
+
+</head>
+<body>
+
+
+<div class="fixedTable" id="demo">
+  <header class="fixedTable-header">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+          <th>D</th>
+          <th>E</th>
+          <th>F</th>
+          <th>G</th>
+          <th>H</th>
+          <th>I</th>
+          <th>J</th>
+          <th>K</th>
+          <th>L</th>
+        </tr>
+      </thead>
+    </table>
+  </header>
+  <aside class="fixedTable-sidebar">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>7</td>
+        </tr>
+        <tr>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>9</td>
+        </tr>
+        <tr>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>11</td>
+        </tr>
+        <tr>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>13</td>
+        </tr>
+        <tr>
+          <td>14</td>
+        </tr>
+        <tr>
+          <td>15</td>
+        </tr>
+        <tr>
+          <td>16</td>
+        </tr>
+        <tr>
+          <td>17</td>
+        </tr>
+        <tr>
+          <td>18</td>
+        </tr>
+        <tr>
+          <td>19</td>
+        </tr>
+      </tbody>
+    </table>
+  </aside>
+  <div class="fixedTable-body">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+        <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td>f</td>
+          <td>g</td>
+          <td>h</td>
+          <td>i</td>
+          <td>j</td>
+          <td>k</td>
+          <td>l</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

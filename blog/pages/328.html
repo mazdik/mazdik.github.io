@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">Cleanup trace files Oracle</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>Cleanup trace files</p>
+<pre class="lang:bash">
+#!/bin/bash
+ORACLE_BASE=/u01/app/oracle
+export ORACLE_BASE
+ORACLE_SID=testdb
+export ORACLE_SID
+# Cleanup trace files more than 3 days old
+find $ORACLE_BASE/diag/rdbms/$ORACLE_SID/$ORACLE_SID/trace/*.trc -mtime +3 -exec rm {} \;
+find $ORACLE_BASE/diag/rdbms/$ORACLE_SID/$ORACLE_SID/trace/*.trm -mtime +3 -exec rm {} \;
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

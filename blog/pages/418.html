@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1060;&#1088;&#1072;&#1075;&#1084;&#1077;&#1085;&#1090;&#1072;&#1094;&#1080;&#1103; &#1090;&#1072;&#1073;&#1083;&#1080;&#1094; &#1074; Oracle</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<pre class="lang:plsql">
+
+--&#1060;&#1088;&#1072;&#1075;&#1084;&#1077;&#1085;&#1090;&#1072;&#1094;&#1080;&#1103; &#1090;&#1072;&#1073;&#1083;&#1080;&#1094;&#1099;
+SELECT TABLE_NAME, ROUND((BLOCKS*8),2) "SIZE_KB",
+ROUND((NUM_ROWS*AVG_ROW_LEN/1024),2) "SIZEREAL_KB",
+ROUND((BLOCKS*8),2)-ROUND((NUM_ROWS*AVG_ROW_LEN/1024),2) "RECLAIMABLE_SPACE",
+ROUND((ROUND((BLOCKS*8),2)-ROUND((NUM_ROWS*AVG_ROW_LEN/1024),2))*100/DECODE(ROUND((BLOCKS*8),2), 0, 1, ROUND((BLOCKS*8),2)), 2) "PERC"
+FROM ALL_TABLES
+WHERE TABLE_NAME = upper('TABLE_NAME');
+
+</pre>
+<p>&#1057;&#1087;&#1086;&#1089;&#1086;&#1073;&#1099; &#1076;&#1077;&#1092;&#1088;&#1072;&#1075;&#1084;&#1077;&#1085;&#1090;&#1072;&#1094;&#1080;&#1080;:<br>
+1. drop and recreate (exp/imp)<br>
+2. truncate (exp the data, truncate it, imp the data)<br>
+3. alter TABLE move + rebuild indexes<br>
+4. SHRINK SPACE &#1087;&#1086;&#1103;&#1074;&#1080;&#1083;&#1072;&#1089;&#1100; &#1074; 10G<br>
+5. DBMS_REDEFINITION</p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

@@ -1,0 +1,61 @@
+<style type="text/css">
+.box {
+    width: 200px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.elem {
+    border: solid #6AC5AC 3px;
+    position: relative;
+}
+</style>
+<h2>Вариант 1 (float: left;)</h2>
+<div style="position: relative;">
+    <div class="box elem" style="float: left;">
+        <p>1</p>
+    </div>
+    <div class="box elem" style="float: left;">
+        <p>2</p>
+    </div>
+    <div class="box elem" style="float: left;">
+        <p>3</p>
+    </div>
+    <div style="clear: left;"></div>
+</div>
+<h2>Вариант 2 (display: inline-block;)</h2>
+<div style="position: relative;">
+    <div class="box elem" style="display: inline-block;">
+        <p>1</p>
+    </div>
+    <div class="box elem" style="display: inline-block;">
+        <p>2</p>
+    </div>
+    <div class="box elem" style="display: inline-block;">
+        <p>3</p>
+    </div>
+</div>
+<h2>Вариант 3 (position: absolute; left: width+width; top: 0;)</h2>
+<div style="position: relative; height: 100px">
+    <div class="box elem" style="position: absolute; left: 0px; top: 0px;">
+        <p>1</p>
+    </div>
+    <div class="box elem" style="position: absolute; left: 210px; top: 0px;">
+        <p>2</p>
+    </div>
+    <div class="box elem" style="position: absolute; left: 420px; top: 0px;">
+        <p>3</p>
+    </div>
+</div>
+<h2>Вариант 4 (flex)</h2>
+<div style="display: flex;">
+    <div class="box elem">
+        <p>1</p>
+    </div>
+    <div class="box elem">
+        <p>2</p>
+    </div>
+    <div class="box elem">
+        <p>3</p>
+    </div>
+</div>

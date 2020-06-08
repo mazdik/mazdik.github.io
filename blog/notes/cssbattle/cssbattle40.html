@@ -1,0 +1,31 @@
+<i class="t a"></i>
+<i class="t b"></i>
+<style>
+  * {background:#6592CF}
+  .t {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .a {
+    width: 200px;
+    height: 200px;
+    background: #243D83;
+    border-radius: 0 50% 50%;
+  }
+  .a::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 100px;
+    top: 0;
+    left: 50px;
+    background: #6592CF;
+  }
+  .b {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+</style>

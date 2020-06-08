@@ -1,0 +1,110 @@
+﻿Восстановление БД Oracle на новом сервере c помощью RMAN.
+
+1. Создать структуру каталогов. Например:
+mkdir D:\oracle\product\10.2.0\admin\ORCL\adump
+mkdir D:\oracle\product\10.2.0\admin\ORCL\bdump
+mkdir D:\oracle\product\10.2.0\admin\ORCL\cdump
+mkdir D:\oracle\product\10.2.0\admin\ORCL\dpdump
+mkdir D:\oracle\product\10.2.0\admin\ORCL\udump
+mkdir D:\oracle\product\10.2.0\oradata\ORCL
+2. Настройка Oracle Net
+а). Настраиваем listener.ora
+б). Настраиваем tnsnames.ora
+в). sqlnet.ora создать и добавить в него строку:
+SQLNET.AUTHENTICATION_SERVICES = (NTS)
+3. Создаем базу ORCL с паролем SYS (создается служба OracleServiceORCL):
+oradim.exe -new -sid ORCL -syspwd sys -startmode auto
+oradim.exe -edit -sid ORCL -startmode auto -srvcstart system
+4. В regedit (например в KEY_OraDb10g_home1) создаем строковое значение ORACLE_SID
+5. Скопировать RMAN-бэкапы с FRA. Например: в каталог C:\FRA. 
+Желательно указать путь как было в spfile, чтобы не указывать пути при восстановлении.
+6. Далее подключаемся к RMAN и выполняем следующие команды:
+
+RMAN TARGET /
+RMAN> SET DBID 2272089540
+RMAN> STARTUP FORCE NOMOUNT
+RMAN> RESTORE SPFILE FROM 'C:\FRA\ORCL\AUTOBACKUP\2013_04_01\O1_MF_S_811592437_8OL9SQ0H_.BKP';
+RMAN> SHUTDOWN IMMEDIATE;
+RMAN> STARTUP NOMOUNT;
+RMAN> RESTORE CONTROLFILE FROM AUTOBACKUP;
+		или если путь к автобэкапу другой то:
+RMAN> RESTORE CONTROLFILE FROM 'C:\FRA\ORCL\AUTOBACKUP\2013_04_01\O1_MF_S_811592437_8OL9SQ0H_.BKP';
+RMAN> ALTER DATABASE MOUNT;
+		если путь к бэкапсету другой то указать (если несколько, то для каждой по команде):
+RMAN> CATALOG BACKUPPIECE 'C:\FRA\ORCL\BACKUPSET\2013_04_01\O1_MF_NNNDF_TAG20130401T101609_8OL9KB8S_.BKP';
+	или CATALOG START WITH 'C:\FRA\ORCL\BACKUPSET\2013_04_01';
+RMAN> LIST BACKUP;
+RMAN> RESTORE DATABASE;
+RMAN> RECOVER DATABASE;
+RMAN> ALTER DATABASE OPEN RESETLOGS;
+
+
+
+Возможные проблемы:
+
+Не совпадение DBID:
+RMAN> LIST BACKUP;
+
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03002: failure of list command at 04/05/2013 16:05:13
+RMAN-06189: current DBID 2272089542 does not match target mounted database (2272
+089540)
+
+RMAN> SHUTDOWN IMMEDIATE
+RMAN> STARTUP NOMOUNT
+RMAN> SET DBID 2272089540
+RMAN> ALTER DATABASE MOUNT;
+RMAN> LIST BACKUP;
+
+
+Не совпадение нумерации архивных журналов и контрольных точек:
+RMAN> RECOVER DATABASE;
+
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03002: failure of recover command at 04/05/2013 15:51:34
+RMAN-06054: media recovery requesting unknown archived log for thread 1 with seq
+uence 1 and starting SCN of 2208740
+
+RMAN> RECOVER DATABASE UNTIL SEQUENCE 1;
+
+
+Дополнительно:
+Скрипт просмотра дата и редо лог файлов в sqlplus:
+SELECT FILE# AS "File/Grp#", NAME FROM V$DATAFILE UNION
+SELECT GROUP#,MEMBER FROM V$LOGFILE;
+
+Пример скрипта восстановления с новым SID и путями к датафайлам. Номера datafile у всех разные.
+RMAN> @C:\rman.txt
+RMAN> run{
+set newname for datafile 1 to 'C:\ORADATA\ORCL\SYSTEM01.DBF';
+set newname for datafile 2 to 'C:\ORADATA\ORCL\SYSAUX01.DBF';
+set newname for datafile 3 to 'C:\ORADATA\ORCL\UNDOTBS01.DBF';
+set newname for datafile 4 to 'C:\ORADATA\ORCL\SPR01.DBF';
+set newname for datafile 5 to 'C:\ORADATA\ORCL\SPR_IND01.DBF';
+set newname for datafile 6 to 'C:\ORADATA\ORCL\USERS01.DBF';
+set newname for datafile 7 to 'C:\ORADATA\ORCL\USERS02.DBF';
+set newname for datafile 8 to 'C:\ORADATA\ORCL\USERS03.DBF';
+set newname for datafile 9 to 'C:\ORADATA\ORCL\USR_IND01.DBF';
+set newname for datafile 10 to 'C:\ORADATA\ORCL\USR_IND02.DBF';
+set newname for datafile 11 to 'C:\ORADATA\ORCL\USR_IND03.DBF';
+SQL "ALTER DATABASE RENAME FILE ''D:\ORADATA\ORCL\REDO01.LOG'' TO ''C:\ORADATA\ORCL\REDO01.LOG'' ";
+SQL "ALTER DATABASE RENAME FILE ''D:\ORADATA\ORCL\REDO02.LOG'' TO ''C:\ORADATA\ORCL\REDO02.LOG'' ";
+SQL "ALTER DATABASE RENAME FILE ''D:\ORADATA\ORCL\REDO03.LOG'' TO ''C:\ORADATA\ORCL\REDO03.LOG'' ";
+SET NEWNAME FOR TEMPFILE 1 TO 'C:\ORADATA\ORCL\TEMP01.DBF';  
+SET NEWNAME FOR TEMPFILE 2 TO 'C:\ORADATA\ORCL\TEMP02.DBF';  
+
+SET UNTIL SCN 745212;
+RESTORE DATABASE;
+SWITCH DATAFILE ALL;
+SWITCH TEMPFILE ALL; 
+RECOVER DATABASE;
+}
+
+Вместо SET UNTIL SCN можно SET UNTIL SEQUENCE;
+
+Последний SEQUENCE в бэкапе 103505 + 20 (FRA\ARCHIVELOG - 20шт) + 1 = 103526;
+RECOVER DATABASE UNTIL SEQUENCE 103526;

@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1057;&#1082;&#1088;&#1080;&#1087;&#1090;&#1099; RMAN</h1>
+
+
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><img src="/uploads/2013/04/backup.jpg" alt="backup" width="596" height="325" class="aligncenter size-full wp-image-1077" srcset="/uploads/2013/04/backup.jpg 596w, /uploads/2013/04/backup-300x163.jpg 300w" sizes="(max-width: 596px) 100vw, 596px"></p>
+<h2>&#1057;&#1082;&#1088;&#1080;&#1087;&#1090; rman &#1087;&#1086;&#1076; windows &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;</h2>
+<p><strong>rman_bkp_f.bat:</strong></p>
+<pre class="lang:bash">
+
+set ORACLE_HOME=D:\oracle\product\10.2.0\db_1
+D:\oracle\product\10.2.0\db_1\bin\rman target sys/sys@SID<d: log d:><p><strong>rman_bkp_f.txt:</strong></p>
+<pre class="lang:bash">
+
+run
+{
+
+CONFIGURE RETENTION POLICY TO REDUNDANCY 14;
+CONFIGURE CONTROLFILE AUTOBACKUP ON;
+#CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO 'C:\FRA\%d\AUTOBACKUP\CF_%d_%F';
+CONFIGURE BACKUP OPTIMIZATION ON;
+CONFIGURE DEVICE TYPE DISK BACKUP TYPE TO COMPRESSED BACKUPSET;
+backup as compressed backupset full database plus archivelog delete all input;
+crosscheck archivelog all;
+crosscheck backup;
+crosscheck copy;
+delete noprompt obsolete;
+backup validate database;
+restore database validate;
+restore spfile validate;
+restore controlfile validate;
+restore archivelog from time 'sysdate-1' validate;
+}
+
+</pre>
+<p>&nbsp;</p>
+<h2>&#1057;&#1082;&#1088;&#1080;&#1087;&#1090; rman &#1087;&#1086;&#1076; linux&nbsp;&#1089;&#1077;&#1088;&#1074;&#1077;&#1088;</h2>
+<p>crontab:</p>
+<p>0 2 * * * oracle /u01/app/oracle/admin/rmanbackup.sh</p>
+<p>rmanbackup.sh:</p>
+<pre class="lang:bash">
+
+# export variables
+ORACLE_BASE=/u01/app/oracle
+export ORACLE_BASE
+ORACLE_HOME=/u01/app/oracle/product/11.2.0/db_1
+export ORACLE_HOME
+ORACLE_SID=testdb
+export ORACLE_SID
+PATH=$ORACLE_HOME/bin:$PATH
+export PATH
+LOGFILE=/u01/app/oracle/admin/backup.log
+rman target /  $LOGFILE
+set echo on;
+CONFIGURE CONTROLFILE AUTOBACKUP ON;
+#CONFIGURE RETENTION POLICY TO RECOVERY WINDOW OF 7 DAYS;
+CONFIGURE RETENTION POLICY TO REDUNDANCY 2;
+CONFIGURE BACKUP OPTIMIZATION ON;
+CONFIGURE DEVICE TYPE DISK BACKUP TYPE TO COMPRESSED BACKUPSET;
+show all;
+report unrecoverable;
+# actual backup
+#backup full database noexclude include current controlfile spfile;
+backup database plus archivelog;
+# delete obsolete;
+# report obsolete;
+delete force noprompt obsolete;
+# crosscheck
+crosscheck archivelog all;
+delete noprompt expired archivelog all;
+crosscheck backup;
+delete noprompt expired backup;
+crosscheck copy;
+delete noprompt expired copy;
+list backup;
+list backup summary;
+list backup recoverable;
+report unrecoverable;
+restore database validate;
+restore spfile validate;
+exit
+ERMAN
+</pre>
+					</d:></pre>
+</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

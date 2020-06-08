@@ -1,0 +1,38 @@
+<i class="t a"></i>
+<i class="t a"></i>
+<i class="t a"></i>
+<i class="t a"></i>
+<i class="t b"></i>
+<i class="t b"></i>
+<i class="t b"></i>
+<i class="t b"></i>
+<i class="t c"></i>
+<i class="t c"></i>
+<i class="t c"></i>
+<i class="t c"></i>
+<style>
+  * {background: #5C434C; margin: 1px;}
+  .t {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    margin: 8px;
+    position: relative;
+    display: inline-block;
+  }
+  .t::after {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    content: '';
+    position: absolute;
+    background: #F09462;
+  }
+  .a:nth-child(2n)::after,
+  .c:nth-child(2n)::after {
+    background: #F5D6B4;
+  }
+  .b:nth-child(2n+1)::after {
+    background: #F5D6B4;
+  }
+</style>

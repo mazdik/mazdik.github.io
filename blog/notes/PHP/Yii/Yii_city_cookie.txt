@@ -1,0 +1,87 @@
+Сохранить город в cookies + зависимые списки
+
+Модель:
+class CityForm extends CFormModel {
+
+    public $region;
+    public $city;
+    
+    	public function attributeLabels()
+	{
+          return array (
+            'region' => 'Регион',
+            'city' => 'Город',      
+             );
+        }
+
+    public function setCookieCity($city_id) {
+        $cookie = new CHttpCookie('city', $city_id);
+        $cookie->expire = time() + 60 * 60 * 24 * 180;
+        Yii::app()->request->cookies['city'] = $cookie;
+        return TRUE;
+    }
+
+}
+
+Контроллер:
+        public function actionSelectcity() 
+        {
+            $model = new CityForm;
+            if (isset($_POST['CityForm'])) {
+                $city_id =  $_POST['CityForm']['city'];
+                if ($model->setCookieCity($city_id))
+                    $this->redirect (Yii::app()->user->returnUrl);
+            }
+            $this->render('city',array('model'=>$model));
+        }
+
+        public function actionDynamicCity()
+            {
+                $region_id = (int)$_POST['region'];
+                $data= City::getAssocListCityByRegion($region_id);
+                foreach($data as $value=>$name)
+                {
+                    echo CHtml::tag('option',
+                               array('value'=>$value),CHtml::encode($name),true);
+                }
+            }
+		
+Вьюшка:
+<?php
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    'id' => 'city-form',
+    'enableAjaxValidation' => false,
+        ));
+?>
+
+<?php echo $form->labelEx($model, 'region'); ?>
+<?php
+echo $form->dropDownList($model, 'region', Region::getAssocListRegion(), array(
+    'empty' => 'Выбрать регион',
+    'class' => 'span5',
+    'ajax' => array(
+        'type' => 'POST', //request type
+        'url' => CController::createUrl('Animals/DynamicCity'), //url to call.
+        'data' => array('region' => 'js:this.value'),
+        'update' => '#CityForm_city', //selector to update
+        ))
+);
+?>
+
+    <?php echo $form->labelEx($model, 'city'); ?>
+    <?php echo $form->dropDownList($model, 'city', array(), array('class' => 'span5')); ?>
+
+<div class="form-actions">
+    <?php
+    $this->widget('bootstrap.widgets.TbButton', array(
+        'buttonType' => 'submit',
+        'type' => 'primary',
+        'label' => 'Выбрать',
+    ));
+    ?>
+</div>
+
+<?php $this->endWidget(); ?>
+
+Вызов из cookies
+$cookie_city = isset(Yii::app()->request->cookies['city']) ? Yii::app()->request->cookies['city']->value : '';

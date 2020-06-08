@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">ORA-01578: &#1088;&#1072;&#1079;&#1088;&#1091;&#1096;&#1077;&#1085; &#1073;&#1083;&#1086;&#1082; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093; ORACLE</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>ORA-01578: &#1088;&#1072;&#1079;&#1088;&#1091;&#1096;&#1077;&#1085; &#1073;&#1083;&#1086;&#1082; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093; ORACLE (&#1092;&#1072;&#1081;&#1083; # 4, &#1073;&#1083;&#1086;&#1082; # 935432)</p>
+<p>&#1048;&#1097;&#1077;&#1084; &#1086;&#1073;&#1098;&#1077;&#1082;&#1090; &#1074; &#1082;&#1086;&#1090;&#1086;&#1088;&#1086;&#1084; &#1089;&#1073;&#1086;&#1081;&#1085;&#1099;&#1081; &#1073;&#1083;&#1086;&#1082;:</p>
+<pre class="lang:plsql">
+SELECT owner, segment_name, segment_type
+FROM dba_extents
+WHERE file_id = 4
+AND 935432 BETWEEN block_id AND block_id + blocks - 1;
+
+</pre>
+<p>&#1054;&#1073;&#1098;&#1077;&#1082;&#1090;&nbsp;I_ENV_LOCK_SESSION_UNIT &mdash; &nbsp;&#1080;&#1085;&#1076;&#1077;&#1082;&#1089;, &#1090;&#1086; &#1084;&#1086;&#1078;&#1085;&#1086; &#1087;&#1077;&#1088;&#1077;&#1089;&#1086;&#1079;&#1076;&#1072;&#1090;&#1100;:</p>
+<pre class="lang:plsql">
+drop index I_ENV_LOCK_SESSION_UNIT;
+create index I_ENV_LOCK_SESSION_UNIT on ENV_LOCK( SESSION_ID,UNITCODE );
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

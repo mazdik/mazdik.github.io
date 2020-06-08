@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1089;&#1090;&#1088;&#1086;&#1082;&#1080; &#1074; &#1089;&#1090;&#1086;&#1083;&#1073;&#1094;&#1099; (rows to cols)</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<pre class="lang:plsql ">
+------- &#1086;&#1073;&#1099;&#1095;&#1085;&#1099;&#1081; &#1079;&#1072;&#1087;&#1088;&#1086;&#1089; -------
+select
+OBJECT_TYPE, count(*) cnt,
+ROW_NUMBER() OVER (ORDER BY OBJECT_TYPE) seq
+from SYS.ALL_OBJECTS
+where OWNER='LIDER'
+and OBJECT_TYPE in ('FUNCTION', 'INDEX', 'PACKAGE', 'PACKAGE BODY', 'PROCEDURE', 'TABLE', 'TRIGGER', 'VIEW')
+group by OBJECT_TYPE
+
+-- Oracle 11 - &#1089;&#1072;&#1084;&#1099;&#1081; &#1091;&#1076;&#1086;&#1073;&#1085;&#1099;&#1081; &#1074;&#1072;&#1088;&#1080;&#1072;&#1085;&#1090; --
+select *
+from
+(select object_type
+from SYS.ALL_OBJECTS where OWNER='LIDER')
+pivot
+(count(object_type)
+for object_type in ('SEQUENCE', 'PROCEDURE', 'VIEW', 'SYNONYM'));
+
+------- &#1042;&#1072;&#1088;&#1080;&#1072;&#1085;&#1090; &#1089; ROW_NUMBER() OVER -------
+SELECT
+MAX(DECODE(seq,1,cnt,NULL)) "FUNCTION",
+MAX(DECODE(seq,2,cnt,NULL)) "INDEX",
+MAX(DECODE(seq,3,cnt,NULL)) "PACKAGE",
+MAX(DECODE(seq,4,cnt,NULL)) "PACKAGE BODY",
+MAX(DECODE(seq,5,cnt,NULL)) "PROCEDURE",
+MAX(DECODE(seq,6,cnt,NULL)) "TABLE",
+MAX(DECODE(seq,7,cnt,NULL)) "TRIGGER",
+MAX(DECODE(seq,8,cnt,NULL)) "VIEW"
+FROM
+(
+select
+OBJECT_TYPE, count(*) cnt,
+ROW_NUMBER() OVER (ORDER BY OBJECT_TYPE) seq
+from SYS.ALL_OBJECTS
+where OWNER='LIDER'
+and OBJECT_TYPE in ('FUNCTION', 'INDEX', 'PACKAGE', 'PACKAGE BODY', 'PROCEDURE', 'TABLE', 'TRIGGER', 'VIEW')
+group by OBJECT_TYPE
+)
+
+------- &#1042;&#1072;&#1088;&#1080;&#1072;&#1085;&#1090; &#1089; LEAD -------
+select * from (
+select
+LEAD(t.cnt, 0, 0) OVER (ORDER BY OBJECT_TYPE) AS "FUNCTION",
+LEAD(t.cnt, 1, 0) OVER (ORDER BY OBJECT_TYPE) AS "INDEX",
+LEAD(t.cnt, 2, 0) OVER (ORDER BY OBJECT_TYPE) AS "PACKAGE",
+LEAD(t.cnt, 3, 0) OVER (ORDER BY OBJECT_TYPE) AS "PACKAGE BODY",
+LEAD(t.cnt, 4, 0) OVER (ORDER BY OBJECT_TYPE) AS "PROCEDURE",
+LEAD(t.cnt, 5, 0) OVER (ORDER BY OBJECT_TYPE) AS "TABLE",
+LEAD(t.cnt, 6, 0) OVER (ORDER BY OBJECT_TYPE) AS "TRIGGER",
+LEAD(t.cnt, 7, 0) OVER (ORDER BY OBJECT_TYPE) AS "VIEW"
+from (
+select OBJECT_TYPE, count(*) cnt
+from SYS.ALL_OBJECTS
+where OWNER='LIDER'
+and OBJECT_TYPE in ('FUNCTION', 'INDEX', 'PACKAGE', 'PACKAGE BODY', 'PROCEDURE', 'TABLE', 'TRIGGER', 'VIEW')
+group by OBJECT_TYPE
+order by OBJECT_TYPE
+) t
+) where rownum=1
+
+------- &#1042;&#1072;&#1088;&#1080;&#1072;&#1085;&#1090; &#1089; LAG -------
+select * from (
+select
+ROW_NUMBER() OVER (ORDER BY null) rnum,
+LAG(t.cnt, 7, 0) OVER (ORDER BY OBJECT_TYPE) AS "FUNCTION",
+LAG(t.cnt, 6, 0) OVER (ORDER BY OBJECT_TYPE) AS "INDEX",
+LAG(t.cnt, 5, 0) OVER (ORDER BY OBJECT_TYPE) AS "PACKAGE",
+LAG(t.cnt, 4, 0) OVER (ORDER BY OBJECT_TYPE) AS "PACKAGE BODY",
+LAG(t.cnt, 3, 0) OVER (ORDER BY OBJECT_TYPE) AS "PROCEDURE",
+LAG(t.cnt, 2, 0) OVER (ORDER BY OBJECT_TYPE) AS "TABLE",
+LAG(t.cnt, 1, 0) OVER (ORDER BY OBJECT_TYPE) AS "TRIGGER",
+LAG(t.cnt, 0, 0) OVER (ORDER BY OBJECT_TYPE) AS "VIEW"
+from (
+select OBJECT_TYPE, count(*) cnt
+from SYS.ALL_OBJECTS
+where OWNER='LIDER'
+and OBJECT_TYPE in ('FUNCTION', 'INDEX', 'PACKAGE', 'PACKAGE BODY', 'PROCEDURE', 'TABLE', 'TRIGGER', 'VIEW')
+group by OBJECT_TYPE
+order by OBJECT_TYPE
+) t
+) where rnum=8
+
+------- &#1042;&#1072;&#1088;&#1080;&#1072;&#1085;&#1090; &#1089; CASE -------
+select sum(
+case when OBJECT_TYPE = 'FUNCTION'
+then cnt
+else 0 end ) as "FUNCTION",
+sum(
+case when OBJECT_TYPE = 'INDEX'
+then cnt
+else 0 end ) as "INDEX",
+sum(
+case when OBJECT_TYPE = 'PACKAGE'
+then cnt
+else 0 end ) as "PACKAGE",
+sum(
+case when OBJECT_TYPE = 'PACKAGE BODY'
+then cnt
+else 0 end ) as "PACKAGE BODY",
+sum(
+case when OBJECT_TYPE = 'PROCEDURE'
+then cnt
+else 0 end ) as "PROCEDURE",
+sum(
+case when OBJECT_TYPE = 'TABLE'
+then cnt
+else 0 end ) as "TABLE",
+sum(
+case when OBJECT_TYPE = 'TRIGGER'
+then cnt
+else 0 end ) as "TRIGGER",
+sum(
+case when OBJECT_TYPE = 'VIEW'
+then cnt
+else 0 end ) as "VIEW"
+from
+(
+select
+OBJECT_TYPE, count(*) cnt,
+ROW_NUMBER() OVER (ORDER BY OBJECT_TYPE) seq
+from SYS.ALL_OBJECTS
+where OWNER='LIDER'
+and OBJECT_TYPE in ('FUNCTION', 'INDEX', 'PACKAGE', 'PACKAGE BODY', 'PROCEDURE', 'TABLE', 'TRIGGER', 'VIEW')
+group by OBJECT_TYPE
+)
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

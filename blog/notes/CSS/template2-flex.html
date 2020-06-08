@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>With flex</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" rel="stylesheet">
+
+<style type="text/css">
+
+*, *::after, *::before { box-sizing: border-box; }
+html { font-size: 10px; -webkit-tap-highlight-color: transparent; }
+body { background-color: #fff; color: #333; font-size: 14px; font-family: Verdana, Arial, sans-serif; line-height: 20px; }
+a { text-decoration: none; transition: all 0.3s linear 0s; color: #337ab7; }
+html, body { height: 100%; }
+
+/***************/
+.navbar {
+  font-size: 14px;
+  background-color: #2578cf;
+  padding-bottom: 10px;
+}
+
+.main-nav {
+  list-style-type: none;
+  display: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links,
+.logo {
+  text-decoration: none;
+  color: white;
+}
+
+.main-nav li {
+  text-align: center;
+}
+
+.logo {
+  display: inline-block;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.nav-links {
+  display: block;
+  padding: 10px 0;
+}
+
+.nav-links:hover {
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.nav-links.active {
+  box-shadow: 0 2px 1px rgba(0, 0, 0, .05), 0 0 0 1px rgba(0, 0, 0, .125) inset;
+}
+
+.navbar-toggle {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+}
+
+.active {
+  display: block;
+}
+
+@media screen and (min-width: 768px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+    height: 40px;
+    align-items: center;
+  }
+
+  .main-nav {
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+  }
+
+  .main-nav li {
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 15px;
+  }
+
+  .logo {
+    margin-top: 0;
+  }
+
+  .navbar-toggle {
+    display: none;
+  }
+}
+
+/**************/
+
+.header-nav {
+  position: fixed;
+  top: 0;
+  z-index: 3;
+  width: 100%;
+}
+
+.body-nav {
+  position: fixed;
+  top: 40px;
+  z-index: 2;
+  height: calc(100vh - 40px);
+  overflow-x: hidden;
+  width: 200px;
+}
+
+/**************/
+
+.sidenav {
+  background-color: #19528e;
+}
+
+.sidenav a {
+  display: block;
+  text-decoration: none;
+  padding: 8px;
+  color: white;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.sidenav a:hover {
+  background-color: #267bd3;
+  color: white;
+}
+
+.sidenav a.active {
+  background-color: #2373c6;
+  color: white;
+}
+
+@media screen and (max-width: 700px) {
+  .sidenav {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 0;
+  }
+
+  .sidenav a {
+    float: left;
+  }
+
+  div.main {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidenav a {
+    text-align: center;
+    float: none;
+  }
+}
+
+.main {
+  margin-left: 200px;
+  padding: 54px 20px 20px 20px;
+}
+</style>
+</head>
+<body>
+
+<header class="header-nav">
+  <nav class="navbar">
+    <a href="#" class="logo">logo</a>
+    <ul class="main-nav" id="mainNav">
+      <li>
+        <a href="#" class="nav-links">Home</a>
+      </li>
+      <li>
+        <a href="#" class="nav-links">Products</a>
+      </li>
+      <li>
+        <a href="#" class="nav-links">About Us</a>
+      </li>
+      <li>
+        <a href="#" class="nav-links">Contact Us</a>
+      </li>
+      <li>
+        <a href="#" class="nav-links">Blog</a>
+      </li>
+    </ul>
+    <span class="navbar-toggle" id="js-navbar-toggle">&#9776;</span>
+  </nav>
+</header>
+
+<div class="body-nav sidenav">
+  <a href="#" class="active">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+  <a href="#">About</a>
+  <a href="#">Contact</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+  <a href="#">About</a>
+</div>
+
+<div class="main">
+  <h2>Sidenav Example</h2>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+  <p>Some text some text some text some text..</p>
+</div>
+
+<script type="text/javascript">
+let mainNav = document.getElementById("mainNav");
+let navBarToggle = document.getElementById("js-navbar-toggle");
+
+navBarToggle.addEventListener("click", function() {
+  mainNav.classList.toggle("active");
+});
+</script>
+
+</body>
+</html>

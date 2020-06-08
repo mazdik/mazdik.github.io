@@ -1,0 +1,27 @@
+Тестировать
+"C:\Program Files\VertrigoServ\Apache\bin\ab" -n 1000 -c 5 http://2ebook.ru/site/contact
+
+Результат чем выше тем лучше
+Requests per second:    10.86 [#/sec] (mean)
+
+Добавить в config:
+
+
+		'cache' => array(
+			'class' => 'CDbCache',
+		),
+            
+		'db'=>array(
+			'schemaCachingDuration'=>180,
+		),
+		
+		
+Сессия в кэше
+Рекомендуется использовать, если не критична потеря данных сессии.
+
+'session' => array(
+    'class' => 'CCacheHttpSession',
+),
+'cache'=>array(
+    'class'=>'system.caching.CApcCache',
+)

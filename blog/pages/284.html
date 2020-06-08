@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">ARCHIVELOG</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><span style="color: #339966;"><strong>&#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100; &#1088;&#1072;&#1079;&#1084;&#1077;&#1088; &#1080;&nbsp;&#1088;&#1072;&#1089;&#1087;&#1086;&#1083;&#1086;&#1078;&#1077;&#1085;&#1080;&#1077;&nbsp;FRA</strong></span></p>
+<p><strong><span style="color: #3366ff;">ALTER SYSTEM set</span> DB_RECOVERY_FILE_DEST_SIZE = <span style="color: #ff0000;">200G</span> <span style="color: #3366ff;">scope = both;</span></strong><br><strong><span style="color: #3366ff;">ALTER SYSTEM set</span> DB_RECOVERY_FILE_DEST = <span style="color: #ff0000;">&lsquo;D:\flash_recovery_area&rsquo;</span> <span style="color: #3366ff;">scope = both;</span></strong></p>
+<p><strong><span style="color: #339966;">&mdash;&#1050;&#1072;&#1082; &#1091;&#1079;&#1085;&#1072;&#1090;&#1100; &#1074; &#1082;&#1072;&#1082;&#1086;&#1084; &#1088;&#1077;&#1078;&#1080;&#1084;&#1077; &#1073;&#1072;&#1079;&#1072; ARCHIVELOG/NOARCHIVELOG?</span></strong><br>
+select log_mode from v$database;</p>
+<p><strong><span style="color: #339966;">&mdash;&#1074;&#1082;&#1083;&#1102;&#1095;&#1080;&#1090;&#1100; ARCHIVELOG</span></strong><br>
+shutdown immediate<br>
+startup mount<br>
+alter database archivelog;<br>
+alter database open;</p>
+<p><strong><span style="color: #339966;">&mdash;&#1087;&#1086;&#1076; sqlplus</span></strong><br>
+archive log list<br>
+show parameter recovery_file_dest<br>
+show parameter recovery_file_dest_size</p>
+<p>SELECT * FROM V$RECOVERY_FILE_DEST;<br>
+SELECT * FROM V$FLASH_RECOVERY_AREA_USAGE;</p>
+<p><strong><span style="color: #339966;">&mdash;&#1087;&#1088;&#1086;&#1074;&#1077;&#1088;&#1082;&#1072;</span></strong><br>
+alter system switch logfile;<br>
+ALTER SYSTEM ARCHIVE LOG CURRENT;</p>
+<p><span style="color: #339966;"><strong>&mdash;&#1042;&#1088;&#1077;&#1084;&#1103; &#1087;&#1077;&#1088;&#1077;&#1082;&#1083;&#1102;&#1095;&#1077;&#1085;&#1080;&#1103; (30 &#1084;&#1080;&#1085;)</strong></span><br>
+alter system set ARCHIVE_LAG_TARGET = 1800 scope=both;</p>
+<p><span style="color: #339966;"><strong>&mdash; &#1086;&#1090;&#1082;&#1083;&#1102;&#1095;&#1080;&#1090;&#1100; DB_RECOVERY_FILE_DEST</strong></span><br>
+ALTER SYSTEM RESET DB_RECOVERY_FILE_DEST SCOPE=spfile sid=&rsquo;*&rsquo;;</p>
+<p><span style="color: #339966;"><strong>&mdash;&#1074;&#1099;&#1082;&#1083;&#1102;&#1095;&#1080;&#1090;&#1100; ARCHIVELOG</strong></span><br>
+shutdown immediate;<br>
+startup mount;<br>
+alter database noarchivelog;<br>
+alter database open;</p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

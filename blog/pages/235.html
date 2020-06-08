@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1059;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100; Label Securitie Option</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&#1055;&#1088;&#1080; &#1087;&#1077;&#1088;&#1077;&#1082;&#1086;&#1084;&#1087;&#1080;&#1083;&#1103;&#1094;&#1080;&#1080; &#1088;&#1091;&#1075;&#1072;&#1077;&#1090;&#1089;&#1103; &#1085;&#1072; LBACSYS.LBAC_EVENTS (Label Securitie Option)</p>
+<p>&#1055;&#1088;&#1086;&#1089;&#1084;&#1086;&#1090;&#1088; &#1086;&#1073;&#1098;&#1077;&#1082;&#1090;&#1086;&#1074; Label Securitie Option:</p>
+<pre class="lang:plsql">SELECT
+object_type
+,COUNT(*)
+FROM dba_objects
+WHERE owner='LBACSYS'
+GROUP BY object_type;
+
+</pre>
+<p>&#1059;&#1076;&#1072;&#1083;&#1103;&#1077;&#1090; Label Securitie Option &#1089; &#1101;&#1082;&#1079;&#1077;&#1084;&#1087;&#1083;&#1103;&#1088;&#1072; &#1073;&#1072;&#1079;&#1099; (&#1074; &#1088;&#1077;&#1078;&#1080;&#1084;&#1077; startup upgrade):<br>
+@C:\oracle\product\11.2\dbhome\RDBMS\ADMIN\catnools.sql</p>
+<p>&#1057;&#1090;&#1072;&#1090;&#1091;&#1089;&#1099; &#1082;&#1086;&#1084;&#1087;&#1086;&#1085;&#1077;&#1085;&#1090;&#1086;&#1074; Oracle:</p>
+<pre class="lang:plsql">select comp_id, comp_name, version, status, schema
+from dba_registry;
+
+</pre>
+<p>&#1042;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1077; Oracle Database Packages and Types:</p>
+<p>startup migrate;<br>
+SQL&gt; @?/rdbms/admin/catalog.sql<br>
+SQL&gt; @?/rdbms/admin/catproc.sql</p>
+<p>catalog.sql &#1073;&#1091;&#1076;&#1077;&#1090; &#1087;&#1077;&#1088;&#1077;&#1089;&#1086;&#1079;&#1076;&#1072;&#1085; Oracle database Catalog Views component<br>
+catproc.sql &#1073;&#1091;&#1076;&#1077;&#1090; &#1087;&#1077;&#1088;&#1077;&#1089;&#1086;&#1079;&#1076;&#1072;&#1085; Oracle database Packages and Types component</p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

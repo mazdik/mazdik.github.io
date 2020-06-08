@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1060;&#1091;&#1085;&#1082;&#1094;&#1080;&#1103; &#1076;&#1083;&#1103; &#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1080;&#1103; &#1085;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1103; &#1087;&#1077;&#1088;&#1080;&#1086;&#1076;&#1072;</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&nbsp;</p>
+<pre class="lang:plsql">
+function get_period (dDATE in date)
+return varchar
+as
+sPERIOD varchar(50):='';
+iYEAR integer;
+iMONTH integer;
+begin
+iYEAR := to_number(to_char(dDATE,'YYYY'),'9999');
+iMONTH := to_number(to_char(dDATE,'MM'),'99');
+if iMONTH = 4 then
+sPERIOD:='1 &#1082;&#1074;&#1072;&#1088;&#1090;&#1072;&#1083; '||iYEAR||'&#1075;.';
+elsif iMONTH = 7 then
+sPERIOD:='2 &#1082;&#1074;&#1072;&#1088;&#1090;&#1072;&#1083; '||iYEAR||'&#1075;.';
+elsif iMONTH = 10 then
+sPERIOD:='3 &#1082;&#1074;&#1072;&#1088;&#1090;&#1072;&#1083; '||iYEAR||'&#1075;.';
+elsif iMONTH = 1 then
+sPERIOD:='4 &#1082;&#1074;&#1072;&#1088;&#1090;&#1072;&#1083; '||iYEAR||'&#1075;.';
+end if;
+return sPERIOD;
+end get_period;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

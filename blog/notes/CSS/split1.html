@@ -1,0 +1,51 @@
+<style>
+* {
+    box-sizing: border-box;
+}
+.container {
+    height: 500px;
+    position: relative;
+}
+.split {
+    display: flex;
+    height: 100%;
+}
+.split >:nth-child(1) {
+    overflow: scroll;
+}
+.split >:nth-child(2) {
+    flex-grow: 1;
+}
+.split.vertical {
+    resize: horizontal;
+    flex-direction: column;
+    width: 50%;
+}
+.split.horizontal {
+    flex-direction: row;
+}
+.box-a{
+    resize: vertical;
+    height: 50%;
+    border: 1px solid #F6F2A4;
+    background: #FFFEDB;
+}
+.box-b{
+    border: 1px solid #F2B98D;
+    background: #FEE5D0;
+}
+.box-c{
+    border: 1px solid #F18FB3;
+    background: #FDD1E2;
+}
+</style>
+
+<div class="container">
+    <div class="split horizontal">
+        <div class="split vertical">
+            <div class="box-a">A</div>
+            <div class="box-b">B</div>
+        </div>
+        <div class="box-c">C</div>
+    </div>
+</div>

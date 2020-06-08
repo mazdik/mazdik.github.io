@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">DBMS_REPAIR ORA-01578: &#1088;&#1072;&#1079;&#1088;&#1091;&#1096;&#1077;&#1085; &#1073;&#1083;&#1086;&#1082; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093; ORACLE</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<pre class="lang:plsql ">
+-- &#1057;&#1086;&#1079;&#1076;&#1072;&#1085;&#1080;&#1077; &#1090;&#1072;&#1073;&#1083;&#1080;&#1094;&#1099; &#1076;&#1083;&#1103; &#1074;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103;
+BEGIN
+DBMS_REPAIR.ADMIN_TABLES (
+TABLE_NAME =&gt; 'REPAIR_TABLE',
+TABLE_TYPE =&gt; dbms_repair.repair_table,
+ACTION =&gt; dbms_repair.create_action,
+TABLESPACE =&gt; 'PARUS_MAIN');
+END;
+/
+
+-- &#1055;&#1086;&#1080;&#1089;&#1082; &#1088;&#1072;&#1079;&#1088;&#1091;&#1096;&#1077;&#1085;&#1085;&#1099;&#1093; &#1086;&#1073;&#1098;&#1077;&#1082;&#1090;&#1086;&#1074;
+-- &#1074;&#1099;&#1074;&#1077;&#1076;&#1077;&#1090; &#1082;&#1086;&#1083;&#1080;&#1095;&#1077;&#1089;&#1090;&#1074;&#1086; number corrupt: 1
+declare
+rpr_count int;
+begin
+rpr_count := 0;
+dbms_repair.check_object (
+schema_name =&gt; 'PARUS',
+object_name =&gt; 'PUBTURNS',
+repair_table_name =&gt; 'REPAIR_TABLE',
+corrupt_count =&gt; rpr_count);
+dbms_output.put_line('repair count: ' || to_char(rpr_count));
+end;
+/
+
+-- &#1087;&#1088;&#1086;&#1089;&#1084;&#1086;&#1090;&#1088;&#1077;&#1090;&#1100; &#1090;&#1072;&#1073;&#1083;&#1080;&#1094;&#1091; &#1076;&#1083;&#1103; &#1074;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103;
+select object_name, block_id, corrupt_type, marked_corrupt,
+corrupt_description, repair_description
+from repair_table;
+
+/
+
+-- &#1048;&#1089;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1077; &#1087;&#1086;&#1074;&#1088;&#1077;&#1078;&#1076;&#1077;&#1085;&#1080;&#1081;
+-- &#1074;&#1099;&#1074;&#1077;&#1076;&#1077;&#1090; &#1082;&#1086;&#1083;&#1080;&#1095;&#1077;&#1089;&#1090;&#1074;&#1086; num fix: 1
+DECLARE num_fix INT;
+BEGIN
+num_fix := 0;
+DBMS_REPAIR.FIX_CORRUPT_BLOCKS (
+SCHEMA_NAME =&gt; 'PARUS',
+OBJECT_NAME=&gt; 'PUBTURNS',
+OBJECT_TYPE =&gt; dbms_repair.table_object,
+REPAIR_TABLE_NAME =&gt; 'REPAIR_TABLE',
+FIX_COUNT=&gt; num_fix);
+DBMS_OUTPUT.PUT_LINE('num fix: ' || TO_CHAR(num_fix));
+END;
+/
+-- &#1087;&#1088;&#1086;&#1087;&#1091;&#1089;&#1082;&#1072;&#1090;&#1100; &#1087;&#1086;&#1074;&#1088;&#1077;&#1078;&#1076;&#1077;&#1085;&#1085;&#1099;&#1077; &#1073;&#1083;&#1086;&#1082;&#1080;
+BEGIN
+DBMS_REPAIR.SKIP_CORRUPT_BLOCKS (
+SCHEMA_NAME =&gt; 'PARUS',
+OBJECT_NAME =&gt; 'PUBTURNS',
+OBJECT_TYPE =&gt; dbms_repair.table_object,
+FLAGS =&gt; dbms_repair.skip_flag);
+END;
+/
+
+-- &#1087;&#1088;&#1086;&#1089;&#1084;&#1086;&#1090;&#1088;&#1077;&#1090;&#1100; &#1087;&#1088;&#1086;&#1087;&#1091;&#1097;&#1077;&#1085;&#1085;&#1099;&#1077; &#1087;&#1086;&#1074;&#1088;&#1077;&#1078;&#1076;&#1077;&#1085;&#1085;&#1099;&#1077; &#1073;&#1083;&#1086;&#1082;&#1080;
+SELECT OWNER, TABLE_NAME, SKIP_CORRUPT FROM DBA_TABLES
+WHERE OWNER = 'PARUS'
+AND SKIP_CORRUPT='ENABLED';
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

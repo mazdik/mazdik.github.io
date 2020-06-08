@@ -1,0 +1,47 @@
+### PostgreSQL on CentOS 7 ###
+
+yum install postgresql-server postgresql-contrib
+
+postgresql-setup initdb
+
+systemctl start postgresql
+systemctl enable postgresql
+
+войти в систему под именем пользователя postgres:
+su postgres
+psql
+ALTER ROLE postgres WITH PASSWORD 'postgres';
+createdb testing
+\q
+exit
+
+vim /var/lib/pgsql/data/pg_hba.conf
+Заменить "ident" на "md5"
+
+local   all             all                                     md5
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+
+systemctl restart postgresql
+
+psql -U postgres
+
+Для PHP
+yum install php-pgsql
+systemctl restart httpd.service
+
+
+### Linux Mint ###
+sudo apt-get -y install python-software-properties
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
+export LC_ALL=ru_RU.UTF-8
+sudo apt-get update
+sudo apt-get install postgresql-9.6
+sudo apt-get install pgadmin3
+service postgresql start
+
+Список установленных пакетов:
+dpkg --get-selections | grep postgres
+apt list --installed
+

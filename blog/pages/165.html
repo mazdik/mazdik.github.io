@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1054;&#1090;&#1073;&#1086;&#1088; &#1074;&#1085;&#1091;&#1090;&#1088;&#1080; &#1074;&#1100;&#1102;&#1096;&#1082;&#1080;</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&#1055;&#1088;&#1080;&#1084;&#1077;&#1088;&#1099; &#1076;&#1083;&#1103;&nbsp;&#1086;&#1090;&#1073;&#1086;&#1088;&#1072; &#1074;&#1085;&#1091;&#1090;&#1088;&#1080; &#1074;&#1100;&#1102;&#1096;&#1082;&#1080;</p>
+<pre class="lang:plsql">
+and t.docdate &lt;= nvl(f.DATETO, t.docdate)
+
+and nvl(T.ADDR_USER, B.AUTHID) = B.AUTHID
+and T.ADDR_USER is null or T.ADDR_USER = B.AUTHID
+
+</pre>
+<pre class="lang:plsql">
+and lpad(t.docnumb, 10) &lt;= lpad(nvl(f.NUMTO, t.docnumb), 10)
+and ( nvl(sp.sbalunit, 'sbalunit') = nvl(nvl(f.BALUNIT,sp.sbalunit), 'sbalunit') or
+f.BALUNIT = '()' and sp.sbalunit is null or
+strinlike(sp.sbalunit, replace(f.BALUNIT,'*','%'),';','()')!=0 )
+
+</pre>
+<pre class="lang:plsql">
+and (nvl(t.execdate, 777) = nvl(nvl(f.the_year, t.execdate), 777)
+or f.THE_YEAR = -1)
+
+and d.bunit_mnemo like f_d_sfield_isnull (replace (replace(
+(select str_val from V_R_USERS_PARAMS_PAIDSERVICES
+where authid = user and unitcode = 'PayServceFilter' and paramcode = 'spbe'), '?', '_'), '*', '%'))
+
+</pre>
+<pre class="lang:plsql">
+and (case
+when f.NOTEOP = 1 and sp.deop_date is null then
+1
+when f.NOTEOP = 0 and
+sp.deop_date &gt;= nvl(f.EOP_DATE1, sp.deop_date) and sp.deop_date &lt;= nvl(f.EOP_DATE2, sp.deop_date) then
+1
+when f.NOTEOP is null then
+1
+else
+0
+end) = 1
+
+</pre>
+<pre class="lang:plsql">
+select 'ddd' from dual
+where
+(case
+when 1 = 1 then
+1
+when 2 = 2 then
+1
+when null is null then
+1
+else
+0
+end) = 1
+--&#1042;&#1099;&#1074;&#1086;&#1076;:ddd. &#1045;&#1089;&#1083;&#1080; &#1074;&#1089;&#1077; &#1091;&#1089;&#1083;&#1086;&#1074;&#1080;&#1103; &#1083;&#1086;&#1078;&#1085;&#1099;&#1077;, &#1090;&#1086; &#1085;&#1080;&#1095;&#1077;&#1075;&#1086; &#1085;&#1077; &#1074;&#1099;&#1074;&#1086;&#1076;&#1080;&#1090;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

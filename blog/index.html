@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mazdik Notes</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="prism.css" />
+</head>
+
+<body>
+
+  <div class="wrap">
+    <nav class="navbar-custom navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Mazdik Notes</a>
+        </div>
+        <div class="navbar-collapse">
+          <ul id="header-nav" class="navbar-nav navbar-right nav">
+            <li><a data-id="note" href>Notes</a></li>
+            <li><a data-id="articles" href>Articles</a></li>
+            <li><a data-id="portfolio" href>Portfolio</a></li>
+            <li><a href="https://github.com/mazdik" target="_blank">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10" id="content"></div>
+        <div class="col-md-2" id="side-nav"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container"></div>
+  </footer>
+
+  <script src="prism.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

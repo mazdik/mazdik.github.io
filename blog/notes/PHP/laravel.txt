@@ -1,0 +1,4 @@
+Laravel chmod(storage/oauth-public.key): Operation failed: Operation not permitted
+
+sudo chown daemon:daemon oauth-public.key
+sudo chmod 600 oauth-public.key

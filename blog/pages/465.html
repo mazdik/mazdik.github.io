@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">dblink &#1074; &#1084;&#1085;&#1086;&#1075;&#1086;&#1087;&#1086;&#1090;&#1086;&#1095;&#1085;&#1086;&#1084; &#1088;&#1077;&#1078;&#1080;&#1084;&#1077;</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&#1042;&#1093;&#1086;&#1076;&#1085;&#1099;&#1077; &#1087;&#1072;&#1088;&#1072;&#1084;&#1077;&#1090;&#1088;&#1099; &#1087;&#1088;&#1086;&#1094;&#1077;&#1076;&#1091;&#1088;&#1099;: nCOUNT &mdash;&nbsp;&#1082;&#1086;&#1083;&#1080;&#1095;&#1077;&#1089;&#1090;&#1074;&#1086; &#1087;&#1086;&#1090;&#1086;&#1082;&#1086;&#1074;, sNAME_ACTION &mdash;&nbsp;&#1080;&#1084;&#1103; &#1087;&#1088;&#1086;&#1094;&#1077;&#1076;&#1091;&#1088;&#1099;, &#1092;&#1091;&#1085;&#1082;&#1094;&#1080;&#1080;. &#1041;&#1077;&#1088;&#1077;&#1090;&#1089;&#1103; &#1082;&#1086;&#1083;&#1080;&#1095;&#1077;&#1089;&#1090;&#1074;&#1086; dblink &lsquo;&#1086;&#1074; &#1076;&#1077;&#1083;&#1080;&#1090;&#1089;&#1103; &#1085;&#1072; &#1082;&#1086;&#1083;&#1080;&#1095;&#1077;&#1089;&#1090;&#1074;&#1086; &#1087;&#1086;&#1090;&#1086;&#1082;&#1086;&#1074; &#1080; &#1089; &#1087;&#1086;&#1084;&#1086;&#1097;&#1100;&#1102; &#1087;&#1072;&#1075;&#1080;&#1085;&#1072;&#1094;&#1080;&#1080; (Pagination) &#1074;&#1099;&#1087;&#1086;&#1083;&#1085;&#1103;&#1077;&#1090;&#1089;&#1103; &#1076;&#1077;&#1081;&#1089;&#1090;&#1074;&#1080;&#1077;&nbsp;sNAME_ACTION &#1089; &#1074;&#1093;&#1086;&#1076;&#1085;&#1099;&#1084; &#1087;&#1072;&#1088;&#1072;&#1084;&#1077;&#1090;&#1088;&#1086;&#1084;-&#1080;&#1084;&#1103; &#1089;&#1089;&#1099;&#1083;&#1082;&#1080;.</p>
+<pre class="lang:plsql">
+create or replace procedure RAD_P_THREAD_LINK(nCOUNT in number default 1,
+sNAME_ACTION in varchar2) as
+
+nJOBS number;
+nLINKS number;
+nPAGINATION number;
+
+procedure P_JOB_SESSION(sACTION in varchar2) as
+nCNT number;
+begin
+begin
+--select 1 into nCNT from v$session v where v.ACTION = sACTION;
+SELECT 1
+into nCNT
+FROM USER_SCHEDULER_JOBS
+WHERE job_name = sACTION
+AND STATE = 'RUNNING';
+exception
+when others then
+nCNT := 0;
+end;
+if (nCNT &gt; 0) then
+SYS.DBMS_LOCK.SLEEP(5);
+--&#1088;&#1077;&#1082;&#1091;&#1088;&#1089;&#1080;&#1103;
+P_JOB_SESSION(sACTION);
+end if;
+end P_JOB_SESSION;
+
+procedure P_CREATE_JOB(sNAME in varchar2, nPAGI in number, i integer) as
+nMAX_ROW number;
+MIN_ROW number;
+sJOB_ACTION varchar2(500);
+begin
+nMAX_ROW := nPAGI * i;
+MIN_ROW := nMAX_ROW - nPAGI;
+sJOB_ACTION := 'begin
+for lnks in (select db_link
+from (select a.*, rownum rnum
+from (select t.db_link from dba_db_links t) a
+where rownum &lt;= ' || nMAX_ROW || ') where rnum &gt;= ' || MIN_ROW || ' ) loop
+' || sNAME_ACTION || '(lnks.db_link);
+end loop;
+end;';
+sys.dbms_scheduler.create_job(job_name =&gt; sNAME,
+job_type =&gt; 'PLSQL_BLOCK',
+job_action =&gt; sJOB_ACTION);
+end;
+
+procedure P_RUN_JOB(sNAME in varchar2) as
+begin
+dbms_scheduler.run_job(sNAME, false);
+end;
+
+procedure P_DROP_JOB(sNAME in varchar2) as
+begin
+begin
+dbms_scheduler.drop_job(sNAME, TRUE);
+exception
+when others then
+null;
+end;
+end;
+
+begin
+nJOBS := nCOUNT;
+select count(*) into nLINKS from dba_db_links;
+if (nLINKS &gt; nJOBS) then
+nPAGINATION := CEIL(nLINKS / nJOBS);
+else
+nJOBS := 1;
+nPAGINATION := nLINKS;
+end if;
+
+for i in 1 .. nJOBS loop
+P_DROP_JOB('JOB_UPD_' || i);
+end loop;
+
+for i in 1 .. nJOBS loop
+P_CREATE_JOB('JOB_UPD_' || i, nPAGINATION, i);
+end loop;
+
+for i in 1 .. nJOBS loop
+P_RUN_JOB('JOB_UPD_' || i);
+end loop;
+
+SYS.DBMS_LOCK.SLEEP(5);
+
+for i in 1 .. nJOBS loop
+P_JOB_SESSION('JOB_UPD_' || i);
+end loop;
+
+for i in 1 .. nJOBS loop
+P_DROP_JOB('JOB_UPD_' || i);
+end loop;
+
+end RAD_P_THREAD_LINK;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

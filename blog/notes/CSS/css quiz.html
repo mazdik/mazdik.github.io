@@ -1,0 +1,75 @@
+<!-- 1. Границы элемента 
+Добавление рамок во время изменения состояния элемента, такого как :hover, будет значить, что блоки станут больше и тогда оттолкнут идущие следом блоки вниз.
+Решение: добавление прозрачных рамок к изначальному состоянию (без наведения курсора) 
+-->
+<style type="text/css">
+.user-item {
+  border: 2px solid transparent;
+}
+.user-item:hover {
+  border: 2px solid #a7a784;
+}
+</style>
+
+<!-- 2. Позиционирование — absolute против fixed 
+Когда родительский элемент имеет свойство transform со значением, отличным от none, он становится содержащим блоком для абсолютно и фиксированно позиционированных элементов
+
+3. Схлопывание margin родительского и дочерних элементов
+схлопывания margins не будет происходить, если у родительского элемента:
+есть верхний/нижний padding больший нуля
+есть верхний/нижний border больший нуля
+overflow: hidden или overflow: auto
+-->
+
+<!-- 5. Процент от чего?
+margin-left: 50%; - 200px
+transform: translateX(50%); - 25px
+Когда элемент использует transform, единицы измерения в процентах (только для transform) основываются на собственном размере элемента, а не на размере родителя.
+ -->
+<div class="container">
+  <div class="box"></div>
+</div>
+<style type="text/css">
+.container {
+  width: 400px;
+}
+.box {
+  height: 50px;
+  width: 50px;
+}
+</style>
+
+<!-- Flexbox Centering (Vertical and Horizontal) -->
+<div class="container">
+  <img src="">
+</div>
+<style type="text/css">
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+img {
+  margin: auto;
+}
+</style>
+<!-- https://habr.com/ru/post/467555/ -->
+
+<!-- Как отрендерится DOM? Что увидим в браузере? -->
+<style>
+  body { color: orange }
+  p { color: green }
+  div { color: red }
+</style>
+Text 1<p>Text 2<div>Text 3</div>Text 4</p>Text 5
+<!-- Результат: -->
+Text 1<p>Text 2</p><div>Text 3</div>Text 4<p></p>Text 5
+
+<!-- Какая ширина блоков (точный размер)? Какое расстояние в пикселях между двумя блоками по вертикали? -->
+<style>
+  div { margin: 20px 0 }
+</style>
+<div>Text 1</div> ┐
+                  ├── какое расстояние в пикселях?
+<div>Text 2</div> ┘
+<!-- Ширина блоков по дефолту всегда 100%. Расстояние между 2мя блоками 20px по вертикали, так как margin схлопываются. -->

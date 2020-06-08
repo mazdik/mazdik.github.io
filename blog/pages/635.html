@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">&#1055;&#1077;&#1088;&#1077;&#1089;&#1086;&#1079;&#1076;&#1072;&#1085;&#1080;&#1077; Oracle Enterprise Manager</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><strong><span style="color: #008000;">emca -config dbcontrol db -repos recreate</span></strong></p>
+<p>&#1045;&#1089;&#1083;&#1080; &#1086;&#1096;&#1080;&#1073;&#1082;&#1072;<br><strong>CONFIG: ORA-00955: name is already used by an existing object</strong></p>
+<p>&#1056;&#1077;&#1096;&#1077;&#1085;&#1080;&#1077;:</p>
+<p><strong><span style="color: #0000ff;">drop user</span> SYSMAN <span style="color: #0000ff;">cascade</span>;</strong><br><strong><span style="color: #0000ff;"> drop user</span> MGMT_VIEW <span style="color: #0000ff;">cascade</span>;</strong><br><strong><span style="color: #0000ff;"> drop public synonym</span> SETEMVIEWUSERCONTEXT;</strong><br><strong><span style="color: #0000ff;"> drop role</span> MGMT_USER;</strong><br><strong><span style="color: #0000ff;"> drop PUBLIC SYNONYM</span> MGMT_TARGET_BLACKOUTS;</strong></p>
+<pre class="lang:plsql">
+begin
+for cur in (select synonym_name
+from dba_synonyms
+where table_owner = 'SYSMAN'
+and owner = 'PUBLIC'
+) loop
+--dbms_output.put_line('drop public synonym '||cur.synonym_name);
+execute immediate ('drop public synonym '||cur.synonym_name);
+end loop;
+end;
+</pre>
+<p><strong><span style="color: #008000;">emca -deconfig dbcontrol db -repos drop</span></strong><br><strong><span style="color: #008000;"> emca -config dbcontrol db -repos create</span></strong></p>
+<p>&#1043;&#1076;&#1077; &#1083;&#1077;&#1078;&#1072;&#1090; &#1092;&#1072;&#1081;&#1083;&#1099; Enterprise Manager<br><strong><span style="color: #ff6600;">%ORACLE_HOME%</span></strong>\srv_kazs<br><strong><span style="color: #ff6600;">%ORACLE_HOME%</span></strong>\srv_kazs\sysman\config &mdash; &#1082;&#1086;&#1085;&#1092;&#1080;&#1075;&#1080; Enterprise Manager<br><strong><span style="color: #ff6600;">%ORACLE_HOME%</span></strong>\oc4j\j2ee\OC4J_DBConsole_srv_kazs</p>
+<p>srv &mdash; &#1080;&#1084;&#1103; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1072;, kazs &mdash; SID</p>
+<p>&#1051;&#1086;&#1075;&#1080; &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1080;<br><strong><span style="color: #ff6600;">%ORACLE_HOME%</span></strong>\cfgtoollogs\emca</p>
+<p><a title="opatch apply 8350262" href="http://mazdik.ru/?p=657" target="_blank">&#1054;&#1096;&#1080;&#1073;&#1082;&#1072;: Error starting Database Control</a></p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">pipelined function dynamic sql</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>Pipelined function &#1091;&#1076;&#1086;&#1073;&#1085;&#1077;&#1077; &#1089;&#1086;&#1079;&#1076;&#1072;&#1074;&#1072;&#1090;&#1100; &#1074; &#1087;&#1072;&#1082;&#1077;&#1090;&#1077;.</p>
+<p>select * from TABLE(PIPELINED_TEST.PIPE_LINED);</p>
+<pre class="lang:plsql">
+create or replace package PIPELINED_TEST is
+
+TYPE ttt_type IS RECORD(
+name0 varchar2(200),
+name1 varchar2(200),
+name2 varchar2(200),
+name3 varchar2(200),
+name4 varchar2(200),
+name5 varchar2(200));
+
+TYPE ttt_tab IS TABLE OF ttt_type;
+
+function PIPE_LINED return ttt_tab
+PIPELINED;
+
+end PIPELINED_TEST;
+/
+create or replace package body PIPELINED_TEST is
+
+function PIPE_LINED return ttt_tab
+PIPELINED is
+buf ttt_tab;
+c sys_refcursor;
+sSQL varchar2(2000);
+begin
+sSQL := 'select ''LINK'', ''NAME'', ''PERCENT'', ''FOUND'', ''ERR'', ''DDATE'' from dual';
+
+open c for sSQL;
+loop
+fetch c bulk collect
+into buf;
+
+for i in 1 .. buf.Count loop
+pipe row(buf(i));
+end loop;
+
+exit when c%NotFound;
+end loop;
+close c;
+end PIPE_LINED;
+
+begin
+null;
+end PIPELINED_TEST;
+
+</pre>
+<p>&nbsp;</p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

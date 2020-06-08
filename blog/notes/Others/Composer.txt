@@ -1,0 +1,46 @@
+set http_proxy=172.23.1.241:3128
+set https_proxy=172.23.1.241:3128
+
+netsh winhttp set proxy proxy-server="socks=127.0.0.1:1080" bypass-list="localhost"
+netsh winhttp show proxy
+netsh winhttp reset proxy
+
+Установка Yii2
+composer global require "fxp/composer-asset-plugin:^1.2.0"
+composer create-project --prefer-dist yiisoft/yii2-app-basic D:\Yii\yii2
+
+
+Обновление Yii2
+composer update yiisoft/*
+composer require yiisoft/yii2 2.0.12.2
+
+Установка из composer.json
+composer install
+
+Обновление
+composer update
+
+Перемещение каталога vendor для нескольких проектов
+/web/index.php
+if ($_SERVER['HTTP_HOST'] == 'host2') {
+    defined('YII_DEBUG') or define('YII_DEBUG', true);
+    defined('YII_ENV') or define('YII_ENV', 'dev');
+    require(__DIR__ . '/../../yii2/vendor/autoload.php');
+    require(__DIR__ . '/../../yii2/vendor/yiisoft/yii2/Yii.php');
+} else {
+    require(__DIR__ . '/../vendor/autoload.php');
+    require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
+}
+/config/web.php
+$config['vendorPath'] = '../../yii2/vendor';
+
+Удаление
+composer remove mongosoft/yii2-upload-behavior --update-with-dependencies
+
+Глобальные файлы, плагины компосера лежат в
+C:\Users\User\AppData\Roaming\Composer
+
+Установка из bower
+composer require bower-asset/fontawesome:*
+composer require bower-asset/awesome-bootstrap-checkbox:*
+composer require bower-asset/lightbox2:*

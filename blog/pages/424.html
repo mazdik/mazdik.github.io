@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">DDL &#1095;&#1077;&#1088;&#1077;&#1079; dblink</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<pre class="lang:plsql ">
+--DDL over dblink.sql
+
+declare
+sSTATMENT varchar2(3000);
+begin
+sSTATMENT:='
+create table TEST_TABLE
+(sslink VARCHAR2(100))
+tablespace USERS';
+dbms_utility.exec_ddl_statement@db_link(sSTATMENT);
+end;
+
+</pre>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

@@ -1,0 +1,40 @@
+<i class="a"></i><i class="b"></i>
+<style>
+  * {background:#1A4341}
+  i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  i::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+  }
+  .a {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #998235 50%, #1A4341 50%);
+  }
+  .a::after {
+    width: 30px;
+    height: 30px;
+    background: #0B2429;
+    top: 30px;
+    left: 30px;
+  }
+  .b {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    transform: translate(calc(-50% + 50px), calc(-50% - 50px));
+  }
+  .b::after {
+    width: 200px;
+    height: 200px;
+    background: #F3AC3C;
+    right: 0;
+  }
+</style>

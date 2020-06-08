@@ -1,0 +1,36 @@
+﻿
+Cколько коннектов на 80 порт:
+netstat -na | grep ":80\ " | wc -l
+netstat -na | grep ":2106\ " | wc -l
+netstat -na | grep ":7777\ " | wc -l
+
+SYN
+netstat -na | grep ":80\ " | grep syn
+
+Сколько апачей:
+ps aux | grep httpd  |wc -l
+
+закрыть -S входящий трафик от досера
+iptables -A INPUT -s 46.119.73.134 -j DROP
+iptables -A INPUT -s 46.119.73.134  -p tcp --destination-port http -j DROP
+
+отображать правила iptables
+iptables -L INPUT --line-numbers
+iptables -L -n -v --line-numbers
+
+
+/opt/lampp/lampp stopapache
+/opt/lampp/lampp startapache
+
+/sbin/rcSuSEfirewall2 restart
+
+/etc/init.d/fail2ban restart
+/etc/init.d/syslog restart
+
+Drop all connection coming from mac address
+/sbin/iptables -A INPUT -m mac --mac-source 00:1a:92:75:8a:a6 -j DROP
+
+
+iptables -A INPUT -i eth0 -s 10.10.12.10 -p tcp --destination-port 3306 -j ACCEPT
+
+service iptables save

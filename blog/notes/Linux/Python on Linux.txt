@@ -1,0 +1,56 @@
+######### CentOS #########
+sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum -y install python36u
+sudo yum -y install python36u-pip
+sudo yum -y install python36u-devel
+python3.6 -V
+yum install httpd-devel
+
+######### Ubuntu/Mint #########
+sudo add-apt-repository ppa:jonathonf/python-3.6
+sudo apt update
+sudo apt install python3.6
+sudo apt install python3.6-dev
+sudo python3.6 -m pip install --upgrade pip
+python3.6 -V
+sudo apt-get install -y apache2
+sudo apt-get install -y apache2-dev
+sudo apt-get install -y libapache2-mod-wsgi-py3
+
+######### CentOS/Ubuntu/Mint #########
+pip3.6 install mod_wsgi
+mod_wsgi-express install-module
+
+python3.6 -m venv venv
+source venv/bin/activate
+pip3.6 install -r requirements.txt
+
+######### Ubuntu/Mint - mod_wsgi #########
+/etc/apache2/mods-enabled/wsgi.load
+LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
+/etc/apache2/mods-enabled/wsgi.conf
+WSGIPythonHome /usr
+WSGIDaemonProcess flask user=user group=user lang='en_US.UTF-8' locale='en_US.UTF-8'
+WSGIProcessGroup flask
+
+sudo vim /etc/apache2/sites-available/000-default.conf
+WSGIScriptAlias / /var/www/html/mazdik.ru/service.wsgi
+
+sudo service apache2 reload
+
+######### CentOS - mod_wsgi #########
+/etc/httpd/conf.d/wsgi.conf
+LoadModule wsgi_module /etc/httpd/modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
+WSGIPythonHome /usr
+WSGIDaemonProcess flask user=user group=user lang='en_US.UTF-8' locale='en_US.UTF-8'
+WSGIProcessGroup flask
+
+/etc/httpd/conf/httpd.conf
+WSGIScriptAlias / /var/www/html/mazdik.ru/service.wsgi
+
+sudo systemctl restart httpd
+
+######### Making Python 3 the Default - Не надо так делать!
+sudo rm /usr/bin/python
+sudo ln -s /usr/bin/python3.6 /usr/bin/python
+sudo ln -f -v /usr/bin/python3.6 /usr/bin/python3

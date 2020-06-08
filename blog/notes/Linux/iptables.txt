@@ -1,0 +1,71 @@
+отображать правила iptables
+iptables -L INPUT --line-numbers
+iptables -L -n -v
+
+удалить правило
+iptables -D INPUT номер
+
+
+Add (prerouting,postrouting) rules in you NAT table using
+
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to-source ip_address
+iptables -t nat -A PREROUTING -i eth0 -j DNAT --to-destination ip_address
+
+iptables -t nat -A PREROUTING -d 194.187... -j DNAT --to-destination 10.12.205.26
+iptables -t nat -A POSTROUTING -s 10.12.205.26 -j SNAT --to-source 194.187...
+
+
+redirect from a different incoming port to a port on another server:
+
+iptables -t nat -A PREROUTING -p tcp --dport 5001 -j DNAT --to-destination 10.10.10.10:25
+iptables -t nat -A POSTROUTING -p tcp --dport 25 -j MASQUERADE
+
+Редирект на login.icq.com
+iptables -t nat -A PREROUTING -p tcp --dport 5190 -j DNAT --to-destination 64.12.201.165:5190
+iptables -t nat -A POSTROUTING -p tcp --dport 5190 -j MASQUERADE
+
+
+Просмотреть nat правила
+iptables -L -t nat
+Удалить правило
+iptables -t nat -D PREROUTING 1
+iptables -t nat -D POSTROUTING 1
+
+
+Лимит подключений
+﻿iptables -A INPUT -p tcp --syn --dport 2106 -m connlimit --connlimit-above 5 -j REJECT
+iptables -A INPUT -p tcp --syn --dport 7777 -m connlimit --connlimit-above 7 -j REJECT
+iptables -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 30 -j REJECT
+iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 3 -j REJECT
+
+-A INPUT - цепочка входящих подключений
+-p tcp --syn - это порт, типа TCP на стадии определения - SYN
+-m connlimit --connlimit-above {number} - более {number} конектов
+-j REJECT - исключить (запретить). 
+
+отображать правила iptables
+iptables -L INPUT --line-numbers
+iptables -L -n -v
+
+удалить правило
+iptables -D INPUT номер
+
+iptables -A INPUT -i eth0 -s 10.0.0.0/8 -p tcp --destination-port 3306 -j ACCEPT
+
+удаление
+iptables -D INPUT 4
+
+Открыть порты
+iptables -I INPUT -p tcp --dport 2106 -m state --state NEW -j ACCEPT
+iptables -I INPUT -p tcp --dport 7777 -m state --state NEW -j ACCEPT
+iptables -I INPUT -p tcp --dport 443 -m state --state NEW -j ACCEPT
+iptables -I INPUT -p tcp --dport 8080 -m state --state NEW -j ACCEPT
+
+service iptables save
+
+Перезагружаем iptables:
+/etc/init.d/iptables restart
+или
+service iptables restart
+
+

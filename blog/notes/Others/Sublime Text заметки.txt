@@ -1,0 +1,13 @@
+Поиск-замена по регулярке
+
+Ctrl + H (on PC)
+Enable (Regular Expression): .* icon or Alt + R
+
+RE syntax to work with a particular tag,
+(?s)<start tag>.*?<end tag>
+
+Such as, for CSS comment tags,
+(?s)/*.*?*/
+
+For HTML comment tags,
+(?s)<!--.*?-->

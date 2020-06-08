@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">DATABASE LINK</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p>&#1055;&#1088;&#1086;&#1089;&#1084;&#1086;&#1090;&#1088;&#1077;&#1090;&#1100; &#1074;&#1089;&#1077; &#1080;&#1084;&#1077;&#1102;&#1097;&#1080;&#1077;&#1089;&#1103; &#1089;&#1089;&#1099;&#1083;&#1082;&#1080; &#1087;&#1086;&#1076;&#1082;&#1083;&#1102;&#1095;&#1077;&#1085;&#1080;&#1081;:</p>
+<p><strong><span style="color: #0000ff;">select * from dba_db_links;</span></strong></p>
+<p>&#1057;&#1086;&#1079;&#1076;&#1072;&#1090;&#1100; &#1089;&#1089;&#1099;&#1083;&#1082;&#1091; &#1087;&#1086;&#1076;&#1082;&#1083;&#1102;&#1095;&#1077;&#1085;&#1080;&#1103; &#1082; &#1091;&#1076;&#1072;&#1083;&#1077;&#1085;&#1085;&#1086;&#1081; &#1073;&#1072;&#1079;&#1077; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093;:</p>
+<p><strong><span style="color: #0000ff;">create database link testlink_db1 connect to system identified by sys</span></strong><br><strong><span style="color: #0000ff;"> using</span></strong><br><strong><span style="color: #339966;">&lsquo;(DESCRIPTION=</span></strong><br><strong><span style="color: #339966;"> (ADDRESS=</span></strong><br><strong><span style="color: #339966;"> (PROTOCOL=TCP)</span></strong><br><strong><span style="color: #339966;"> (HOST=192.168.2.127)</span></strong><br><strong><span style="color: #339966;"> (PORT=1521))</span></strong><br><strong><span style="color: #339966;"> (CONNECT_DATA=</span></strong><br><strong><span style="color: #339966;"> (SID=TESTDB)))&rsquo;;</span></strong></p>
+<p>&#1080;&#1083;&#1080;</p>
+<p><strong><span style="color: #0000ff;">create database link testlink_db2 connect to system identified by sys</span></strong><br><strong><span style="color: #0000ff;"> using</span></strong><br><strong><span style="color: #339966;">&lsquo;192.168.2.127:1521/TESTDB&rsquo;;</span></strong></p>
+<p>SQL &#1079;&#1072;&#1087;&#1088;&#1086;&#1089; &#1087;&#1088;&#1086;&#1089;&#1084;&#1086;&#1090;&#1088;&#1072; &#1089;&#1077;&#1089;&#1089;&#1080;&#1081; &#1091;&#1076;&#1072;&#1083;&#1077;&#1085;&#1085;&#1086;&#1081; &#1073;&#1072;&#1079;&#1099; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093;:</p>
+<p><strong><span style="color: #0000ff;">select * from v$version@testlink_db1;</span></strong></p>
+<p>&#1059;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100; &#1083;&#1080;&#1085;&#1082; &#1087;&#1086;&#1076;&#1082;&#1083;&#1102;&#1095;&#1077;&#1085;&#1080;&#1103;:</p>
+<p><strong><span style="color: #0000ff;">drop database link testlink_db1;</span></strong></p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

@@ -1,0 +1,22 @@
+Рестартуем самбу:
+/etc/init.d/samba restart
+
+Для примера, добавим пользователя tom
+useradd tom -m -G users
+
+Установим пароль для пользователя tom
+passwd tom
+(введите пароль)
+
+Добавим пользователя в самбу:
+smbpasswd -a tom
+(введите пароль пользователя)
+
+service rsyslog restart перезапуск службы логирования
+
+
+Добавить пользователя в группу
+usermod -a -G groupname username
+
+В каких группах пользователь
+groups username

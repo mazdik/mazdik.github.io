@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="post-inner-content">
+		<header class="entry-header page-header"><h1 class="entry-title ">OUI-67073: OracleHomeInventory</h1>
+
+			
+<!-- .entry-meta -->
+		</header><!-- .entry-header --><div class="entry-content">
+			<p><strong>&#1054;&#1096;&#1080;&#1073;&#1082;&#1072;&nbsp;&#1087;&#1088;&#1080; &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1077; &#1087;&#1072;&#1090;&#1095;&#1072; &#1095;&#1077;&#1088;&#1077;&#1079; opatch</strong> <strong>:</strong></p>
+<pre class="lang:bash">SEVERE:OUI-67073:ApplySession failed: ApplySession failed to prepare the system. OracleHomeInventory gets null oracleHomeInfo
+INFO:System intact, OPatch will not attempt to restore the system
+INFO:Finishing ApplySession at Mon Jul 14 12:11:35 YEKST 2014
+INFO:Total time spent waiting for user-input is 0 seconds. Finish at Mon Jul 14 12:11:35 YEKST 2014
+INFO:Stack Description: java.lang.RuntimeException: ApplySession failed to prepare the system. OracleHomeInventory gets null oracleHomeInfo
+INFO:StackTrace: oracle.opatch.OracleHomeInventory.load(OracleHomeInventory.java:2536)
+INFO:StackTrace: oracle.opatch.ApplySession.loadInventory(ApplySession.java:679)
+INFO:StackTrace: oracle.opatch.ApplySession.processLocal(ApplySession.java:3471)
+INFO:StackTrace: oracle.opatch.ApplySession.process(ApplySession.java:5577)
+INFO:StackTrace: oracle.opatch.OPatchSession.main(OPatchSession.java:1719)
+INFO:StackTrace: oracle.opatch.OPatch.main(OPatch.java:630)
+
+</pre>
+<p><strong>&#1054;&#1087;&#1080;&#1089;&#1072;&#1085;&#1080;&#1077;:</strong><br>
+Oracle Universal Installer Inventory &mdash; &#1101;&#1090;&#1086; &#1082;&#1072;&#1090;&#1072;&#1083;&#1086;&#1075;, &#1074; &#1082;&#1086;&#1090;&#1086;&#1088;&#1086;&#1084; Oracle Universal Installer &#1093;&#1088;&#1072;&#1085;&#1080;&#1090; &#1080;&#1085;&#1092;&#1086;&#1088;&#1084;&#1072;&#1094;&#1080;&#1102; &#1086;&#1073; &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1085;&#1099;&#1093; &#1087;&#1088;&#1086;&#1076;&#1091;&#1082;&#1090;&#1072;&#1093;, &#1090;&#1072;&#1082;&#1078;&#1077; &#1077;&#1075;&#1086; &#1072;&#1082;&#1090;&#1080;&#1074;&#1085;&#1086; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1091;&#1077;&#1090; &#1091;&#1090;&#1080;&#1083;&#1080;&#1090;&#1072; OPatch.</p>
+<p><strong>&#1056;&#1077;&#1096;&#1077;&#1085;&#1080;&#1077;:</strong><br>
+1 c&#1087;&#1086;&#1089;&#1086;&#1073;: &#1054;&#1090;&#1088;&#1077;&#1076;&#1072;&#1082;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; &#1092;&#1072;&#1081;&#1083;<br><strong><span style="color: #008000;">C:\Program Files\Oracle\Inventory\ContentsXML\inventory.xml</span></strong><br>
+&#1076;&#1086;&#1073;&#1072;&#1074;&#1080;&#1090;&#1100; &#1087;&#1091;&#1090;&#1100; &#1082; ORACLE_HOME<br><strong><span style="color: #0000ff;">&lt;HOME NAME=&raquo;OraDb10g_home1&Prime; LOC=&raquo;D:\oracle\product\10.2.0\db_1&Prime; TYPE=&raquo;O&raquo; IDX=&raquo;1&Prime;/&gt;</span></strong><br>
+2 &#1089;&#1087;&#1086;&#1089;&#1086;&#1073;: &#1057;&#1086;&#1079;&#1076;&#1072;&#1090;&#1100; Inventory<br><strong><span style="color: #008000;">D:\oracle\product\10.2.0\db_1\oui\bin\attachHome.bat</span></strong></p>
+					</div>
+<!-- .entry-content -->
+
+		<!-- .entry-meta --></div></body></html>

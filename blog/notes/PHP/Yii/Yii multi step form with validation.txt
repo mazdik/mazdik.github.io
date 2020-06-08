@@ -1,0 +1,75 @@
+Controller
+	$cs = Yii::app()->getClientScript();
+	$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/step_form.js');
+	
+step_form.js
+$(document).ready(function() {
+    $("#step-2").click(function() {
+        var form = $("#animals-form");
+        var settings = form.data('settings');
+        settings.submitting = true;
+        $.fn.yiiactiveform.validate(form, function(messages) {
+            if ($.isEmptyObject(messages)) {
+                // If there are no error messages all data are valid
+                $.each(settings.attributes, function() {
+                    $.fn.yiiactiveform.updateInput(this, messages, form);
+                });
+                $('#step-2').hide();
+                $('#step-3').show();
+                $('#myTab li:eq(1) a').tab('show');
+            } else {
+                // Fields acquiring invalid data classes and messages show up. Update the inputs.
+                settings = form.data('settings'),
+                        $.each(settings.attributes, function() {
+                            $.fn.yiiactiveform.updateInput(this, messages, form);
+                        });
+                settings.submitting = false;
+				$('#myTab li:eq(0) a').tab('show');
+            }
+        });
+        return false;
+    });
+    $("#step-3").click(function() {
+        $('#step-3').hide();
+        $('#saveButtonId').show();
+        $('#myTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
+        return false;
+    });
+});
+
+View
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'animals-form',
+        'enableAjaxValidation'=>false,
+        'enableClientValidation'=>true,
+        'clientOptions'=>array(
+            'validateOnChange'=>true,
+            'validateOnSubmit'=>true,),
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
+)); ?>
+
+	<?php echo $form->errorSummary($model); ?>
+        
+        <?php 
+        $this->widget('bootstrap.widgets.TbTabs', array(
+            'tabs'=>$this->getTabularFormTabs($form, $model),
+            'htmlOptions'=>array('id'=>'myTab'),
+        )); 
+        ?>
+
+        <div class="form-actions">
+            <?php echo CHtml::link('Шаг 2 <i class="icon-chevron-right"></i>','#', 
+                    array('class'=>'btn btn-info', "id"=>"step-2")); ?>
+            
+            <?php echo CHtml::link('Шаг 3 <i class="icon-chevron-right"></i>','#', 
+                    array('class'=>'btn btn-info', "id"=>"step-3", "style"=>"display: none;")); ?>
+            
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'buttonType'=>'submit',
+                    'type'=>'success',
+                    'label'=>'Сохранить',
+                    'htmlOptions'=>array('id'=>'saveButtonId', "style"=>"display: none;"),
+            )); ?>
+	</div>
+
+<?php $this->endWidget(); ?>

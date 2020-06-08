@@ -1,0 +1,22 @@
+DBVERIFY - утилита командной строки, которая выполняет проверку целостности файлов базы данных. 
+Эта утилита только для файлов данных, с control и redolog файлами не будет работать.
+
+dbv file=E:\FRS\PARUS_MAIN.DAT logfile= dbv.log blocksize=8192 feedback=100
+
+blocksize=8192 - размер блока 8192
+feedback=100 - прогресс в командной строке в виде одной точки (.)
+
+DBVERIFY - Verification complete 
+Total Pages Examined         : 9216 
+Total Pages Processed (Data) : 2044 
+Total Pages Failing   (Data) : 0 
+Total Pages Processed (Index): 733 
+Total Pages Failing   (Index): 0 
+Total Pages Empty            : 5686 
+Total Pages Marked Corrupt   : 0 
+Total Pages Influx           : 0 
+
+Total Pages Marked Corrupt - количество разрушенных блоков
+
+
+dbv file=D:\oracle\product\10.2.0\oradata\orcl\USERS01.DBF logfile= D:\dbv.log blocksize=8192 feedback=100
