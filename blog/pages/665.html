@@ -21,7 +21,7 @@ from user_objects t
 group by rollup(object_type)
 
 </pre>
-<p><img class="alignnone size-full wp-image-672" src="/uploads/2014/04/total_total.jpg" alt="total_total" width="214" height="303"></p>
+<p><img class="alignnone size-full wp-image-672" src="uploads/2014/04/total_total.jpg" alt="total_total" width="214" height="303"></p>
 <p style="text-align: center;"><strong>&#1048;&#1090;&#1086;&#1075;&#1080;, &#1087;&#1086;&#1076;&#1080;&#1090;&#1086;&#1075;&#1080; rollup</strong></p>
 <pre class="lang:plsql">
 select object_type, owner,
@@ -37,7 +37,7 @@ where t.object_type='JOB'
 group by rollup(object_type, owner)
 
 </pre>
-<p><img class="alignnone size-full wp-image-673" src="/uploads/2014/04/total_rollup.jpg" alt="total_rollup" width="524" height="100"></p>
+<p><img class="alignnone size-full wp-image-673" src="uploads/2014/04/total_rollup.jpg" alt="total_rollup" width="524" height="100"></p>
 <p style="text-align: center;"><strong>&#1048;&#1090;&#1086;&#1075;&#1080;, &#1087;&#1086;&#1076;&#1080;&#1090;&#1086;&#1075;&#1080; cube</strong></p>
 <pre class="lang:plsql">
 select object_type, owner,
@@ -54,7 +54,7 @@ group by cube(object_type, owner)
 order by grouping(owner), grouping(object_type)
 
 </pre>
-<p><img class="alignnone size-full wp-image-674" src="/uploads/2014/04/total_cube.jpg" alt="total_cube" width="526" height="154"></p>
+<p><img class="alignnone size-full wp-image-674" src="uploads/2014/04/total_cube.jpg" alt="total_cube" width="526" height="154"></p>
 					</div>
 <!-- .entry-content -->
 
