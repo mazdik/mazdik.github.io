@@ -61,8 +61,9 @@ class App {
     if (data && data.children) {
       data.children.forEach(item => {
         const category = this.createCategory(item);
-        categories.push(category);
         categoryLinks[item.name] = this.createLinks(item.children || []);
+        category.textContent += ` (${categoryLinks[item.name].length})`;
+        categories.push(category);
       });
     }
     this.categories = categories;
@@ -89,6 +90,7 @@ class App {
     element.classList.add('list-group-item');
     element.href = item.path;
     element.textContent = item.name;
+    element.dataset.category = item.name;
     return element;
   }
 
@@ -165,10 +167,10 @@ class App {
   onClickSideNav(event) {
     const target = event.target;
     const element = target.tagName === 'A' ? target : target.closest('a');
-    if (element) {
+    if (element && element.dataset.category) {
       event.stopPropagation();
       event.preventDefault();
-      const categoryName = element.textContent;
+      const categoryName = element.dataset.category;
       const categoryLinks = {};
       categoryLinks[categoryName] = this.categoryLinks[categoryName];
       this.renderCategoryLinks(categoryLinks);
