@@ -7,6 +7,7 @@ class App {
   content = document.querySelector('#content');
   sideNav = document.querySelector('#side-nav');
   headerNav = document.querySelector('#header-nav');
+  logo = document.querySelector('#logo');
   title = document.createElement('h1');
 
   constructor() {
@@ -19,6 +20,9 @@ class App {
     });
     this.content.addEventListener('click', (event) => {
       this.onClickContent(event);
+    });
+    this.logo.addEventListener('click', (event) => {
+      this.onClickLogo(event);
     });
   }
 
@@ -191,6 +195,11 @@ class App {
         this.loadPortfolio();
       }
     }
+  }
+
+  onClickLogo(event) {
+    event.preventDefault();
+    this.renderCategoryLinks(this.categoryLinks);
   }
 
   async loadPortfolio() {
