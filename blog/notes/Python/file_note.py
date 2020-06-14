@@ -6,9 +6,6 @@ import base64
 import pickle
 from lxml import html	
 import urllib.request
-from pygments import highlight
-from pygments.lexers import (get_lexer_by_name, get_lexer_for_filename)
-from pygments.formatters import HtmlFormatter
 
 
 class Note(object):
@@ -26,7 +23,6 @@ class Note(object):
         'sql': '/SQL'
     }
     articles_dir = '/Pages'
-    portfolio_dir = '/Portfolio/portfolio.html'
     include_suffix = ('.css', '.html', '.js', '.php', '.txt', '.py', '.cs', '.jpg', '.png', '.sh', '.sql', '.bat')
     cache_dir = os.path.abspath(os.path.dirname(__file__)) + os.sep + 'cache' + os.sep
 
@@ -124,8 +120,8 @@ class Note(object):
 
             data.append({
                 'fileName': file_name,
-                'code': 'markdown' if extension == 'MD' else extension,
-                'content': self.lex(file_basename, content),
+                'code': extension,
+                'content': content,
                 'image': image_data,
                 'category': category
             })
@@ -138,11 +134,7 @@ class Note(object):
                 with open(filename, 'r', encoding=e) as f:
                     return f.read()
             except UnicodeDecodeError:
-                # print('got unicode error with %s, trying different encoding' % e)
                 pass
-
-    def get_portfolio(self):
-        return self.file_get_contents(os.path.dirname(__file__) + self.portfolio_dir)
 
     def get_article(self, article_id):
         file = os.path.dirname(__file__) + self.articles_dir + os.sep + str(article_id) + '.html'
@@ -163,15 +155,3 @@ class Note(object):
                 links.append('<a class="list-group-item" href="/?p={0}">{1}</a>'.format(file_name, data['title']))
             self.set_cache('cache_article_list', links)
         return links
-
-    def lex(self, name, content):
-        if name.endswith('.prc') or name.endswith('.pck') or name.endswith('.fnc'):
-            lexer = get_lexer_by_name('plpgsql')
-        else:
-            try:
-                lexer = get_lexer_for_filename(name)
-            except Exception as e:
-                # print(e)
-                pass
-                return content
-        return highlight(content, lexer, HtmlFormatter())

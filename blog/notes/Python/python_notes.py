@@ -204,3 +204,12 @@ s1    False
 s2    True
 s3    True
 cnt_not_empty_cols: 2
+
+# цикл между 2 датами по 1 дню
+for i in range((end_date - begin_date).days + 1):
+    print((begin_date + timedelta(days=i)).strftime('%Y.%m.%d'))
+
+# цикл между 2 датами по 2 часа
+for i in range((end_date - begin_date).days*24 + 1):
+    if (i % 2) == 0:
+        print((begin_date + timedelta(hours=i)).strftime('%Y-%m-%dT%H:%M'))
