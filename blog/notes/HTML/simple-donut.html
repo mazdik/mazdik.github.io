@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <style type="text/css">
+    .donut-container {
+      position: relative;
+      float: left;
+    }
+
+    .donut-container h2 {
+      text-align: center;
+      position: absolute;
+      line-height: 125px;
+      width: 100%;
+    }
+
+    .donut-container svg {
+      transform: rotate(-90deg);
+    }
+
+    .donut-container .donut {
+      stroke-dasharray: 440;
+      animation: donut 1s ease-out forwards;
+    }
+
+    @keyframes donut {
+      from {
+        stroke-dashoffset: 440;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="donut-container">
+    <h2>donut</h2>
+    <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <circle r="69.85699" cy="81" cx="81" stroke-width="14" stroke="#f2f2f2" fill="none">
+          <title>Layer 1</title>
+        </circle>
+        <circle id="circle1" style="stroke-dashoffset: 160;" class="donut" r="69.85699" cy="81" cx="81" stroke-width="14" stroke="#69aff4" fill="none">
+          <title>Layer 2</title>
+        </circle>
+      </g>
+    </svg>
+  </div>
+  <div class="donut-container">
+    <h2>donut 2</h2>
+    <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <circle r="69.85699" cy="81" cx="81" stroke-width="14" stroke="#f2f2f2" fill="none">
+          <title>Layer 1</title>
+        </circle>
+        <circle id="circle2" style="stroke-dashoffset: 220;" class="donut" r="69.85699" cy="81" cx="81" stroke-width="14" stroke="#FEC007" fill="none">
+          <title>Layer 2</title>
+        </circle>
+      </g>
+    </svg>
+  </div>
+
+  <script type="text/javascript">
+    const circle1 = document.querySelector('#circle1');
+    const circle2 = document.querySelector('#circle2');
+
+    setTimeout(() => {
+      circle1.style.strokeDashoffset = 440 - (440 * 0.50); // 50%
+      circle2.style.strokeDashoffset = 440 - (440 * 0.25); // 25%
+    }, 2000);
+
+  </script>
+
+</body>
+
+</html>
