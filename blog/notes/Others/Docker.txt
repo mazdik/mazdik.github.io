@@ -27,3 +27,6 @@ docker exec -it my_container /bin/bash
 docker restart $(docker ps -a -q)
 docker start $(docker ps -a -q -f status=exited)
 docker stop $(docker ps -a -q)
+
+-- Запустить временный контейнер (удаляется после завершения)
+docker run -i -t --rm --name guest oraclelinux:7-slim /bin/bash

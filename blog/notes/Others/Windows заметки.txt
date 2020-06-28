@@ -63,3 +63,8 @@ winscp.exe sftp://user:password@server.ru/
 winscp.exe ftp://user:password@server.ru/folder/
 winscp.exe ftp://user:password@server.ru/folder/ /upload f:\upload /nointeractiveinput
 winscp.exe /command "open ftp://user:password@server.ru/" "synchronize both f:\upload /folder" "exit" /log=f:\winscp.log
+
+###### chocolatey локальный репозиторий
+choco source disable -n=chocolatey
+choco source add -n=itsk -s"C:\repository"
+choco list -l

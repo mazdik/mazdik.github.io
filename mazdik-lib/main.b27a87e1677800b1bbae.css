@@ -388,6 +388,9 @@ a {
 /* StatesLineIntervalDemo */
 .states-line-interval-demo { height: 7rem; width: 60rem; }
 
+/* SimpleBarChartDemo */
+.simple-bar-chart-demo { height: 15rem; width: 30rem; }
+
 :root {
   --dt-color-success-light: #4caf50;
   --dt-color-success-lighter: #2ecc71;
@@ -1120,6 +1123,10 @@ a {
   margin: .1875rem 0;
   overflow: hidden;
   background-color: var(--dt-color-secondary-lighter);
+}
+
+.dt-list-menu-select-all {
+  border-bottom: .0625rem solid var(--dt-color-secondary-lighter);
 }
 
 .dt-list-menu-row {
@@ -2391,6 +2398,49 @@ button.vertical-menu-item {
 
 .states-line-interval .states-line {
   margin-top: 1rem;
+}
+
+.simple-bar-vertical {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.simple-bar-vertical * {
+  box-sizing: border-box;
+}
+
+.simple-bar-vertical-top {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.simple-bar-vertical-bottom {
+  display: flex;
+  width: 100%;
+  padding-left: 3rem;
+  justify-content: space-around;
+}
+
+.simple-bar-vertical-left {
+  display: flex;
+  height: 100%;
+  width: 3rem;
+  border-right: 1px #99C6E3 solid;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.simple-bar-vertical-main {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: repeating-linear-gradient(to bottom, #99C6E3, #99C6E3 1px, #fff 1px, #fff 20%);
+  border-bottom: 1px #99C6E3 solid;
+  justify-content: space-around;
+  align-items: flex-end;
 }
 
 
