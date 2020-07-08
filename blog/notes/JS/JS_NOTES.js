@@ -247,3 +247,6 @@ function findMinMax(arr, field): any[] {
   }
   return [min, max];
 }
+
+// get every nth element in a given array
+const everyNth = (arr, nth) => arr.filter((e, i) => i % nth === nth - 1);

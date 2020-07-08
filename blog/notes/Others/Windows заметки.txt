@@ -68,3 +68,6 @@ winscp.exe /command "open ftp://user:password@server.ru/" "synchronize both f:\u
 choco source disable -n=chocolatey
 choco source add -n=itsk -s"C:\repository"
 choco list -l
+
+###### powershell replace text in file
+(Get-Content c:\temp\test.txt).replace('[MYID]', 'MyValue') | Set-Content c:\temp\test.txt
