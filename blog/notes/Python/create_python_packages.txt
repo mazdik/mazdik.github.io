@@ -1,0 +1,20 @@
+# Файл MANIFEST.in
+include xalglib/alglib316_64free.dll
+include xalglib/alglib316_64free.so
+
+# Файл setup.py
+import setuptools
+setuptools.setup(
+    name="xalglib",
+    version="0.0.1",
+    python_requires='>=3.6',
+    include_package_data = True,
+    packages = ['xalglib'],
+    package_data={'xalglib': ['xalglib/alglib316_64free.dll', 'xalglib/alglib316_64free.so']},
+)
+
+# Сборка пакета
+python setup.py sdist
+
+# Установка
+pip install xalglib --no-index --find-links=py_packages
