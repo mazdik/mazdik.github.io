@@ -184,3 +184,14 @@ export class PageObjectBase {
   }
 
 }
+
+/* Виртуальный скрол с помощью прокрутки мыши */
+this.wheelListener = this.onWheel.bind(this);
+this.table.nativeElement.addEventListener('wheel', this.wheelListener);
+
+onWheel(event) {
+  if (this.scroller.items.length > this.scroller.itemsPerRow) {
+    event.preventDefault();
+    this.scroller.setOffsetY(this.scroller.scrollYPos + event.deltaY);
+  }
+}
