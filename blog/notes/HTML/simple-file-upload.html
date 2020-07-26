@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <style type="text/css">
+    .file-upload {
+      display: flex;
+      border: dashed 3px #eee;
+      width: 16rem;
+      height: 16rem;
+      overflow: auto;
+    }
+
+    .file-upload-label {
+      display: flex;
+      flex-grow: 1;
+      position: relative;
+      justify-content: center;
+    }
+
+    .file-upload-input {
+      opacity: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .file-upload-content {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .file-upload-content-mock {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      font-size: 10rem;
+      color: #eee;
+    }
+
+    .file-upload-row {
+      padding: .3rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="file-upload">
+    <label class="file-upload-label">
+      <input class="file-upload-input" type="file" name="file" multiple />
+      <div class="file-upload-content">
+        <div class="file-upload-content-mock">+</div>
+      </div>
+    </label>
+  </div>
+
+  <script type="text/javascript">
+    const input = document.querySelector('.file-upload-input');
+    const content = document.querySelector('.file-upload-content');
+
+    input.addEventListener('change', () => {
+      content.innerHTML = '';
+      const fileList = input.files;
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList.item(i);
+        const element = document.createElement('div');
+        element.classList.add('file-upload-row');
+        element.textContent = file.name + ' ' + formatFileSize(file.size);
+        content.append(element);
+      }
+    });
+
+    function formatFileSize(size) {
+      const mb = Math.ceil(size / 1024);
+      return mb.toLocaleString() + ' KB';
+    }
+  </script>
+</body>
+
+</html>
