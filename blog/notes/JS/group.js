@@ -29,3 +29,18 @@ console.log(groupAndSum(rows));
   {fieldName: "test2", oilProduction: 6, oilLosses: 2, count: 3}
 ]
 */
+
+export function groupBy<T = any>(list: T[], keyGetter: (item: T) => any): Map<any, T[]> {
+  const map = new Map();
+  list.forEach((item) => {
+    const key = keyGetter(item);
+    if (!map.has(key)) {
+      map.set(key, [item]);
+    } else {
+      map.get(key).push(item);
+    }
+  });
+  return map;
+}
+
+groupBy<MeasureType>(measureTypes, x => x.chartGroupId);
