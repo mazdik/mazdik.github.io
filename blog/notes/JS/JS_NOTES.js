@@ -98,6 +98,8 @@ uniqueArray = names.filter(function(item, pos) {
 columns = columns.filter((item, index) => {
   return index === columns.findIndex((x) => x.title === item.title);
 });
+// Unique array for dates
+const uniqueDates = dates.filter((v, i, a) => a.findIndex(d => d.getTime() === v.getTime()) === i);
 
 // remove from url
 url.substring(0, url.lastIndexOf('/'));
