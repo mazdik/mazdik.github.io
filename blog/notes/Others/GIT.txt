@@ -107,3 +107,6 @@ git config --global credential.helper store
 [http]
   proxy = http://user:pass@proxy.local:8080/
   sslVerify = false
+
+# Удаляет все устаревшие ветки удаленного отслеживания
+git remote prune origin
