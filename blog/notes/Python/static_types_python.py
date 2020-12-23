@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional, Union
 
 name_counts: Dict[str, int] = {
     "Adam": 10,
@@ -14,7 +14,6 @@ list_of_dicts: List[Dict[str, int]] = [
 
 my_data: Tuple[str, int, float] = ("Adam", 10, 5.7)
 
-
 LatLngVector = List[Tuple[float, float]]
 points: LatLngVector = [
     (25.91375, -60.15503),
@@ -26,10 +25,17 @@ my_string: str = "My String Value"
 
 def function_name(arg1: type, arg2: type) -> teturn_type:
 
-
-from typing import Optional
 def get_some_date(some_argument: int=None) -> Optional[datetime]:
 
-from typing import Union
 def get_some_date(some_argument: int=None) -> Union[datetime, None]:
 
+
+List[str] # [] || ['text']
+
+List[Optional[str]] # [] || ['text'] || [None]
+
+Optional[List[Optional[str]]] # [] || ['text'] || [None] || None
+
+list # List[Any]
+
+# Static type checker: https://github.com/microsoft/pyright
