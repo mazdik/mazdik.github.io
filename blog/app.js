@@ -126,7 +126,7 @@ class App {
   createCategory(item) {
     const element = document.createElement('a');
     element.classList.add('list-group-item');
-    element.href = '/#/' + encodeURI(item.path);
+    element.href = '#/' + encodeURI(item.path);
     element.textContent = item.name;
     element.dataset.category = item.name;
     return element;
@@ -140,7 +140,7 @@ class App {
           const element = document.createElement('li');
           const link = document.createElement('a');
           element.append(link);
-          link.href = '/#/' + encodeURI(item.path);
+          link.href = '#/' + encodeURI(item.path);
           link.textContent = item.name;
           link.dataset.id = item.path;
           const img = data.find(x => x.name === item.name && imgExtension.includes(x.extension));
