@@ -1,29 +1,61 @@
 class App {
 
   categories = [];
-  categoryLinks = {}
+  categoryLinks = {};
+  links = [];
   pre = document.createElement('pre');
   code = document.createElement('code');
   content = document.querySelector('#content');
   sideNav = document.querySelector('#side-nav');
-  headerNav = document.querySelector('#header-nav');
-  logo = document.querySelector('#logo');
   title = document.createElement('h1');
 
   constructor() {
     this.pre.append(this.code);
-    this.headerNav.addEventListener('click', (event) => {
-      this.onClickHeaderNav(event);
+    window.addEventListener('hashchange', () => {
+      this.router();
     });
-    this.sideNav.addEventListener('click', (event) => {
-      this.onClickSideNav(event);
-    });
-    this.content.addEventListener('click', (event) => {
-      this.onClickContent(event);
-    });
-    this.logo.addEventListener('click', (event) => {
-      this.onClickLogo(event);
-    });
+  }
+
+  router() {
+    const url = window.location.hash.slice(2) || '/';
+    const splittedUrl = url.split('/');
+
+    if (url === '/') {
+      this.renderCategoryLinks(this.categoryLinks);
+    } else if (url === 'notes') {
+      this.renderCategoryLinks(this.categoryLinks);
+    } else if (url === 'articles') {
+      this.loadPage('list');
+    } else if (url === 'portfolio') {
+      this.loadPortfolio();
+    } else if (splittedUrl[0] === 'pages' && splittedUrl[1]) {
+      this.content.innerHTML = '';
+      this.loadPage(splittedUrl[1]);
+    } else {
+      const link = this.links.find(x => x.children[0].dataset.id === decodeURI(url));
+      const element = (link && link.children) ? link.children[0] : null;
+
+      if (element && element.dataset.id) {
+        this.content.innerHTML = '';
+        this.title.textContent = element.textContent;
+        this.content.append(this.title);
+        this.loadContent(element.dataset.id);
+        if (element.dataset.img) {
+          this.loadImage(element.dataset.img);
+        }
+      } else {
+        const element = this.categories.find(x => x.hash === '#/' + url);
+
+        if (element) {
+          const categoryName = element.dataset.category;
+          const categoryLinks = {};
+          categoryLinks[categoryName] = this.categoryLinks[categoryName];
+          this.renderCategoryLinks(categoryLinks);
+        } else {
+          this.content.innerHTML = '<h3>Not found</h3>';
+        }
+      }
+    }
   }
 
   async getText(path) {
@@ -66,6 +98,7 @@ class App {
       data.children.forEach(item => {
         const category = this.createCategory(item);
         categoryLinks[item.name] = this.createLinks(item.children || []);
+        this.links = this.links.concat(categoryLinks[item.name]);
         category.textContent += ` (${categoryLinks[item.name].length})`;
         categories.push(category);
       });
@@ -87,12 +120,13 @@ class App {
     await this.loadMenu();
     this.renderCategories(this.categories);
     this.renderCategoryLinks(this.categoryLinks);
+    this.router();
   }
 
   createCategory(item) {
     const element = document.createElement('a');
     element.classList.add('list-group-item');
-    element.href = item.path;
+    element.href = '/#/' + encodeURI(item.path);
     element.textContent = item.name;
     element.dataset.category = item.name;
     return element;
@@ -106,6 +140,7 @@ class App {
           const element = document.createElement('li');
           const link = document.createElement('a');
           element.append(link);
+          link.href = '/#/' + encodeURI(item.path);
           link.textContent = item.name;
           link.dataset.id = item.path;
           const img = data.find(x => x.name === item.name && imgExtension.includes(x.extension));
@@ -142,64 +177,6 @@ class App {
     }
     this.content.innerHTML = '';
     this.content.append(...elements);
-  }
-
-  onClickContent(event) {
-    const target = event.target;
-    const element = target.tagName === 'A' ? target : target.closest('a');
-    if (!element) {
-      return;
-    }
-    if (element.dataset.id) {
-      event.stopPropagation();
-      event.preventDefault();
-      this.content.innerHTML = '';
-      this.title.textContent = element.textContent;
-      this.content.append(this.title);
-      this.loadContent(element.dataset.id);
-      if (element.dataset.img) {
-        this.loadImage(element.dataset.img);
-      }
-    } else if (element.dataset.page) {
-      event.stopPropagation();
-      event.preventDefault();
-      this.content.innerHTML = '';
-      this.loadPage(element.dataset.page);
-    }
-  }
-
-  onClickSideNav(event) {
-    const target = event.target;
-    const element = target.tagName === 'A' ? target : target.closest('a');
-    if (element && element.dataset.category) {
-      event.stopPropagation();
-      event.preventDefault();
-      const categoryName = element.dataset.category;
-      const categoryLinks = {};
-      categoryLinks[categoryName] = this.categoryLinks[categoryName];
-      this.renderCategoryLinks(categoryLinks);
-    }
-  }
-
-  onClickHeaderNav(event) {
-    const target = event.target;
-    const element = target.tagName === 'A' ? target : target.closest('a');
-    if (element && element.dataset.id) {
-      event.stopPropagation();
-      event.preventDefault();
-      if (element.dataset.id === 'note') {
-        this.renderCategoryLinks(this.categoryLinks);
-      } else if (element.dataset.id === 'articles') {
-        this.loadPage('list');
-      } else if (element.dataset.id === 'portfolio') {
-        this.loadPortfolio();
-      }
-    }
-  }
-
-  onClickLogo(event) {
-    event.preventDefault();
-    this.renderCategoryLinks(this.categoryLinks);
   }
 
   async loadPortfolio() {
