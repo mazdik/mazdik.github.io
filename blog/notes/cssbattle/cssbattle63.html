@@ -1,0 +1,42 @@
+<i class="x y z">
+  <i class="x w y"></i>
+  <i class="x w a"></i>
+  <i class="x w b"></i>
+  <i class="x w c"></i>
+  <i class="x w d"></i>
+</i>
+<style>
+* {background: #191919}
+.x {position: absolute}
+.y {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.z {
+  width: 190px;
+  height: 190px;
+  top:149px;
+  left: 201px;
+}
+.w {
+  width: 50px;
+  height: 50px;
+  border: 10px solid #5DBCF9;
+} 
+.a {
+  border-radius: 50% 50% 0 50%;
+}
+.b {
+  border-radius: 50% 0 50% 50%;
+  bottom: 0;
+}
+.c {
+  border-radius: 50% 50% 50% 0;
+  right: 0;
+}
+.d {
+  border-radius: 0 50% 50% 50%;
+  right: 0;
+  bottom: 0;
+}
