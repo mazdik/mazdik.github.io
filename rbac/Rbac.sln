@@ -1,0 +1,87 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rbac.Web", "Rbac.Web\Rbac.Web.csproj", "{A7F8E3A5-04E5-42A2-A6A1-A61FF00E3BD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rbac.Contracts", "Rbac.Contracts\Rbac.Contracts.csproj", "{463855A9-EE15-4942-9E23-9D97A2EA22B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connectors", "Connectors", "{28E0CF9C-DC83-4D92-ABBA-3DF82D776714}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rbac.Connectors", "Rbac.Connectors\Rbac.Connectors.csproj", "{CC256DBC-DF96-4A56-A159-AD9D38E0B7F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rbac.Connectors.PostgreSql", "Rbac.Connectors.PostgreSql\Rbac.Connectors.PostgreSql.csproj", "{4D86BF02-B871-480E-B7D3-B42619911AE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readers", "Readers", "{6E69F01D-C594-4CC5-9DFD-287950F1E5B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rbac.Readers", "Rbac.Readers\Rbac.Readers.csproj", "{72A364FE-5749-4D7D-932C-9173FEE66B30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rbac.Readers.PostgreSql", "Rbac.Readers.PostgreSql\Rbac.Readers.PostgreSql.csproj", "{5B026784-40B5-4094-99FD-829A56DDAFB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Writers", "Writers", "{FBBA5210-7C34-4084-BEB7-5671AB280674}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rbac.Writers", "Rbac.Writers\Rbac.Writers.csproj", "{868AB660-0606-44A0-B02E-6E78649EE13A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rbac.Writers.PostgreSql", "Rbac.Writers.PostgreSql\Rbac.Writers.PostgreSql.csproj", "{982FE855-E2CB-4BD2-A30A-B7C142C5B7FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rbac.Logging", "Rbac.Logging\Rbac.Logging.csproj", "{B6E1B280-8EA1-432A-848E-0740659F5735}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7F8E3A5-04E5-42A2-A6A1-A61FF00E3BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7F8E3A5-04E5-42A2-A6A1-A61FF00E3BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7F8E3A5-04E5-42A2-A6A1-A61FF00E3BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7F8E3A5-04E5-42A2-A6A1-A61FF00E3BD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{463855A9-EE15-4942-9E23-9D97A2EA22B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463855A9-EE15-4942-9E23-9D97A2EA22B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463855A9-EE15-4942-9E23-9D97A2EA22B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463855A9-EE15-4942-9E23-9D97A2EA22B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC256DBC-DF96-4A56-A159-AD9D38E0B7F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC256DBC-DF96-4A56-A159-AD9D38E0B7F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC256DBC-DF96-4A56-A159-AD9D38E0B7F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC256DBC-DF96-4A56-A159-AD9D38E0B7F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D86BF02-B871-480E-B7D3-B42619911AE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D86BF02-B871-480E-B7D3-B42619911AE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D86BF02-B871-480E-B7D3-B42619911AE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D86BF02-B871-480E-B7D3-B42619911AE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72A364FE-5749-4D7D-932C-9173FEE66B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72A364FE-5749-4D7D-932C-9173FEE66B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72A364FE-5749-4D7D-932C-9173FEE66B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72A364FE-5749-4D7D-932C-9173FEE66B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B026784-40B5-4094-99FD-829A56DDAFB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B026784-40B5-4094-99FD-829A56DDAFB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B026784-40B5-4094-99FD-829A56DDAFB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B026784-40B5-4094-99FD-829A56DDAFB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868AB660-0606-44A0-B02E-6E78649EE13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868AB660-0606-44A0-B02E-6E78649EE13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868AB660-0606-44A0-B02E-6E78649EE13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868AB660-0606-44A0-B02E-6E78649EE13A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{982FE855-E2CB-4BD2-A30A-B7C142C5B7FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{982FE855-E2CB-4BD2-A30A-B7C142C5B7FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{982FE855-E2CB-4BD2-A30A-B7C142C5B7FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{982FE855-E2CB-4BD2-A30A-B7C142C5B7FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6E1B280-8EA1-432A-848E-0740659F5735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6E1B280-8EA1-432A-848E-0740659F5735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6E1B280-8EA1-432A-848E-0740659F5735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6E1B280-8EA1-432A-848E-0740659F5735}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CC256DBC-DF96-4A56-A159-AD9D38E0B7F2} = {28E0CF9C-DC83-4D92-ABBA-3DF82D776714}
+		{4D86BF02-B871-480E-B7D3-B42619911AE6} = {28E0CF9C-DC83-4D92-ABBA-3DF82D776714}
+		{72A364FE-5749-4D7D-932C-9173FEE66B30} = {6E69F01D-C594-4CC5-9DFD-287950F1E5B5}
+		{5B026784-40B5-4094-99FD-829A56DDAFB8} = {6E69F01D-C594-4CC5-9DFD-287950F1E5B5}
+		{868AB660-0606-44A0-B02E-6E78649EE13A} = {FBBA5210-7C34-4084-BEB7-5671AB280674}
+		{982FE855-E2CB-4BD2-A30A-B7C142C5B7FF} = {FBBA5210-7C34-4084-BEB7-5671AB280674}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBC20D58-4466-4270-B63D-16FDD2423A29}
+	EndGlobalSection
+EndGlobal
