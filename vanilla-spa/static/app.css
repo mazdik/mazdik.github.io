@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3 {
+  font-weight: 400;
+  margin: 0;
+}
+
+p {
+  margin: 0 0 10.5px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+.main {
+	margin: 20px auto;
+	width: 50%;
+}
+
+.button {
+  background-color: #5b9bd5;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+  outline: 0;
+}
+
+.button[disabled] {
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+.button.active, .button:active {
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+}
+
+.button-sm {
+  padding: 3px 9px;
+}
+
+.df-control {
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.df-has-error .df-control
+{
+  border-color: #a94442;
+}
+
+.df-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.df-has-error .df-control:focus {
+  outline: 0;
+  border-color: #843534;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #ce8483;
+}
+
+.df-help-block {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #737373;
+}
+
+.df-has-error .df-help-block
+{
+  color: #a94442;
+}
+
+.df-control[disabled], .df-control[readonly] {
+  background-color: #eee;
+  opacity: 1;
+}
+
+.df-control[disabled] {
+  cursor: not-allowed;
+}
+
+.df-group {
+  margin-bottom: 1rem;
+}
+
+.required label::after {
+  content: ' *';
+  color: red;
+}
+
+.comment {
+  padding-bottom: 15px; 
+  overflow: hidden;
+}
+
+.comment h3 {
+  cursor: pointer;
+  color: #5b9bd5;
+}

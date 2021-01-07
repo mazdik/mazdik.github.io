@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="/static/app.css">
+    <script src="/static/app.js"></script>
+</head>
+
+<body>
+    <ul class="menu">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/comment">Comment</a></li>
+        <li><a href="#/view">View</a></li>
+        <li><a href="#/stat">Stat</a></li>
+    </ul>
+    <div class="main">
+        <div id="message"></div>
+        <div id="comment" style="display: none;">
+            <form id="comment-form" novalidate>
+                <div class="df-group required">
+                    <label for="surname">Surname</label>
+                    <input class="df-control" type="text" name="surname" id="surname" data-validation="required" />
+                </div>
+                <div class="df-group required">
+                    <label for="name">Name</label>
+                    <input class="df-control" type="text" name="name" id="name" data-validation="required" />
+                </div>
+                <div class="df-group">
+                    <label for="middle_name">Middle name</label>
+                    <input class="df-control" type="text" name="middle_name" id="middle_name" />
+                </div>
+                <div class="df-group">
+                    <label for="region_id">Region</label>
+                    <select class="df-control" name="region_id" id="region_id">
+                        <option value="0"></option>
+                    </select>
+                </div>
+                <div class="df-group">
+                    <label for="city_id">City</label>
+                    <select class="df-control" type="text" name="city_id" id="city_id">
+                        <option value="0"></option>
+                    </select>
+                </div>
+                <div class="df-group">
+                    <label for="phone">Phone</label>
+                    <input class="df-control" type="text" name="phone" id="phone" data-validation="phone" />
+                </div>
+                <div class="df-group">
+                    <label for="email">E-mail</label>
+                    <input class="df-control" type="text" name="email" id="email" data-validation="email" />
+                </div>
+                <div class="df-group">
+                    <label for="comment">Comment</label>
+                    <textarea class="df-control" name="comment" id="comment"></textarea>
+                </div>
+                <button class="button" type="submit" id="comment-button">Add</button>
+            </form>
+        </div>
+        <div id="view" style="display: none;"></div>
+        <div id="stat" style="display: none;"></div>
+        <div id="p404" style="display: none;">Page Not Found</div>
+    </div>
+</body>
+
+</html>
