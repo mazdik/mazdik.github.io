@@ -1,0 +1,55 @@
+<i class="x y z">
+  <i class="w">
+    <i class="x a"></i>
+    <i class="x y b"></i>
+  </i>
+  <i class="w v"></i>
+  <i class="w u">
+    <i class="x y c"></i>
+    <i class="x y d"></i>
+  </i>
+</i>
+<style>
+* {background: #191919}
+.x {position: absolute}
+.y {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.z {
+  width: 250px;
+  height: 200px;
+  display: flex;
+}
+.w {
+  width: 225px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.a {
+  border-top: 100px solid transparent;
+  border-right: 100px solid #5DBCF9;
+  border-bottom: 100px solid transparent;
+  left: 25px;
+}
+.b {
+  width: 100%;
+  height: 50px;;
+  background: #5DBCF9;
+  border-radius: 10px;
+}
+.c {
+  width: 80px;
+  height: 80px;;
+  border-radius: 50%;
+  left: 0;
+  box-shadow: 0 0 0 10px #5DBCF9, 0 0 0 25px #191919, 0 0 0 35px #5DBCF9, 0 0 0 50px #191919, 0 0 0 60px #5DBCF9
+}
+.v {
+  width: 45px;
+}
+.u {
+  width: 180px;
+}
