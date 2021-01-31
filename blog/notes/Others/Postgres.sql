@@ -11,29 +11,6 @@ initdb -U postgres -A password -E utf8 -W -D %POSTGRESQL_ROOT%\data
 pg_ctl register -N "Postgresql" -U "NT AUTHORITY\NetworkService" -D "%POSTGRESQL_ROOT%/data" -w
 */
 
------------------ Оra2pg -----------------
--- Параметры соединения c БД Oracle
-ORACLE_HOME /usr/lib/oracle/11.2/client64
-ORACLE_DSN dbi:Oracle:host=oracle_host.domain.ru;sid=<SID>
-ORACLE_USER SYSTEM
-ORACLE_PWD MANAGER
--- Какую схему выгружаем
-EXPORT_SCHEMA 1
-SCHEMA TST_OWNER
--- В какую схему загружаем
-PG_SCHEMA tst_owner
--- Копировать данные напрямую из Oracle в Postgres, минуя текстовый файл.
-TYPE TABLE,COPY
--- Параметры соединения c БД Postgres
-PG_DSN dbi:Pg:dbname=qqq;host=localhost;port=5432
-PG_USER tst_owner
-PG_PWD tst_onwer
--- Для того, чтобы тип number() без указания точности не конвертировался в bigint, укажем:
-DEFAULT_NUMERIC numeric
--- Запуск
-ora2pg -c ora2pg_dist.conf
------------------ Оra2pg -----------------
-
 --Консоль
 psql -h localhost -p 5432 -U postgres -W postgres
 psql -U postgres
@@ -44,7 +21,6 @@ psql -U postgres -d postgres -f 136_output_table.sql
 --Сиквенсы
 truncate table tbl_sessions_count;
 SELECT setval('tbl_sessions_count_id_seq', 1, false);
-
 
 --Пересоздание схемы
 DROP SCHEMA public CASCADE;
