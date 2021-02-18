@@ -35,7 +35,7 @@ select *
     on T0.BEGIN_DATE >= T2.BEGIN_DATE
    and (T0.BEGIN_DATE < T2.END_DATE or T2.END_DATE is null)
  order by T0.BEGIN_DATE
-/* Àíàëîãè÷íî ðàáîòàåò è òàê
+/* ÐÐ½Ð°Ð»Ð¾Ð³Ð¸Ñ‡Ð½Ð¾ Ñ€Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚ Ð¸ Ñ‚Ð°Ðº
 T0, T1, T2
 where T0.BEGIN_DATE >= T1.BEGIN_DATE
  and (T0.BEGIN_DATE < T1.END_DATE or T1.END_DATE is null)

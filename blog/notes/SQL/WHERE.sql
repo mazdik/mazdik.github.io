@@ -1,4 +1,4 @@
--- Фильтры для NULL
+-- Р¤РёР»СЊС‚СЂС‹ РґР»СЏ NULL
 WHERE NVL (a, 0) = NVL (b, 0);
 WHERE DECODE (a, b, 'YES', 'NO') = 'YES';
 WHERE (a = b OR (a IS NULL AND b IS NULL));
@@ -9,7 +9,7 @@ WHERE (t1.col1 = t2.col2 or coalesce(t1.col1, t2.col2) is null)
 WHERE decode(ename, :ename, 1) = 1
 WHERE (t.shop_id in (select cdng_id from rpt_cdng) or (select count(cdng_id) from rpt_cdng) = 0)
 
-/* Пример where case */
+/* РџСЂРёРјРµСЂ where case */
 and (case
          when f.noteop = 1 and sp.deop_date is null then
           1
@@ -21,7 +21,7 @@ and (case
           0
   end) = 1
 
--- Вывод: ddd. Если все условия ложные, то ничего не выводит
+-- Р’С‹РІРѕРґ: ddd. Р•СЃР»Рё РІСЃРµ СѓСЃР»РѕРІРёСЏ Р»РѕР¶РЅС‹Рµ, С‚Рѕ РЅРёС‡РµРіРѕ РЅРµ РІС‹РІРѕРґРёС‚
 select 'ddd' from dual
 where 
      (case
@@ -35,7 +35,7 @@ where
           0
      end) = 1
 
-/* Сквозной поиск */
+/* РЎРєРІРѕР·РЅРѕР№ РїРѕРёСЃРє */
 where (
 :P3_SEARCH is null or
 (instr(upper(e.ename),upper(:P3_SEARCH) ) > 0 or
@@ -43,7 +43,7 @@ instr(upper(e.job),upper(:P3_SEARCH) ) > 0 or
 instr(upper(e.deptno),upper(:P3_SEARCH) ) > 0 )
 )
 
-/* Пример where case | where or */
+/* РџСЂРёРјРµСЂ where case | where or */
 with W_DATA as
  (select 10002 as STATE_ID, to_date('01.02.2019', 'DD.MM.YYYY') as DT
     from dual
@@ -56,9 +56,9 @@ with W_DATA as
 select *
   from W_DATA
  where
-/* 1 способ */
+/* 1 СЃРїРѕСЃРѕР± */
 ((DT >= to_date('01.03.2019', 'DD.MM.YYYY') and STATE_ID = 10002) or (STATE_ID <> 10002))
-/* 2 способ */
+/* 2 СЃРїРѕСЃРѕР± */
  (case
    when STATE_ID = 10002 then
     (case

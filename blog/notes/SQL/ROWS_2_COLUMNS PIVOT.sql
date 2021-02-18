@@ -1,4 +1,4 @@
-------- обычный запрос -------
+------- РѕР±С‹С‡РЅС‹Р№ Р·Р°РїСЂРѕСЃ -------
 select
   OBJECT_TYPE, count(*) cnt,
   ROW_NUMBER() OVER (ORDER BY OBJECT_TYPE) seq
@@ -7,7 +7,7 @@ where OWNER='LIDER'
 and OBJECT_TYPE in ('FUNCTION', 'INDEX', 'PACKAGE', 'PACKAGE BODY', 'PROCEDURE', 'TABLE', 'TRIGGER', 'VIEW')
 group by OBJECT_TYPE
 
--- Вариант с pivot (Oracle 11) --
+-- Р’Р°СЂРёР°РЅС‚ СЃ pivot (Oracle 11) --
 select *
 from
   (select object_type
@@ -16,7 +16,7 @@ from
     (count(object_type)
       for object_type in ('SEQUENCE', 'PROCEDURE', 'VIEW', 'SYNONYM'));
 
-------- Вариант с ROW_NUMBER() OVER -------
+------- Р’Р°СЂРёР°РЅС‚ СЃ ROW_NUMBER() OVER -------
 SELECT
 MAX(DECODE(seq,1,cnt,NULL)) "FUNCTION",
 MAX(DECODE(seq,2,cnt,NULL)) "INDEX",
@@ -37,7 +37,7 @@ and OBJECT_TYPE in ('FUNCTION', 'INDEX', 'PACKAGE', 'PACKAGE BODY', 'PROCEDURE',
 group by OBJECT_TYPE
 )
 
-------- Вариант с LEAD -------
+------- Р’Р°СЂРёР°РЅС‚ СЃ LEAD -------
 select * from (
 select
 LEAD(t.cnt, 0, 0) OVER (ORDER BY OBJECT_TYPE) AS "FUNCTION",
@@ -58,7 +58,7 @@ order by OBJECT_TYPE
 ) t
 ) where rownum=1
 
-------- Вариант с LAG -------
+------- Р’Р°СЂРёР°РЅС‚ СЃ LAG -------
 select * from (
 select
 ROW_NUMBER() OVER (ORDER BY null) rnum,
@@ -80,7 +80,7 @@ order by OBJECT_TYPE
 ) t
 ) where rnum=8
 
-------- Вариант с CASE -------
+------- Р’Р°СЂРёР°РЅС‚ СЃ CASE -------
 select sum(
          case when OBJECT_TYPE = 'FUNCTION'
               then cnt
@@ -124,7 +124,7 @@ and OBJECT_TYPE in ('FUNCTION', 'INDEX', 'PACKAGE', 'PACKAGE BODY', 'PROCEDURE',
 group by OBJECT_TYPE
 )
 
--- sql с транспонированием
+-- sql СЃ С‚СЂР°РЅСЃРїРѕРЅРёСЂРѕРІР°РЅРёРµРј
 select 
 MAX(DECODE(seq,1,contr_name,NULL)) highest,
 MAX(DECODE(seq,1,auto_full,NULL)) auto_full,

@@ -1,35 +1,35 @@
---поиск дубликатов
+--РїРѕРёСЃРє РґСѓР±Р»РёРєР°С‚РѕРІ
 select name, count(name) as num from character_votes group by name having num>1 order by num desc;
 
---удаление дубликатов
+--СѓРґР°Р»РµРЅРёРµ РґСѓР±Р»РёРєР°С‚РѕРІ
 DELETE t1 FROM character_votes t1, character_votes t2 WHERE t1.name=t2.name AND t1.id>t2.ID;
 
---поиск дубликатов 2 способ
+--РїРѕРёСЃРє РґСѓР±Р»РёРєР°С‚РѕРІ 2 СЃРїРѕСЃРѕР±
 select * from character_votes where name in (select name from character_votes group by name having count(*) > 1) order by name;
 
---поиск дубликатов 3 по нескольким полям
+--РїРѕРёСЃРє РґСѓР±Р»РёРєР°С‚РѕРІ 3 РїРѕ РЅРµСЃРєРѕР»СЊРєРёРј РїРѕР»В¤Рј
 select * from libr_records where (datevid,formno, invno) in (SELECT datevid,formno, invno
 FROM libr_records
 group by datevid,formno, invno
 having count(*)>1)
 
--- в оракле парус 8
+-- РІ РѕСЂР°РєР»Рµ РїР°СЂСѓСЃ 8
 select
 m.fact_doctype_rn, m.fact_docnumb, m.acnt_opersum, m.fact_docdate, count(*)
 from V_ECONOPRS M  
-where  M.OPERATION_CONTENTS='Принятые обязательства'
+where  M.OPERATION_CONTENTS='С•СЂРёРЅВ¤С‚С‹Рµ РѕР±В¤Р·Р°С‚РµР»СЊСЃС‚РІР°'
 and m.operation_date BETWEEN TO_DATE ('01.01.2012','DD/MM/YYYY') AND TO_DATE ('31.12.2012','DD/MM/YYYY')
 group by m.fact_doctype_rn, m.fact_docnumb, m.acnt_opersum, m.fact_docdate
 having count(*)>1
 
--- удаление дубликатов парус 8
+-- СѓРґР°Р»РµРЅРёРµ РґСѓР±Р»РёРєР°С‚РѕРІ РїР°СЂСѓСЃ 8
 delete from doclinks where rn in (
 select max(d.rn)
   from doclinks d
         group by d.out_document
         having count(*)>1)
 
--- удаление дубликатов по rowid
+-- СѓРґР°Р»РµРЅРёРµ РґСѓР±Р»РёРєР°С‚РѕРІ РїРѕ rowid
 delete from RAD_PARAM_TOTAL_TABLE t
  where t.rowid in (SELECT max(rowid)
                      FROM RAD_PARAM_TOTAL_TABLE
@@ -37,17 +37,17 @@ delete from RAD_PARAM_TOTAL_TABLE t
                     group by link, param
                    having count(*) > 1);
 
---удаление дубликатов 2 способ -- ниже не проверял
+--СѓРґР°Р»РµРЅРёРµ РґСѓР±Р»РёРєР°С‚РѕРІ 2 СЃРїРѕСЃРѕР± -- РЅРёР¶Рµ РЅРµ РїСЂРѕРІРµСЂВ¤Р»
 
--- Вариант с NOT IN. 
--- Остаются строки с минимальным значением поля DUPLICATE_ID среди дубликатов.
+-- В¬Р°СЂРёР°РЅС‚ СЃ NOT IN. 
+-- СњСЃС‚Р°СЋС‚СЃВ¤ СЃС‚СЂРѕРєРё СЃ РјРёРЅРёРјР°Р»СЊРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј РїРѕР»В¤ DUPLICATE_ID СЃСЂРµРґРё РґСѓР±Р»РёРєР°С‚РѕРІ.
 delete TEST_DUPLICATE
 where duplicate_id not in (
         select min(duplicate_id)
         from TEST_DUPLICATE
         group by value
       );
--- То же самое через NOT EXISTS.
+-- вЂњРѕ Р¶Рµ СЃР°РјРѕРµ С‡РµСЂРµР· NOT EXISTS.
 delete TEST_DUPLICATE d
 where not exists (
         select 1
@@ -57,7 +57,7 @@ where not exists (
              ) d2
         where d.duplicate_id = d2.duplicate_id
       );
--- Вариант с использованием аналитической функции row_number()
+-- В¬Р°СЂРёР°РЅС‚ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј Р°РЅР°Р»РёС‚РёС‡РµСЃРєРѕР№ С„СѓРЅРєС†РёРё row_number()
 delete TEST_DUPLICATE
 where duplicate_id in (
         select duplicate_id
@@ -66,11 +66,11 @@ where duplicate_id in (
              )
         where rw > 1
       );
--- В верхнем запросе нельзя сказать, какая именно строка из дубликатов останется, 
--- из-за условия "ORDER BY NULL". Для управления этим процессом 
--- можно отсортировать выборку в пределах каждого неуникального значения 
--- так, чтобы строка, которую хотелось бы оставить, была первой. 
--- Например, оставить строки с минимальным значением первичного ключа:
+-- В¬ РІРµСЂС…РЅРµРј Р·Р°РїСЂРѕСЃРµ РЅРµР»СЊР·В¤ СЃРєР°Р·Р°С‚СЊ, РєР°РєР°В¤ РёРјРµРЅРЅРѕ СЃС‚СЂРѕРєР° РёР· РґСѓР±Р»РёРєР°С‚РѕРІ РѕСЃС‚Р°РЅРµС‚СЃВ¤, 
+-- РёР·-Р·Р° СѓСЃР»РѕРІРёВ¤ "ORDER BY NULL". Ж’Р»В¤ СѓРїСЂР°РІР»РµРЅРёВ¤ СЌС‚РёРј РїСЂРѕС†РµСЃСЃРѕРј 
+-- РјРѕР¶РЅРѕ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ РІС‹Р±РѕСЂРєСѓ РІ РїСЂРµРґРµР»Р°С… РєР°Р¶РґРѕРіРѕ РЅРµСѓРЅРёРєР°Р»СЊРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёВ¤ 
+-- С‚Р°Рє, С‡С‚РѕР±С‹ СЃС‚СЂРѕРєР°, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РµР»РѕСЃСЊ Р±С‹ РѕСЃС‚Р°РІРёС‚СЊ, Р±С‹Р»Р° РїРµСЂРІРѕР№. 
+-- РЊР°РїСЂРёРјРµСЂ, РѕСЃС‚Р°РІРёС‚СЊ СЃС‚СЂРѕРєРё СЃ РјРёРЅРёРјР°Р»СЊРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р°:
 delete TEST_DUPLICATE
 where duplicate_id in (
         select duplicate_id, row_number() over (partition by value order by duplicate_id) rw
@@ -79,7 +79,7 @@ where duplicate_id in (
         where rw > 1
       );
 
---Исключение дубликатов (кроме DISTINCT и GROUP BY)
+--В»СЃРєР»СЋС‡РµРЅРёРµ РґСѓР±Р»РёРєР°С‚РѕРІ (РєСЂРѕРјРµ DISTINCT Рё GROUP BY)
 select job
   from (select job, row_number() over(partition by job order by job) rn
           from emp) x
