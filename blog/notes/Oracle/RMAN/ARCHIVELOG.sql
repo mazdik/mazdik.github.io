@@ -1,19 +1,19 @@
---Как узнать в каком режиме база ARCHIVELOG/NOARCHIVELOG? 
+--РљР°Рє СѓР·РЅР°С‚СЊ РІ РєР°РєРѕРј СЂРµР¶РёРјРµ Р±Р°Р·Р° ARCHIVELOG/NOARCHIVELOG? 
 select log_mode from v$database;
 
---включить ARCHIVELOG
+--РІРєР»СЋС‡РёС‚СЊ ARCHIVELOG
 shutdown immediate;
 startup mount;
 alter database archivelog;
 alter database open;
 
---выключить ARCHIVELOG
+--РІС‹РєР»СЋС‡РёС‚СЊ ARCHIVELOG
 shutdown immediate;
 startup mount;
 alter database noarchivelog;
 alter database open;
 
---под sqlplus
+--РїРѕРґ sqlplus
 archive log list
 show parameter recovery_file_dest
 show parameter recovery_file_dest_size
@@ -21,15 +21,15 @@ show parameter recovery_file_dest_size
 ALTER SYSTEM set DB_RECOVERY_FILE_DEST_SIZE = 200G scope = both;
 ALTER SYSTEM set DB_RECOVERY_FILE_DEST = 'D:\oracle\product\10.2.0\flash_recovery_area' scope = both;
 
---проверка
+--РїСЂРѕРІРµСЂРєР°
 alter system switch logfile;
 ALTER SYSTEM ARCHIVE LOG CURRENT;
 
---Время переключения
+--Р’СЂРµРјСЏ РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ
 alter system set ARCHIVE_LAG_TARGET = 1800 scope=both;
 
---Вместо LOG_ARCHIVE_DEST и LOG_ARCHIVE_DUPLEX_DEST рекомендуется использовать LOG_ARCHIVE_DEST_n
---выключить DB_RECOVERY_FILE_DEST (оставить LOG_ARCHIVE_DEST) и перезапустить базу
+--Р’РјРµСЃС‚Рѕ LOG_ARCHIVE_DEST Рё LOG_ARCHIVE_DUPLEX_DEST СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ LOG_ARCHIVE_DEST_n
+--РІС‹РєР»СЋС‡РёС‚СЊ DB_RECOVERY_FILE_DEST (РѕСЃС‚Р°РІРёС‚СЊ LOG_ARCHIVE_DEST) Рё РїРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ Р±Р°Р·Сѓ
 ALTER SYSTEM RESET DB_RECOVERY_FILE_DEST SCOPE=spfile sid='*';
 
 -- LOG_ARCHIVE_DEST_1
