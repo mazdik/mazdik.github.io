@@ -1,6 +1,9 @@
 ## Версия линукс
 cat /etc/*-release
 
+## Текущая частота процессора
+watch -n.1 "cat /proc/cpuinfo | grep \"^[c]pu MHz\""
+
 ## dconf-editor
 Кодировка для XED - org.x.editor
 
@@ -9,12 +12,6 @@ gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'WI
 
 ## Кодировка в Pluma для Linux Mint (форк редактора Gedit)
 gsettings set org.mate.pluma auto-detected-encodings "['UTF-8', 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']"
-
-## cd /opt/lampp
-sudo ./manager-linux.run (or manager-linux-x64.run)
-
-## Не удалось выполнить процесс-потомок «xterm»
-# sudo ln -s /usr/bin/mate-terminal /usr/bin/xterm
 
 ## Очистка кэша в Linux
 echo 3 > /proc/sys/vm/drop_caches
