@@ -192,29 +192,6 @@ while (i < 1000000) {
 }
 console.timeEnd('Execution time took');
 
-// Fetch: POST json data
-let token = null;
-fetch('http://localhost:5000/api/user/login', {
-  method: 'post',
-  headers: {
-    'Accept': 'application/json, text/plain, */*',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({username: 'user1', password: 'test'})
-}).then(res=>res.json())
-  .then(res => { console.log(res); token = res.token});
-
-//
-fetch('http://localhost:5000/api/user/test', {
-  method: 'get',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  }
-}).then(res=>res.json())
-  .then(res => console.log(res));
-
 // Gradient. Color scale from 0% to 100%, rendering it from red to yellow to green
 function perc2color(perc) {
   let r, g, b = 0;
@@ -238,17 +215,6 @@ percentageToColor(perc, maxHue = 120, minHue = 0) {
 
 ['VAL1', 'VAL2', 'VAL3'].reduce((a, b) => a + `,'` + b + `'`, '').substr(1);
 // "'VAL1','VAL2','VAL3'"
-
-function findMinMax(arr, field): any[] {
-  let min = field ? arr[0][field] : arr[0];
-  let max = min;
-  for (let i = 1, len = arr.length; i < len; i++) {
-    const v = field ? arr[i][field] : arr[i];
-    min = (v < min) ? v : min;
-    max = (v > max) ? v : max;
-  }
-  return [min, max];
-}
 
 // get every nth element in a given array
 const everyNth = (arr, nth) => arr.filter((e, i) => i % nth === nth - 1);
