@@ -36,3 +36,7 @@ docker system df
 
 -- Удалит все неиспользуемые контейнеры а также образы
 docker system prune -a
+
+-- Перенести образ локально
+docker save postgres:12.4 > postgres.tar
+docker load < postgres.tar
