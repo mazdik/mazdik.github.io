@@ -109,19 +109,3 @@ function letterToColumn(letter)
   }
   return column;
 }
-
-// Парсер даты DD.MM.YYYY HH:mm:ss
-parseDate(strDate: string, showTime: boolean, showSeconds: boolean): Date {
-  const patDate = /^(\d{2}).(\d{2}).(\d{4})$/; // DD.MM.YYYY
-  const patDateTime = /^(\d{2}).(\d{2}).(\d{4})\s(\d{1,2}):(\d{2})$/; // DD.MM.YYYY HH:mm
-  const patDateTimeSec = /^(\d{2}).(\d{2}).(\d{4})\s(\d{1,2}):(\d{2}):(\d{2})$/; // DD.MM.YYYY HH:mm:ss
-
-  let pattern = showTime ? (showSeconds ? patDateTimeSec : patDateTime) : patDate;
-  const [, day, month, year, hour = 0, min = '00', sec = '00'] = pattern.exec(strDate);
-  const iso = `${year}-${month}-${day}T${('0' + hour).slice(-2)}:${min}:${sec}`;
-  return new Date(iso);
-}
-
-isValidDate(date: Date) {
-  return date instanceof Date && !isNaN(date.getTime());
-}
