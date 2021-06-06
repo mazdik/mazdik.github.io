@@ -1,0 +1,11 @@
+redis.conf:
+нужно закомментировать bind
+# bind 127.0.0.1 -::1
+maxmemory 1gb
+maxmemory-policy allkeys-lru
+
+command: redis-server /usr/local/etc/redis/redis.conf --requirepass password
+
+Проверка применения настроек:
+redis-cli -a password
+INFO Memory
