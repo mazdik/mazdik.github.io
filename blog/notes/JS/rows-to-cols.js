@@ -19,7 +19,7 @@ function pivot(rows, groupKeys, columnKey, valueKey, columnPrefix) {
 }
 
 function addEmptyKeys(rows, fillValue = null) {
-  const uniqueKeys = [...new Set(result.map(x => Object.keys(x)).flat())]
+  const uniqueKeys = [...new Set(rows.map(x => Object.keys(x)).flat())]
   rows.forEach(row => {
     uniqueKeys.forEach(key => {
       if (!row.hasOwnProperty(key)) {
