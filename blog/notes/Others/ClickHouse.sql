@@ -46,3 +46,7 @@ from system.parts
 where active
 group by database, table
 order by bytes_size desc;
+
+/* Принудительная очистка по TTL: */
+OPTIMIZE TABLE system.query_log FINAL;
+OPTIMIZE TABLE system.query_thread_log FINAL;
