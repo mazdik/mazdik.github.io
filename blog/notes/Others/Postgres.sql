@@ -1,16 +1,3 @@
-/*
-# Переменные среды
-POSTGRESQL_ROOT = C:\pgsql
-C:\pgsql\bin
-# Создание бд
-initdb -U postgres -A password -E utf8 -W -D %POSTGRESQL_ROOT%\data
-# Запуск, останов
-"pg_ctl" -D "%POSTGRESQL_ROOT%\data" -l "%POSTGRESQL_ROOT%/pgsql.log" start
-"pg_ctl" -D "%POSTGRESQL_ROOT%\data" -l "%POSTGRESQL_ROOT%/pgsql.log" stop
-# Служба
-pg_ctl register -N "Postgresql" -U "NT AUTHORITY\NetworkService" -D "%POSTGRESQL_ROOT%/data" -w
-*/
-
 --Консоль
 psql -h localhost -p 5432 -U postgres -W postgres
 psql -U postgres
@@ -83,9 +70,6 @@ psql -U postgres -d postgres -f postgres.sql
 psql -U era_mer -d era_mer -f postgres.sql
 "C:\Program Files\PostgreSQL\10\bin\psql.exe" -U postgres -d postgres -f postgres.sql
 
--- Sessions
-select * from pg_stat_activity;
-
 -- Comments columns
 select t1.table_name, t1.column_name, t1.data_type, pgd.description as comments
   from (select c.table_name, c.column_name, c.data_type, c.ordinal_position, st.relid
@@ -153,4 +137,16 @@ show myvars.language_id;
 select set_config('myvars.language_id', '20', false);
 select current_setting('myvars.language_id');
 
+/* количество сессий */
+select application_name, count(*) as cnt from pg_stat_activity t
+ group by t.application_name
+ order by cnt desc;
+
+/* медленные или зависшие запросы, которые выполняются в данный момент */
+select pid, client_addr, usename, datname, state, to_char(current_timestamp - state_change, 'ssss.ms') as runtime, query, application_name
+from pg_stat_activity 
+where pid <> pg_backend_pid() 
+and state = 'active' 
+and state_change < current_timestamp - interval '3' second
+order by runtime desc;
 
