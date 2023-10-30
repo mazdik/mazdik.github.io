@@ -4,15 +4,6 @@ cat /etc/*-release
 ## Текущая частота процессора
 watch -n.1 "cat /proc/cpuinfo | grep \"^[c]pu MHz\""
 
-## dconf-editor
-Кодировка для XED - org.x.editor
-
-## Кодировка в Gedit для Ubuntu
-gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']"
-
-## Кодировка в Pluma для Linux Mint (форк редактора Gedit)
-gsettings set org.mate.pluma auto-detected-encodings "['UTF-8', 'WINDOWS-1251', 'CURRENT', 'ISO-8859-15', 'UTF-16']"
-
 ## Очистка кэша в Linux
 echo 3 > /proc/sys/vm/drop_caches
 

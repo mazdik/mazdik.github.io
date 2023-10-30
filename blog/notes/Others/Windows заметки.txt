@@ -2,7 +2,7 @@
 taskkill /F /IM FreeFileSync.exe
 
 ###### оставить последние 180 дней
-c:\windows\system32\forfiles.exe -p c:\arc_out -s -m *.* -d -180 -c "cmd /c del /q @path"
+orfiles -p c:\arc_out -s -m *.* -d -180 -c "cmd /c del /q @path"
 
 ###### psexec
 Она позволяет выполнять команды на удаленных компьютерах  и при этом не требует установки в систему
@@ -46,7 +46,7 @@ netsh interface portproxy show all
 Чтобы очистить все имеющиеся правила перенаправления:
 netsh interface portproxy reset
 
-В случае необходимости в брандмауэра  Windows можно добавить новое правило командой:
+В случае необходимости в брандмауэра Windows можно добавить новое правило командой:
 netsh advfirewall firewall add rule name=”RDP_3340” protocol=TCP dir=in localip=10.10.1.110  localport=3340 action=allow
 
 ###### Расчет адресации в протоколе IPv4
