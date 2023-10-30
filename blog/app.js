@@ -18,19 +18,11 @@ class App {
 
   router() {
     const url = window.location.hash.slice(2) || '/';
-    const splittedUrl = url.split('/');
 
     if (url === '/') {
       this.renderCategoryLinks(this.categoryLinks);
     } else if (url === 'notes') {
       this.renderCategoryLinks(this.categoryLinks);
-    } else if (url === 'articles') {
-      this.loadPage('list');
-    } else if (url === 'portfolio') {
-      this.loadPortfolio();
-    } else if (splittedUrl[0] === 'pages' && splittedUrl[1]) {
-      this.content.innerHTML = '';
-      this.loadPage(splittedUrl[1]);
     } else {
       const link = this.links.find(x => x.children[0].dataset.id === decodeURI(url));
       const element = (link && link.children) ? link.children[0] : null;
@@ -177,20 +169,6 @@ class App {
     }
     this.content.innerHTML = '';
     this.content.append(...elements);
-  }
-
-  async loadPortfolio() {
-    let text = await this.getText('portfolio/portfolio.html');
-    if (text) {
-      this.content.innerHTML = text;
-    }
-  }
-
-  async loadPage(page) {
-    let text = await this.getText(`pages/${page}.html`);
-    if (text) {
-      this.content.innerHTML = text;
-    }
   }
 
 }
