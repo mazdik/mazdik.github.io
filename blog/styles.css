@@ -35,18 +35,13 @@ a {
   padding: 70px 40px;
 }
 
-@media (max-width: 480px) {
-  .container {
-    flex-direction: column;
-  }
-}
-
 .content {
+  width: calc(100% - 200px);
   padding: 0 10px;
 }
 
 .side-nav {
-  min-width: 200px;
+  width: 200px;
 }
 
 .footer {
