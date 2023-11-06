@@ -7,7 +7,7 @@ orfiles -p c:\arc_out -s -m *.* -d -180 -c "cmd /c del /q @path"
 ###### psexec
 Она позволяет выполнять команды на удаленных компьютерах  и при этом не требует установки в систему
 Например эта команда копирует программу 7z920.exe в удаленную систему и устанавливает в фоновом режиме(/S)
-psexec /accepteula \\172.24.91.2 -u oracle -p master -c C:\7z920.exe /S
+psexec /accepteula \\172.24.91.2 -u user -p master -c C:\7z920.exe /S
 
 ###### Порт RDP
 HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TerminalServer\WinStations\RDP-Tcp\PortNumber

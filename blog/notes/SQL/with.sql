@@ -26,15 +26,3 @@ select * from b
 , R_TABLE_TMP t
 where trunc(b.ddd, 'dd')=trunc(t.DOC_DATE(+), 'dd')
 order by b.ddd
-
-/* Oracle 12.1 */
-WITH
-FUNCTION year_number
-RETURN INTEGER
-IS
-BEGIN
-RETURN pkg.year_number;
-END;
-SELECT year_number
-FROM employees
-WHERE employee_id = 138

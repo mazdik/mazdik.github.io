@@ -1,5 +1,5 @@
 ############################## Mint ##############################
-How to install Oracle JDK on Linux Mint
+How to install JDK on Linux Mint
 
 sudo apt-get update && apt-get remove openjdk*
 cd ~/Downloads
@@ -11,9 +11,6 @@ sudo update-alternatives --set java /opt/java/jdk1.8.0_131/bin/java
 
 ############################## CentOS ##############################
 CentOS из за условий лицензирования JRE не будет в официальных репозиториях. В репозиториях только openjdk (yum search java).
-
-Скачиваем дистрибутив с сайта Oracle и установить командой: rpm -Uvh
-удаление: rpm -e <package_name>
 
 chmod +x jre-7u2-linux-x64.rpm
 rpm -Uvh jre-7u2-linux-x64.rpm

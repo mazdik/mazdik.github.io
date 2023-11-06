@@ -81,14 +81,6 @@ select t1.table_name, t1.column_name, t1.data_type, pgd.description as comments
     on pgd.objoid = t1.relid
    and pgd.objsubid = t1.ordinal_position
 
--- Отличия substr
-Oracle substr('abcdefg', 1, 4) = 'abcd'
-Oracle substr('abcdefg', 0, 4) = 'abcd'
-Oracle substr('abcdefg', -1, 4) = 'd'
-PG substr('abcdefg', 1, 4) = 'abcd'
-PG substr('abcdefg', 0, 4) = 'abc'
-PG substr('abcdefg', -1, 4) = 'ab'
-
 -- ENABLE / DISABLE ALL TRIGGERS
 CREATE OR REPLACE FUNCTION disable_triggers(a boolean, nsp character varying)
   RETURNS void AS

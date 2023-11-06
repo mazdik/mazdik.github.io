@@ -7,9 +7,6 @@ pip install -r requirements.txt --no-index --find-links=packages_dir
 
 # Установка
 pip install mysqlclient-1.3.7-cp34-none-win_amd64.whl
-pip install cx_Oracle --pre
-# Удаление
-pip uninstall cx_Oracle
 # Список установленных модулей
 pip list
 # Список зависимостей проекта сохранить в файл:

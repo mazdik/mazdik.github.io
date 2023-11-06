@@ -14,10 +14,8 @@ class Note(object):
         'cssbattle': '/cssbattle',
         'html': '/HTML',
         'js': '/JS',
-        'php': '/PHP',
         'others': '/Others',
         'linux': '/Linux',
-        'oracle': '/Oracle',
         'csharp': '/Csharp',
         'python': '/Python',
         'sql': '/SQL'

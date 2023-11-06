@@ -60,10 +60,6 @@ awk -F\' '/menuentry / {print $2}' /boot/grub/grub.cfg
 sudo apt-get install sysv-rc-conf
 sudo sysv-rc-conf
 
-## Клиент оракла
-sudo sh -c "echo /opt/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf"
-sudo ldconfig
-
 ## Переход директории скрипта
 #!/bin/bash
 cd "$(dirname "$0")"
