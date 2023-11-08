@@ -51,44 +51,6 @@ update dept set dname = :dname where deptno = :deptno and ora_hash(dname || '/' 
 -- Виртуальный столбец (Oracle 11) не влечет за собой накладные расходы по хранению. Его значение не вычисляется заранее для сохранения на диске. Вместо этого оно вычисляется при извлечении данных из базы.
 alter table dept add hash as (ora_hash(dname || '/' || loc));
 
---Поиск не индексированных внешних ключей в Oracle
- select table_name, constraint_name,
-        cname1 || nvl2(cname2,','||cname2,null) ||
-        nvl2(cname3,','||cname3,null) || nvl2(cname4,','||cname4,null) ||
-        nvl2(cname5,','||cname5,null) || nvl2(cname6,','||cname6,null) ||
-        nvl2(cname7,','||cname7,null) || nvl2(cname8,','||cname8,null)
-               columns
-     from ( select b.table_name,
-                   b.constraint_name,
-                   max(decode( position, 1, column_name, null )) cname1,
-                   max(decode( position, 2, column_name, null )) cname2,
-                   max(decode( position, 3, column_name, null )) cname3,
-                   max(decode( position, 4, column_name, null )) cname4,
-                   max(decode( position, 5, column_name, null )) cname5,
-                   max(decode( position, 6, column_name, null )) cname6,
-                   max(decode( position, 7, column_name, null )) cname7,
-                   max(decode( position, 8, column_name, null )) cname8,
-                   count(*) col_cnt
-              from (select substr(table_name,1,30) table_name,
-                           substr(constraint_name,1,30) constraint_name,
-                           substr(column_name,1,30) column_name,
-                           position
-                      from user_cons_columns ) a,
-                   user_constraints b
-             where a.constraint_name = b.constraint_name
-               and b.constraint_type = 'R'
-             group by b.table_name, b.constraint_name
-          ) cons
-    where col_cnt > ALL
-            ( select count(*)
-                from user_ind_columns i
-               where i.table_name = cons.table_name
-                 and i.column_name in (cname1, cname2, cname3, cname4,
-                                       cname5, cname6, cname7, cname8 )
-                 and i.column_position <= cons.col_cnt
-               group by i.index_name
-            )
-
 /*
 Плохие привычки в отношении транзакций
 
@@ -133,7 +95,7 @@ where date_col >= trunc(sysdate) and date_col < trunc(sysdate+1)
 Однако после выхода Oracle9i и последующих вер­сий потребность в этом возникает очень редко. 
 PL/SQL является полноцен­ным и популярным языком третьего поколения (third-generation programming language - ЗGL).
 4) Если задачу не удается решить на языке Java, попробуйте написать внешнюю процедуру С. 
-И менно такой подход применяют наиболее часто, когда нужно обеспечить высокую скорость работы п риложения либо использовать API ­
+И менно такой подход применяют наиболее часто, когда нужно обеспечить высокую скорость работы приложения либо использовать API ­
 и нтерфейс от независимых разработчиков, реализованный на языке С.
 5) Если вы не можете решить задачу с помощью внешней процедуры С, всерьез задумайтесь над тем, если в ней необходимость.
 */

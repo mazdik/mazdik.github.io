@@ -8,10 +8,6 @@ request.json # post json
 ?q={"order_by":[{"field":"dz","direction":"desc"}],"limit":2}
 ?q={"filters":[{"name":"sk","op":"eq","val":1010000222}],"order_by":[{"field":"dz","direction":"desc"}],"limit":2}
 
-# SQLAlchemy set postgres schema
-from sqlalchemy import event
-from sqlalchemy.pool import Pool
-
 # datetime JSON serializable
 from datetime import date, datetime
 
