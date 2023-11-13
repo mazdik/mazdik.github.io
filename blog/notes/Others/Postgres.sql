@@ -1,15 +1,22 @@
 --Консоль
-psql -h localhost -p 5432 -U postgres -W postgres
-psql -U postgres
+sudo -u postgres psql postgres
+\l : list all databases
+\du : list all users
 \connect DBNAME
-\q
-psql -U postgres -d postgres -f 136_output_table.sql
 
---Сиквенсы
+show max_connections;
+show shared_buffers;
+
+sudo service postgrespro-std-12.service restart
+
+-- pg_hba.conf
+host    all    all    0.0.0.0/0    md5
+
+-- Сиквенсы
 truncate table tbl_sessions_count;
 SELECT setval('tbl_sessions_count_id_seq', 1, false);
 
---Пересоздание схемы
+-- Пересоздание схемы
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 GRANT ALL ON SCHEMA public TO postgres;
@@ -30,9 +37,6 @@ INSERT INTO {t} (id,col1, col2, col3)
 -- Disable the constraints
 ALTER TABLE reference DISABLE TRIGGER ALL;
 ALTER TABLE reference ENABLE TRIGGER ALL;
-
--- ограничения откладываются до фиксации транзакции
-SET CONSTRAINTS ALL DEFERRED
 
 -- Список таблиц
 select t.table_schema, t.table_name
@@ -57,58 +61,11 @@ select date_trunc('day', CURRENT_TIMESTAMP) from generate_series(1,1);
 SELECT date_trunc('hour', TIMESTAMP '2016-02-17 20:38:40') from generate_series(1,1);
 --2016-02-17 20:00:00
 
--- DUAL
-create view DUAL as select 'X'::text as DUMMY
-
---SYSDATE
-SELECT current_date, current_timestamp 
-
 -- DUMP
 pg_dump -U postgres -f postgres.sql
 --Восстановление 
 psql -U postgres -d postgres -f postgres.sql
 psql -U era_mer -d era_mer -f postgres.sql
-"C:\Program Files\PostgreSQL\10\bin\psql.exe" -U postgres -d postgres -f postgres.sql
-
--- Comments columns
-select t1.table_name, t1.column_name, t1.data_type, pgd.description as comments
-  from (select c.table_name, c.column_name, c.data_type, c.ordinal_position, st.relid
-          from pg_catalog.pg_statio_all_tables st, information_schema.columns c
-         where c.table_schema = st.schemaname
-           and c.table_name = st.relname
-           and c.table_name = 'name_translation') t1
-  left outer join pg_catalog.pg_description pgd
-    on pgd.objoid = t1.relid
-   and pgd.objsubid = t1.ordinal_position
-
--- ENABLE / DISABLE ALL TRIGGERS
-CREATE OR REPLACE FUNCTION disable_triggers(a boolean, nsp character varying)
-  RETURNS void AS
-$BODY$
-declare 
-act character varying;
-r record;
-begin
-    if(a is true) then
-        act = 'disable';
-    else
-        act = 'enable';
-    end if;
-
-    for r in select c.relname from pg_namespace n
-        join pg_class c on c.relnamespace = n.oid and c.relhastriggers = true
-        where n.nspname = nsp
-    loop
-        execute format('alter table %I.%I %s trigger all', nsp,r.relname, act); 
-    end loop;
-end;
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-ALTER FUNCTION disable_triggers(boolean, character varying)
-  OWNER TO postgres;
---
-SELECT disable_triggers(true,'public');
 
 -- Создание бд
 CREATE ROLE era_mer WITH LOGIN PASSWORD 'era_mer';
@@ -141,4 +98,3 @@ where pid <> pg_backend_pid()
 and state = 'active' 
 and state_change < current_timestamp - interval '3' second
 order by runtime desc;
-

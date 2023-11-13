@@ -33,7 +33,7 @@ iptables -t nat -D POSTROUTING 1
 
 
 Лимит подключений
-﻿iptables -A INPUT -p tcp --syn --dport 2106 -m connlimit --connlimit-above 5 -j REJECT
+iptables -A INPUT -p tcp --syn --dport 2106 -m connlimit --connlimit-above 5 -j REJECT
 iptables -A INPUT -p tcp --syn --dport 7777 -m connlimit --connlimit-above 7 -j REJECT
 iptables -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 30 -j REJECT
 iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 3 -j REJECT

@@ -1,0 +1,16 @@
+### Redhat Disable Firewall
+systemctl status firewalld
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
+
+
+# Создание и монтирование раздела
+sudo parted /dev/sdb
+mklabel gpt
+mkpart primary 1 5369GB
+quit
+sudo mkfs.ext4 /dev/sdb1
+sudo mkdir /data
+sudo mount /dev/sdb1 /data
+sudo vim /etc/fstab
+/dev/sdb1               /data                   ext4    defaults        0 0

@@ -1,3 +1,13 @@
+/*
+на сервере:
+sudo timedatectl set-timezone UTC
+
+на клиенте:
+use_client_time_zone
+Asia/Yekaterinburg
+Europe/Moscow
+*/
+
 /* Мат. вьюшка, которая обновляться с агрегированием в 5-минутный диапазон */
 CREATE MATERIALIZED VIEW CURRENT_events
 ENGINE = SummingMergeTree

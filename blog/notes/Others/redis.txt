@@ -9,3 +9,5 @@ command: redis-server /usr/local/etc/redis/redis.conf --requirepass password
 Проверка применения настроек:
 redis-cli -a password
 INFO Memory
+KEYS *name*
+DEL "name"

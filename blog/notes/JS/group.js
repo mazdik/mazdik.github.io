@@ -42,7 +42,7 @@ console.log(groupAndSum(rows, ['paramId'], ['production', 'losses', 'count']));
 function groupBy(rows: any[], keys: any[]): any {
   const groups = {};
   rows.forEach(row => {
-    const group = groupStringValues(row, keys);
+    const group = keyStringValues(row, keys);
     groups[group] = groups[group] || [];
     groups[group].push(row);
   });

@@ -77,3 +77,15 @@ xed admin:///etc/sysctl.conf
 find trace/*.trc -mtime +3 -exec rm {} \;
 # Удалять вместе с каталогами
 find /uploads -mtime +31 -exec rm -r {} \;
+# Удалить файлы like
+find -type f -name '*2020*' -delete
+
+# открыть часть логов с конца файла
+tail -100 logs/app_test.log
+tail -1500 logs/error.log | head -n 300
+
+# проверить порт
+curl -v telnet://xx.xx.xx.xx:9000
+
+# сколько памяти использует процесс
+ps aux | grep python | awk '{sum=sum+$6}; END {print sum/1024 " MB"}'

@@ -96,53 +96,7 @@ for (var i=0; i<department.length; i++) {
     }
 }
 
-// Full Outer Join
-var results = [];
-for (var i=0; i<employee.length; i++) {
-    var found = false;
-    for (var j=0; j<department.length; j++) {
-        if (employee[i].department_id === department[j].department_id) {
-            results.push({
-                employee_name: employee[i].name, 
-                employee_department_id: employee[i].department_id,
-                department_id: department[j].department_id,
-                department_name: department[j].name
-            });
-            found = true;
-            break;
-        }
-    }
-    if (found === false) {
-        results.push({
-            employee_name: employee[i].name, 
-            employee_department_id: employee[i].department_id,
-            department_id: null,
-            department_name: null
-        });    
-    }
-}
-for (var i=0; i<department.length; i++) {
-    var found = false;
-    for (var j=0; j<employee.length; j++) {
-        if (employee[j].department_id === department[i].department_id) {
-            results.push({
-                employee_name: employee[j].name, 
-                employee_department_id: employee[j].department_id,
-                department_id: department[i].department_id,
-                department_name: department[i].name
-            });
-            found = true;                
-        }
-    }
-    if (found === false) {
-        results.push({
-            employee_name: null, 
-            employee_department_id: null,
-            department_id: department[i].department_id,
-            department_name: department[i].name
-        });    
-    }
-}
+
 // remove duplicates
 let duplicates = {};
 for (var i=0; i< results.length; i++) {

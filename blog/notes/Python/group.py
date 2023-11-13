@@ -45,7 +45,6 @@ def get_min_max(rows: list, field: str) -> Tuple[Optional[float], Optional[float
 def get_last_group_rows(rows: List[dict], group_keys: List[str], sort_key: Callable, count: int) -> list:
     """ Последние n строк для каждой группы """
     res = []
-    count = int(count)
     grouped = group_by(rows, group_keys)
     for key in grouped:
         param_rows = grouped[key]

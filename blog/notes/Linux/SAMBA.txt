@@ -1,0 +1,16 @@
+﻿#подключаем vfs обьект Корзина
+vfs_objects = recycle
+#относительный путь к каталогу корзины
+recycle:repository = /media/backup/recycle/%u
+#сохранять каталоги
+recycle:keeptree = Yes
+#делать версии файлов, если имена одинаковы
+recycle:versions = Yes
+#максимальный размер файла для помещения в корзину
+recycle:maxsize = 0
+#исключения для удаления (файлы с такими расширениями не будут помещены в корзину)
+recycle:exclude = *.tmp|*.temp|*.o|*.obj|~$*|*.~??|*.trace
+#исключения для удаления каталогов (анологично exclude )
+recycle:excludedir = /tmp|/temp|/cache
+#исключения для новых версий (эти файлы не будут сохранены при удалении нескольких копий)
+recycle:noversions = *.doc|*.ppt|*.xls

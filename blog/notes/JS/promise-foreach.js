@@ -7,8 +7,6 @@ arr.forEach(async (num) => {
   await waitFor(sec);
   console.log(num);
 });
-console.log('Done');
-
 
 // без порядка
 await arr.forEach(async (num) => {
@@ -16,7 +14,6 @@ await arr.forEach(async (num) => {
   await waitFor(sec);
   console.log(num);
 });
-console.log('Done');
 
 // без порядка
 await Promise.all(arr.map(async (num) => {
