@@ -29,7 +29,7 @@ docker start $(docker ps -a -q -f status=exited)
 docker stop $(docker ps -a -q)
 
 -- Запустить временный контейнер (удаляется после завершения)
-docker run -i -t --rm --name guest oraclelinux:7-slim /bin/bash
+docker run -i -t --rm --name guest ubuntu /bin/bash
 
 -- Сколько занимает места на диске
 docker system df

@@ -23,17 +23,6 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO public;
 COMMENT ON SCHEMA public IS 'standard public schema';
 
--- UPSERT
-INSERT INTO tablename (a, b, c) values (1, 2, 10)
-ON CONFLICT (a) DO UPDATE SET c = EXCLUDED.c + 1;
---
-INSERT INTO {t} (id,col1, col2, col3)
-	VALUES (%s, %s, %s, %s)
-	ON CONFLICT (id)
-	DO UPDATE SET
-		(col1, col2, col3)
-	  = (EXCLUDED.col1, EXCLUDED.col2, EXCLUDED.col3)
-
 -- Disable the constraints
 ALTER TABLE reference DISABLE TRIGGER ALL;
 ALTER TABLE reference ENABLE TRIGGER ALL;
