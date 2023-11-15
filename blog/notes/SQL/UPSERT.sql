@@ -1,6 +1,6 @@
 -- UPSERT (update or insert into a table)
 
--- MERGE Oracle
+-- MERGE (Oracle)
 merge into employee using dual on ( "id"=2097153 )
 when matched then update set "last"="smith" , "name"="john"
 when not matched then insert ("id","last","name") 

@@ -8,7 +8,6 @@
 
 3) cross join
 Этот тип join еще называют декартовым произведением (на английском - cartesian product).
-
 */
 
 left outer join 
@@ -32,4 +31,3 @@ res2     user1
 res3     (null)    
 res5     user3     
 (null)   user4 
-

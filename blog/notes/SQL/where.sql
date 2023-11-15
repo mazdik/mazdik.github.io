@@ -1,12 +1,12 @@
 -- Фильтры для NULL
-WHERE NVL (a, 0) = NVL (b, 0);
-WHERE DECODE (a, b, 'YES', 'NO') = 'YES';
-WHERE (a = b OR (a IS NULL AND b IS NULL));
+where nvl (a, 0) = nvl (b, 0);
+where decode (a, b, 'yes', 'no') = 'yes';
+where (a = b or (a is null and b is null));
 --
-WHERE (T.WELL_ID = nWELL_ID or nWELL_ID is null)
-WHERE (t1.col1 = t2.col2 or coalesce(t1.col1, t2.col2) is null)
-WHERE decode(ename, :ename, 1) = 1
-WHERE (t.shop_id in (select cdng_id from rpt_cdng) or (select count(cdng_id) from rpt_cdng) = 0)
+where (t.well_id = nwell_id or nwell_id is null)
+where (t1.col1 = t2.col2 or coalesce(t1.col1, t2.col2) is null)
+where decode(ename, :ename, 1) = 1
+where (t.shop_id in (select cdng_id from rpt_cdng) or (select count(cdng_id) from rpt_cdng) = 0)
 
 -- Вывод: ddd. Если все условия ложные, то ничего не выводит
 where 

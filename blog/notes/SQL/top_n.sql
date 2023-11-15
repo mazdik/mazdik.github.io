@@ -2,33 +2,32 @@
 --Например, должны быть получены имена и заработные платы сотрудников с 5 самыми высокими зарплатами.
 
 -- 1 способ (DB2, Oracle и SQL Server)
-select ename,sal
+select ename, sal
 from (
-select ename, sal,
-dense_rank() over (order by sal desc) dr
-from emp
+    select a.ename, a.sal,
+        dense_rank() over (order by a.sal desc) as rnk
+    from emp a
 ) x
-where dr <= 5
+where rnk <= 5
 
 -- 2 способ (MySQL и PostgreSQL)
-select ename,sal
+select ename, sal
 from (
-select (select count(distinct b.sal)
-from emp b
-where a.sal <= b.sal) as rnk,
-a.sal,
-a.ename
-from emp a
--- или order by a.sal desc
-)
+    select a.ename, a.sal,
+        (select count(distinct b.sal) from emp b where a.sal <= b.sal) as rnk
+    from emp a
+    -- или order by a.sal desc
+) x
 where rnk <= 5
 order by rnk
 
--- 3 способ
-select ename,sal
+-- 3 способ (Oracle)
+select ename, sal
 from (
-select * from emp order by sal desc
-)
+    select a.ename, a.sal 
+    from emp a
+    order by a.sal desc
+) x
 where rownum <= 5
 
 -- В 1 и 2 способах дубликаты не учитываются, т.е. результать может быть больше 5

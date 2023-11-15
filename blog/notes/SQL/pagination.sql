@@ -2,33 +2,33 @@
 -- 1 способ ROWNUM
 ------------------------------
 select * 
-  from ( select /*+ FIRST_ROWS(n) */ 
-  a.*, ROWNUM rnum 
-      from ( your_query_goes_here, 
-      with order by ) a 
-      where ROWNUM <= 
-      :MAX_ROW_TO_FETCH ) 
+  from (
+    select /*+ FIRST_ROWS(n) */ 
+        a.*, rownum rnum 
+      from (your_query_goes_here with order by) a 
+      where rownum <= :MAX_ROW_TO_FETCH
+  )
 where rnum  >= :MIN_ROW_TO_FETCH;
 
 ------------------------------
 
 select *
+  from (
+    select a.*, rownum rnum
       from
-    (select a.*, rownum rnum
-       from
     (select t.db_link from dba_db_links t) a
      where rownum <= 150
-    )
-    where rnum >= 148;
+  )
+where rnum >= 148;
 	
 ------------------------------
 -- 2 способ row_number()
 ------------------------------
 select db_link 
 from (
-select row_number() over (order by db_link) as rn, 
-db_link 
-from dba_db_links
+  select row_number() over (order by db_link) as rn, 
+  db_link 
+  from dba_db_links
 ) x
 where rn between 1 and 5
 
