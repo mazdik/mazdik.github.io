@@ -87,3 +87,13 @@ where pid <> pg_backend_pid()
 and state = 'active' 
 and state_change < current_timestamp - interval '3' second
 order by runtime desc;
+
+/* топ запросов, занимающих много времени */
+select query,
+  round(total_time::numeric, 2) as total_time,
+  calls,
+  round(mean_time::numeric, 2) as mean,
+  round((100 * total_time / sum(total_time::numeric) over ())::numeric, 2) as percentage_cpu
+from  pg_stat_statements
+order by total_time desc
+limit 20;
