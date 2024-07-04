@@ -1,47 +1,40 @@
-from typing import Callable
-from common import postgres_connector
+# stdlib
+from typing import Generator, Optional
+
+# thirdparty
+from psycopg2 import extensions
 
 
-def pg_dwh_iterating(sql: str, params: dict, job: Callable[[list], int], batch_size=10000) -> int:
-    sql = format_to_pg_sql(sql)
-    rowcount = 0
-    rows = []
-    columns = pg_cursor_description(sql, params, dwh=True)
+def tuples_to_dict(cursor, rows):
+    columns = [i[0].lower() for i in cursor.description]
+    return [dict(zip(columns, row)) for row in rows]
 
-    pool = postgres_connector.get_dwh_pool()
-    conn = pool.getconn()
-    conn.autocommit = False
+
+def fetch_data_from_db(
+    query: str, params: dict, connection: extensions.connection, cursor_name: Optional[str], batch_size: int = 10000
+) -> Generator:
+    """
+    Получает данные с БД, возвращая данные итеративно, являясь генератором
+
+    :param query: SQL-запрос
+    :param params: Параметры запроса
+    :param connection: Соединение с БД
+    :param cursor_name: Наименование курсора. Если задан None, то курсор создаётся на стороне клиента
+        (могут быть затраты RAM у клиента). Желательно создавать уникальное наименование
+    :param batch_size: Размер пачки для фетча данных
+    :return: Полученные с БД данные
+    """
     try:
-        cur = conn.cursor(f'cursor_{config.company_id}')
-        cur.execute(sql, params)
-        cur.itersize = batch_size
+        # Создание курсора
+        with connection.cursor(cursor_name) as cur:
+            cur.execute(query, params)
+            while True:
+                records = cur.fetchmany(batch_size)
+                if not records:
+                    return []
+                rows = tuples_to_dict(cur, records)
+                yield rows
+    except Exception as ex:
+        connection.rollback()
+        raise ex
 
-        for row in cur:
-            rows.append(dict(zip(columns, row)))
-            if len(rows) >= batch_size:
-                rowcount += job(rows)
-                rows = []
-
-        cur.close()
-        rowcount += job(rows)
-        rows = []
-    finally:
-        pool.putconn(conn)
-    return rowcount
-
-
-def pg_cursor_description(sql: str, params: dict, dwh: bool = False) -> list:
-    sql = format_to_pg_sql(sql)
-    sql = f'select * from ({sql}) v99 where 1=2'
-    columns = []
-    pool = postgres_connector.get_pool() if not dwh else postgres_connector.get_dwh_pool()
-    conn = pool.getconn()
-    conn.autocommit = True
-    try:
-        cur = conn.cursor()
-        cur.execute(sql, params)
-        columns = [i[0].lower() for i in cur.description]
-        cur.close()
-    finally:
-        pool.putconn(conn)
-    return columns
