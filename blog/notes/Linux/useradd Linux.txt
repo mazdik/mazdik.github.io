@@ -20,3 +20,7 @@ usermod -a -G groupname username
 
 В каких группах пользователь
 groups username
+
+Добавить группу и пользователя if not exists
+getent group gpnds &>/dev/null || groupadd -g 1006 gpnds
+id -u gpnds &>/dev/null || useradd -u 1005 -g gpnds -r gpnds 
