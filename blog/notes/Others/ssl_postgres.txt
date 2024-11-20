@@ -1,0 +1,29 @@
+0) Нужно найти директорию, где лежат postgresql.conf, pg_hba.conf и pg_ident.conf.
+Вожможно это /var/lib/postgresql
+
+1) Копируем 3 файла
+cp private.key /var/lib/postgresql/server.key
+cp postgres-uat.crt /var/lib/postgresql/server.crt
+cp rootCA.crt /var/lib/postgresql/rootCA.crt
+
+2) Выдаем права
+chmod 600 server.key
+chown postgres:postgres server.key
+
+3) Редактируем postgresql.conf
+ssl = on
+ssl_cert_file = 'server.crt'
+ssl_key_file = 'server.key'
+ssl_ca_file = 'rootCA.crt'
+
+4) Редактируем pg_hba.conf
+Добавляем строку hostssl cert выше host md5
+
+hostssl all all 0.0.0.0/0 cert map=mymap
+host all all all md5
+
+5) Редактируем pg_ident.conf
+mymap /dars wcr
+mymap /dars mdm
+
+6) Перезапускаем postgres 
