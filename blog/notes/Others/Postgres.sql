@@ -12,6 +12,24 @@ sudo service postgrespro-std-12.service restart
 -- pg_hba.conf
 host    all    all    0.0.0.0/0    md5
 
+/* ALTER SYSTEM SET */
+ALTER SYSTEM SET max_connections = '400';
+ALTER SYSTEM SET shared_buffers = '24GB';
+ALTER SYSTEM SET random_page_cost = '1.1';
+ALTER SYSTEM SET effective_io_concurrency = '300';
+ALTER SYSTEM SET effective_cache_size = '48GB';
+ALTER SYSTEM SET maintenance_work_mem = '2GB';
+ALTER SYSTEM SET checkpoint_completion_target = '0.9';
+ALTER SYSTEM SET work_mem = '128MB';
+ALTER SYSTEM SET max_wal_size = '8GB';
+/* USER SET */
+set work_mem = '128MB'
+
+-- DUMP
+pg_dump -U postgres -f postgres.sql
+--Восстановление 
+psql -U postgres -d postgres -f postgres.sql
+
 -- Сиквенсы
 truncate table tbl_sessions_count;
 SELECT setval('tbl_sessions_count_id_seq', 1, false);
@@ -50,12 +68,6 @@ select date_trunc('day', CURRENT_TIMESTAMP) from generate_series(1,1);
 SELECT date_trunc('hour', TIMESTAMP '2016-02-17 20:38:40') from generate_series(1,1);
 --2016-02-17 20:00:00
 
--- DUMP
-pg_dump -U postgres -f postgres.sql
---Восстановление 
-psql -U postgres -d postgres -f postgres.sql
-psql -U era_mer -d era_mer -f postgres.sql
-
 -- Создание бд
 CREATE ROLE era_mer WITH LOGIN PASSWORD 'era_mer';
 CREATE TABLESPACE era_mer OWNER era_mer LOCATION '/home/postgres/era_mer';
@@ -74,6 +86,11 @@ show myvars.language_id;
 -- or via functions
 select set_config('myvars.language_id', '20', false);
 select current_setting('myvars.language_id');
+
+-- start time PostgreSQL:
+select pg_postmaster_start_time();
+-- uptime:
+select now() - pg_postmaster_start_time();
 
 /* количество сессий */
 select application_name, count(*) as cnt from pg_stat_activity t
@@ -96,4 +113,20 @@ select query,
   round((100 * total_time / sum(total_time::numeric) over ())::numeric, 2) as percentage_cpu
 from  pg_stat_statements
 order by total_time desc
-limit 20;
+limit 30;
+
+/* топ запросов, занимающих много времени */
+SELECT 
+  pss.userid,
+  pss.dbid,
+  pd.datname as db_name,
+  round(pss.total_time::numeric, 2) as total_time, 
+  pss.calls, 
+  round(pss.mean_time::numeric, 2) as mean, 
+  round((100 * pss.total_time / sum(pss.total_time::numeric) OVER ())::numeric, 2) as cpu_portion_pctg,
+  pss.query
+FROM pg_stat_statements pss, pg_database pd
+WHERE pd.oid=pss.dbid
+ORDER BY pss.total_time 
+DESC LIMIT 30;
+
