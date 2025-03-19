@@ -22,8 +22,12 @@ ALTER SYSTEM SET maintenance_work_mem = '2GB';
 ALTER SYSTEM SET checkpoint_completion_target = '0.9';
 ALTER SYSTEM SET work_mem = '128MB';
 ALTER SYSTEM SET max_wal_size = '8GB';
-/* USER SET */
-set work_mem = '128MB'
+/* ALTER USER SET */
+ALTER USER <username> SET work_mem TO '128MB';
+
+/* pg_settings */
+select name, setting from pg_settings where name like '%ssl%'
+select name, setting from pg_settings where name like '%work_mem%'
 
 -- DUMP
 pg_dump -U postgres -f postgres.sql
