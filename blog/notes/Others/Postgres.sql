@@ -9,6 +9,11 @@ show shared_buffers;
 
 sudo service postgrespro-std-12.service restart
 
+-- DUMP
+pg_dump -U postgres -f postgres.sql
+--Восстановление 
+psql -U postgres -d postgres -f postgres.sql
+
 -- pg_hba.conf
 host    all    all    0.0.0.0/0    md5
 
@@ -29,14 +34,15 @@ ALTER USER <username> SET work_mem TO '128MB';
 select name, setting from pg_settings where name like '%ssl%'
 select name, setting from pg_settings where name like '%work_mem%'
 
--- DUMP
-pg_dump -U postgres -f postgres.sql
---Восстановление 
-psql -U postgres -d postgres -f postgres.sql
+-- Создание бд
+create user nsi with login password 'nsi!';
+create database nsi owner nsi;
+grant create, connect, temporary on database nsi to nsi;
+alter role nsi set search_path to nsi;
 
 -- Сиквенсы
 truncate table tbl_sessions_count;
-SELECT setval('tbl_sessions_count_id_seq', 1, false);
+select setval('tbl_sessions_count_id_seq', 1, false);
 
 -- Пересоздание схемы
 DROP SCHEMA public CASCADE;
@@ -72,24 +78,9 @@ select date_trunc('day', CURRENT_TIMESTAMP) from generate_series(1,1);
 SELECT date_trunc('hour', TIMESTAMP '2016-02-17 20:38:40') from generate_series(1,1);
 --2016-02-17 20:00:00
 
--- Создание бд
-CREATE ROLE era_mer WITH LOGIN PASSWORD 'era_mer';
-CREATE TABLESPACE era_mer OWNER era_mer LOCATION '/home/postgres/era_mer';
-CREATE DATABASE era_mer OWNER era_mer TABLESPACE era_mer;
-GRANT ALL ON DATABASE era_mer TO era_mer;
-REVOKE ALL ON DATABASE era_mer FROM public;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA era_mer TO era_mer;
-
 -- RETURNING (* - возвращает всю строку) аналог ROWID - CTID
 insert into measure_accuracy values (222, 'BY1001', 1, 1, 1, 1) RETURNING *
 update measure_accuracy set value_begin =123 where id = 222 RETURNING *
-
--- How to set some context variable for a user/connection
-set myvars.language_id = 10;
-show myvars.language_id;
--- or via functions
-select set_config('myvars.language_id', '20', false);
-select current_setting('myvars.language_id');
 
 -- start time PostgreSQL:
 select pg_postmaster_start_time();
@@ -133,4 +124,15 @@ FROM pg_stat_statements pss, pg_database pd
 WHERE pd.oid=pss.dbid
 ORDER BY pss.total_time 
 DESC LIMIT 30;
+
+/* vacuum (verbose, analyze) */
+select format('vacuum (verbose, analyze) %I.%I;', table_schema, table_name)
+  from information_schema.tables
+where table_schema = 'era_neuro'
+   and table_type = 'BASE TABLE'
+   and table_name not like '%202%'
+
+/* last vacuum */
+select relname,last_vacuum, last_autovacuum, last_analyze, last_autoanalyze 
+from pg_stat_user_tables
 
