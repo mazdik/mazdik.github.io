@@ -1,0 +1,32 @@
+Dockerfile:
+
+FROM quay.io/keycloak/keycloak:26.4.1
+COPY ci/local/keycloak/realm.json /opt/keycloak/data/import/realm.json
+ENV TZ=Europe/Moscow
+
+
+docker-compose:
+
+keycloak:
+  container_name: dev-keycloak
+  image: dev-keycloak:$APP_VERSION
+  build:
+    context: ../..
+    dockerfile: docker/Keycloak.Dockerfile
+  command: start-dev --import-realm
+  environment:
+    KC_DB: postgres
+    KC_DB_URL_HOST: postgres
+    KC_DB_URL_DATABASE: keycloak
+    KC_DB_USERNAME: keycloak
+    KC_DB_PASSWORD: $POSTGRES_DBPASS
+    KC_BOOTSTRAP_ADMIN_USERNAME: $KC_ADMIN_USERNAME
+    KC_BOOTSTRAP_ADMIN_PASSWORD: $KC_ADMIN_PASSWORD
+    KC_PROXY: edge
+    KC_PROXY_HEADERS: xforwarded
+  ports:
+    - "5200:8080"
+  depends_on:
+    - postgres
+  volumes:
+    - keycloak_data:/opt/keycloak/data
